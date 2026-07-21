@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/kk.png";
 import { FaArrowRight, FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
