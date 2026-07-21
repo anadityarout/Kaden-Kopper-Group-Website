@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Sidebar from "./Components/Sidebar/Sidebar";
 
-import HomeSlider from "./Components/Home/HomeSlider";
+import HomeSlider from "./Components/Home/Homeslider";
 import Company from "./Components/Company/Company";
 import Projectimage from "./Components/Home/Projectimage";
 import CompanyAdmin from "./Components/HomeCompany/CompanyAdmin";
