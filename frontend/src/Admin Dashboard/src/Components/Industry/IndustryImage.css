@@ -1,0 +1,326 @@
+/* ==========================================
+   INDUSTRY IMAGE ADMIN
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f5f7fb;
+}
+
+.industry-admin{
+    width:100%;
+    min-height:100vh;
+    padding:30px;
+    background:#f5f7fb;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.industry-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.industry-header h2{
+    font-size:32px;
+    font-weight:700;
+    color:#222;
+}
+
+.add-industry-btn{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    padding:12px 24px;
+    border-radius:8px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.add-industry-btn:hover{
+    background:#1d4ed8;
+}
+
+/* ==========================================
+   TABLE
+========================================== */
+
+.industry-table{
+    width:100%;
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
+
+.industry-table table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.industry-table thead{
+    background:#2563eb;
+    color:#fff;
+}
+
+.industry-table th{
+    padding:16px;
+    font-size:15px;
+    font-weight:600;
+    text-align:center;
+}
+
+.industry-table td{
+    padding:18px;
+    border-bottom:1px solid #eee;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.industry-table tbody tr:hover{
+    background:#f8fbff;
+}
+
+/* ==========================================
+   IMAGE
+========================================== */
+
+.table-image{
+    width:120px;
+    height:80px;
+    object-fit:contain;
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:3px;
+}
+
+.no-image{
+    width:120px;
+    height:80px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border:1px dashed #ccc;
+    border-radius:8px;
+    background:#fafafa;
+    color:#999;
+    font-size:13px;
+    margin:auto;
+}
+
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+
+.edit-btn{
+    background:#f59e0b;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    padding:8px 16px;
+    margin-right:8px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.edit-btn:hover{
+    background:#d97706;
+}
+
+.delete-btn{
+    background:#ef4444;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    padding:8px 16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+}
+
+/* ==========================================
+   MODAL
+========================================== */
+
+.modal-overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.5);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.modal-box{
+    width:700px;
+    max-width:95%;
+    background:#fff;
+    border-radius:12px;
+    padding:30px;
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+.modal-box h3{
+    font-size:24px;
+    color:#222;
+    margin-bottom:25px;
+}
+
+/* ==========================================
+   UPLOAD
+========================================== */
+
+.upload-section{
+    margin-bottom:25px;
+}
+
+.upload-section label{
+    display:block;
+    margin-bottom:10px;
+    font-weight:600;
+    color:#333;
+}
+
+.upload-box{
+    width:220px;
+    height:150px;
+    border:2px dashed #d5d5d5;
+    border-radius:10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    overflow:hidden;
+    transition:.3s;
+    background:#fafafa;
+}
+
+.upload-box:hover{
+    border-color:#2563eb;
+    background:#f0f7ff;
+}
+
+.preview-img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    background:#fff;
+}
+
+.upload-box span{
+    color:#999;
+    font-size:14px;
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.modal-buttons{
+    display:flex;
+    justify-content:flex-end;
+    gap:15px;
+    margin-top:30px;
+}
+
+.cancel-btn{
+    background:#6b7280;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:10px 22px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.cancel-btn:hover{
+    background:#4b5563;
+}
+
+.save-btn{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:10px 22px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.save-btn:hover{
+    background:#1d4ed8;
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+.industry-table::-webkit-scrollbar{
+    height:8px;
+}
+
+.industry-table::-webkit-scrollbar-thumb{
+    background:#bbb;
+    border-radius:10px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:768px){
+
+    .industry-admin{
+        padding:20px;
+    }
+
+    .industry-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .industry-table{
+        overflow-x:auto;
+    }
+
+    .table-image{
+        width:90px;
+        height:60px;
+    }
+
+    .upload-box{
+        width:180px;
+        height:120px;
+    }
+
+    .modal-box{
+        width:95%;
+        padding:20px;
+    }
+
+    .modal-buttons{
+        justify-content:center;
+    }
+
+}

@@ -1,0 +1,365 @@
+/* ==========================================
+   OUR COMPANIES SECTION
+========================================== */
+
+.companies-section{
+    width:100%;
+    background:#fff;
+    padding:90px 5%;
+}
+
+.companies-container{
+    max-width:1400px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:80px;
+    margin-bottom:70px;
+}
+
+/* ==========================================
+   LEFT SIDE
+========================================== */
+
+.companies-left{
+    flex:1;
+}
+
+.companies-subtitle{
+    display:inline-block;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#C89A2B;
+    position:relative;
+    margin-bottom:20px;
+}
+
+.companies-subtitle::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-10px;
+    width:35px;
+    height:2px;
+    background:#C89A2B;
+}
+
+.companies-left h2{
+    font-size:58px;
+    font-weight:300;
+    line-height:1.2;
+    color:#222;
+}
+
+/* ==========================================
+   RIGHT SIDE
+========================================== */
+
+.companies-right{
+    flex:1;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:40px;
+}
+
+.companies-right p{
+    max-width:420px;
+    font-size:18px;
+    line-height:1.8;
+    color:#666;
+}
+
+.companies-btn{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:16px 34px;
+    border:1px solid #C89A2B;
+    background:white;
+    color:#C89A2B;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.companies-btn:hover{
+    background:#C89A2B;
+    color:#fff;
+}
+
+/* ==========================================
+   COMPANY SLIDER
+========================================== */
+
+.company-slider{
+    width:100%;
+    overflow:hidden;
+    position:relative;
+}
+
+.company-track{
+    display:flex;
+    gap:30px;
+    width:max-content;
+    animation:companyScroll 35s linear infinite;
+}
+
+.company-slider:hover .company-track{
+    animation-play-state:paused;
+}
+
+/* ==========================================
+   COMPANY CARD
+========================================== */
+
+ .company-card{
+    width:250px;
+    background:#fff;
+    border:1px solid #e5e5e5;
+    border-radius:18px;
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    flex-shrink:0;
+    transition:.35s;
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.company-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 45px rgba(0,0,0,.12);
+}
+
+/* ==========================================
+   LOGO
+========================================== */
+
+  .company-logo{
+    width:100%;
+    height:80px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.company-logo img{
+    width:120px;
+    max-height:80px;
+    object-fit:contain;
+}
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+  .company-content{
+    width:100%;
+    text-align:center;
+}
+
+.company-content h3{
+    font-size:24px;
+    font-weight:600;
+    color:#222;
+    margin-bottom:10px;
+}
+
+.company-content p{
+    font-size:15px;
+    line-height:1.6;
+    color:#666;
+    margin-bottom:20px;
+}
+
+/* ==========================================
+   ARROW BUTTON
+========================================== */
+
+ .company-arrow{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:#f3f3f3;
+    color:#C89A2B;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    transition:.3s;
+    margin-top:auto;
+}
+
+.company-arrow:hover{
+    background:#C89A2B;
+    color:#fff;
+}
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.empty-company{
+    width:100%;
+    height:320px;
+    border:2px dashed #ddd;
+    border-radius:18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:#777;
+}
+
+.empty-company h3{
+    font-size:30px;
+    margin-bottom:15px;
+    font-weight:500;
+}
+
+.empty-company p{
+    font-size:18px;
+}
+
+/* ==========================================
+   ANIMATION
+========================================== */
+
+@keyframes companyScroll{
+
+    0%{
+        transform:translateX(0);
+    }
+
+    100%{
+        transform:translateX(-50%);
+    }
+
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media(max-width:1100px){
+
+.companies-container{
+flex-direction:column;
+align-items:flex-start;
+gap:40px;
+}
+
+.companies-right{
+width:100%;
+justify-content:space-between;
+}
+
+.companies-left h2{
+font-size:46px;
+}
+
+.company-card{
+width:240px;
+min-height:310px;
+padding:25px;
+}
+
+.company-logo img{
+width:120px;
+}
+
+.company-content h3{
+font-size:20px;
+}
+
+.company-content p{
+font-size:14px;
+}
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:768px){
+
+.companies-section{
+padding:60px 20px;
+}
+
+.companies-container{
+gap:30px;
+}
+
+.companies-left h2{
+font-size:34px;
+}
+
+.companies-right{
+flex-direction:column;
+align-items:flex-start;
+gap:25px;
+}
+
+.companies-right p{
+max-width:100%;
+font-size:16px;
+}
+
+.companies-btn{
+width:100%;
+justify-content:center;
+}
+
+.company-track{
+gap:20px;
+}
+
+.company-card{
+width:220px;
+min-height:290px;
+padding:20px;
+}
+
+.company-logo{
+height:80px;
+}
+
+.company-logo img{
+width:100px;
+}
+
+.company-content h3{
+font-size:18px;
+}
+
+.company-content p{
+font-size:14px;
+min-height:60px;
+}
+
+.company-arrow{
+width:40px;
+height:40px;
+}
+
+.empty-company{
+height:220px;
+}
+
+.empty-company h3{
+font-size:24px;
+}
+
+.empty-company p{
+font-size:16px;
+}
+
+}

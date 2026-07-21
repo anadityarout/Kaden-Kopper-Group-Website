@@ -1,0 +1,473 @@
+ /* ==========================================
+   GOOGLE FONT
+========================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* ==========================================
+   RESET
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Inter",sans-serif;
+    overflow-x:hidden;
+}
+
+/* ==========================================
+   NAVBAR
+========================================== */
+
+.navbar{
+    position:fixed;
+    top:18px;
+    left:0;
+    width:100%;
+    z-index:9999;
+    padding:0 25px;
+    transition:all .4s ease;
+}
+
+.navbar-container{
+
+    max-width:1450px;
+    margin:auto;
+
+    height:92px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 35px;
+
+    border-radius:18px;
+
+    background:rgba(95,95,95,.28);
+
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+
+    border:1px solid rgba(255,255,255,.18);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.25),
+        inset 0 1px rgba(255,255,255,.15);
+
+    transition:all .4s ease;
+}
+
+/* ==========================================
+   NAVBAR ON SCROLL
+========================================== */
+
+.navbar.scrolled .navbar-container{
+
+    height:78px;
+
+    background:rgba(55,55,55,.88);
+
+    backdrop-filter:blur(28px);
+    -webkit-backdrop-filter:blur(28px);
+
+    border:1px solid rgba(255,255,255,.20);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.40),
+        inset 0 1px rgba(255,255,255,.10);
+}
+
+/* ==========================================
+   LEFT
+========================================== */
+
+.navbar-left{
+
+    display:flex;
+    align-items:center;
+    gap:30px;
+
+}
+
+.logo{
+
+    display:flex;
+    align-items:center;
+    text-decoration:none;
+
+}
+
+.logo img{
+
+    height:62px;
+    width:auto;
+    object-fit:contain;
+
+    transition:.4s;
+
+}
+
+.navbar.scrolled .logo img{
+
+    height:55px;
+
+}
+
+.logo-divider{
+
+    width:1px;
+    height:46px;
+
+    background:rgba(255,255,255,.22);
+
+}
+
+/* ==========================================
+   MENU
+========================================== */
+
+.nav-menu{
+
+    display:flex;
+    align-items:center;
+    gap:42px;
+
+}
+
+.nav-menu a{
+
+    position:relative;
+
+    text-decoration:none;
+
+    color:#fff;
+
+    font-size:17px;
+
+    font-weight:500;
+
+    transition:.35s;
+
+}
+
+.navbar.scrolled .nav-menu a{
+
+    font-size:16px;
+
+}
+
+.nav-menu a:hover{
+
+    color:#D4A137;
+
+}
+
+.nav-menu a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    bottom:-8px;
+
+    width:0;
+
+    height:2px;
+
+    background:#D4A137;
+
+    transition:.35s;
+
+}
+
+.nav-menu a:hover::after{
+
+    width:100%;
+
+}
+
+/* ==========================================
+   RIGHT
+========================================== */
+
+.nav-right{
+
+    display:flex;
+    align-items:center;
+    gap:18px;
+
+}
+
+/* ==========================================
+   CONNECT BUTTON
+========================================== */
+
+.connect-btn{
+
+    display:flex;
+    align-items:center;
+    gap:16px;
+
+    padding:14px 24px;
+
+    border-radius:10px;
+
+    border:1px solid rgba(255,255,255,.40);
+
+    background:rgba(255,255,255,.08);
+
+    color:#fff;
+
+    font-size:16px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+.navbar.scrolled .connect-btn{
+
+    padding:12px 22px;
+
+}
+
+.connect-btn:hover{
+
+    background:#C4902D;
+
+    border-color:#C4902D;
+
+    transform:translateY(-2px);
+
+}
+
+.arrow-circle{
+
+    width:34px;
+    height:34px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    color:#C4902D;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    transition:.35s;
+
+}
+
+.connect-btn:hover .arrow-circle{
+
+    transform:rotate(-45deg);
+
+}
+
+/* ==========================================
+   DIVIDER
+========================================== */
+
+.menu-divider{
+
+    width:1px;
+    height:34px;
+
+    background:rgba(255,255,255,.22);
+
+}
+
+/* ==========================================
+   MENU BUTTON
+========================================== */
+
+.menu-btn{
+
+    background:none;
+    border:none;
+
+    color:#fff;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+.menu-btn:hover{
+
+    color:#D4A137;
+
+    transform:rotate(90deg);
+
+}
+
+/* ==========================================
+   ANIMATION
+========================================== */
+
+.logo img,
+.navbar-container,
+.connect-btn,
+.menu-btn,
+.nav-menu a{
+
+    transition:all .35s ease;
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:1200px){
+
+.nav-menu{
+
+display:none;
+
+}
+
+.logo-divider{
+
+display:none;
+
+}
+
+.navbar-container{
+
+padding:0 25px;
+
+}
+
+.connect-btn{
+
+padding:12px 18px;
+
+font-size:15px;
+
+}
+
+}
+
+@media(max-width:992px){
+
+.navbar{
+
+padding:0 18px;
+
+}
+
+.navbar-container{
+
+height:82px;
+
+padding:0 20px;
+
+}
+
+.logo img{
+
+height:54px;
+
+}
+
+.connect-btn{
+
+display:none;
+
+}
+
+.menu-divider{
+
+display:none;
+
+}
+
+.menu-btn{
+
+font-size:28px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.navbar{
+
+top:12px;
+
+padding:0 12px;
+
+}
+
+.navbar-container{
+
+height:74px;
+
+border-radius:14px;
+
+padding:0 16px;
+
+}
+
+.logo img{
+
+height:48px;
+
+}
+
+.menu-btn{
+
+font-size:26px;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.navbar{
+
+padding:0 8px;
+
+}
+
+.navbar-container{
+
+height:68px;
+
+padding:0 14px;
+
+}
+
+.logo img{
+
+height:42px;
+
+}
+
+.menu-btn{
+
+font-size:24px;
+
+}
+
+}

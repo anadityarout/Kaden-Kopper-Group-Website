@@ -1,0 +1,114 @@
+/* ===========================
+   SIDEBAR
+=========================== */
+
+.sidebar{
+    width:260px;
+    min-height:100vh;
+    background:#111827;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    overflow-y:auto;
+    border-right:1px solid #222;
+}
+
+/* ===========================
+   LOGO
+=========================== */
+
+.sidebar-logo{
+    height:80px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:24px;
+    font-weight:700;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+/* ===========================
+   MENU
+=========================== */
+
+.menu-section{
+    margin-top:5px;
+}
+
+.menu-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 22px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.menu-title span{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:16px;
+    font-weight:500;
+}
+
+.menu-title:hover{
+    background:#1f2937;
+}
+
+/* ===========================
+   SUB MENU
+=========================== */
+
+.submenu{
+    background:#0f172a;
+}
+
+.submenu-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:13px 45px;
+    cursor:pointer;
+    font-size:15px;
+    color:#490dd3;
+    transition:.3s;
+}
+
+.submenu-item:hover{
+    background:#1e293b;
+    color:#fff;
+}
+
+/* Active Page */
+
+.submenu-item.active{
+    background:#2563eb;
+    color:#fff;
+    font-weight:600;
+}
+
+/* ===========================
+   ACTIVE MENU
+=========================== */
+
+.active-title{
+    background:#1f2937;
+}
+
+/* ===========================
+   SCROLLBAR
+=========================== */
+
+.sidebar::-webkit-scrollbar{
+    width:6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+    background:#444;
+    border-radius:10px;
+}
+
+.sidebar::-webkit-scrollbar-track{
+    background:#111827;
+}

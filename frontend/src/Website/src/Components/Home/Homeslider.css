@@ -1,0 +1,251 @@
+/* ===============================
+   HOME SLIDER
+================================ */
+
+.home-slider {
+  width: 100%;
+  height: auto;
+  position: relative;
+  background: #000;
+  overflow: hidden;
+}
+
+/* ===============================
+   EMPTY SLIDER
+================================ */
+
+.empty-slider {
+  width: 100%;
+  min-height: 500px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #111;
+}
+
+.empty-slider p {
+  color: #fff;
+  font-size: 22px;
+  text-align: center;
+  line-height: 1.8;
+}
+
+/* ===============================
+   SLIDE
+================================ */
+
+.slide {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+/* ===============================
+   IMAGE / VIDEO
+================================ */
+
+.slider-image,
+.slider-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  background: #000;
+}
+
+/* ===============================
+   OVERLAY
+================================ */
+
+.slider-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  display: flex;
+  align-items: center;
+}
+
+.slider-content {
+  width: 90%;
+  max-width: 1300px;
+  margin: auto;
+
+  color: #fff;
+}
+
+.slider-content h1 {
+  font-size: 70px;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.slider-content p {
+  width: 700px;
+  max-width: 100%;
+  font-size: 22px;
+  line-height: 1.7;
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 55px;
+  height: 55px;
+
+  border: none;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 25px;
+
+  transition: 0.3s;
+  z-index: 100;
+}
+
+.slider-btn:hover {
+  background: #C89A2B;
+}
+
+.prev {
+  left: 25px;
+}
+
+.next {
+  right: 25px;
+}
+
+/* ===============================
+   FLOATING CONTACT
+================================ */
+
+.floating-contact {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border-radius: 15px 0 0 15px;
+
+  z-index: 9999;
+}
+
+.contact-icon {
+  width: 90px;
+  height: 90px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-decoration: none;
+
+  background: rgba(0, 0, 0, 0.75);
+
+  transition: 0.3s;
+}
+
+.contact-icon:hover {
+  background: #C89A2B;
+}
+
+.contact-svg {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.contact-icon p {
+  margin: 0;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.contact-icon:nth-child(1) .contact-svg {
+  color: #25D366;
+}
+
+.contact-icon:nth-child(2) .contact-svg {
+  color: #fff;
+}
+
+.contact-icon:nth-child(3) .contact-svg {
+  color: #FFD54F;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 992px) {
+
+  .slider-content h1 {
+    font-size: 48px;
+  }
+
+  .slider-content p {
+    width: 100%;
+    font-size: 18px;
+  }
+
+  .contact-icon {
+    width: 75px;
+    height: 75px;
+  }
+
+  .contact-svg {
+    font-size: 26px;
+  }
+
+  .contact-icon p {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .slider-content h1 {
+    font-size: 34px;
+  }
+
+  .slider-content p {
+    font-size: 16px;
+  }
+
+  .slider-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+
+  .contact-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .contact-svg {
+    font-size: 22px;
+  }
+
+  .contact-icon p {
+    font-size: 10px;
+  }
+}

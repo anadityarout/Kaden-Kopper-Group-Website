@@ -1,0 +1,298 @@
+.companyAdmin {
+  width: 100%;
+  padding: 25px;
+  background: #f5f6fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.companyAdmin h2 {
+  margin-bottom: 20px;
+  color: #222;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.companyForm {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 35px;
+}
+
+.companyForm input[type="text"],
+.companyForm textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 18px;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  outline: none;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.companyForm input[type="text"]:focus,
+.companyForm textarea:focus {
+  border-color: #cf4930;
+}
+
+.companyForm textarea {
+  resize: vertical;
+}
+
+.companyForm h3 {
+  margin: 10px 0;
+  color: #333;
+}
+
+.companyForm input[type="file"] {
+  margin-bottom: 20px;
+}
+
+.preview {
+  width: 220px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.saveBtn {
+  padding: 12px 28px;
+  background: #cf4930;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.saveBtn:hover {
+  background: #a63825;
+}
+
+.companyList {
+  margin-top: 30px;
+}
+
+.noData {
+  text-align: center;
+  color: #777;
+  padding: 40px;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.companyCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.companyHeader {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.companyImage img {
+  width: 140px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.companyContent {
+  flex: 1;
+}
+
+.companyContent h3 {
+  margin: 0 0 10px;
+  color: #222;
+  font-size: 22px;
+}
+
+.companyContent p {
+  margin: 0 0 12px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.companyContent small {
+  color: #999;
+}
+
+.companyActions {
+  display: flex;
+  align-items: center;
+}
+
+.deleteBtn {
+  padding: 10px 22px;
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.deleteBtn:hover {
+  background: #b52a37;
+}
+/* ===========================
+   ADD COMPANY BUTTON
+=========================== */
+
+.addCompanyBtn {
+  background: #cf4930;
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  transition: 0.3s;
+}
+
+.addCompanyBtn:hover {
+  background: #b53f28;
+}
+
+/* ===========================
+   SAVE & CANCEL BUTTONS
+=========================== */
+
+.buttonGroup {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.buttonGroup button {
+  min-width: 140px;
+}
+
+.cancelBtn {
+  padding: 12px 28px;
+  background: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cancelBtn:hover {
+  background: #545b62;
+}
+/* ==========================================
+   COMPANY TABLE
+========================================== */
+
+.companyTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.companyTable thead {
+  background: #CF4930;
+}
+
+.companyTable th {
+  color: #fff;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.companyTable td {
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+  font-size: 15px;
+}
+
+.companyTable tbody tr:hover {
+  background: #f9f9f9;
+}
+
+.tableImage {
+  width: 90px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.companyTable .deleteBtn {
+  padding: 8px 18px;
+}
+
+@media (max-width: 768px) {
+
+  .companyTable {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+}
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width: 768px) {
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .buttonGroup button,
+  .addCompanyBtn {
+    width: 100%;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .companyHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .companyImage img {
+    width: 100%;
+    height: auto;
+  }
+
+  .companyActions {
+    width: 100%;
+  }
+
+  .deleteBtn {
+    width: 100%;
+  }
+
+  .preview {
+    width: 100%;
+    height: auto;
+  }
+}

@@ -1,0 +1,701 @@
+/* ==========================================
+   COMPANY ADMIN
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.company-admin{
+    width:100%;
+    min-height:100vh;
+    padding:30px;
+    background:#f5f7fb;
+    font-family:'Segoe UI',sans-serif;
+}
+
+
+/* ==========================================
+   COMPANY HERO BANNER
+========================================== */
+
+.company-hero-section{
+    width:100%;
+    background:#fff;
+    border-radius:18px;
+    padding:30px;
+    margin-bottom:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.company-hero-section h2{
+    font-size:28px;
+    font-weight:700;
+    color:#1b2b4b;
+    margin-bottom:8px;
+}
+
+.company-hero-section p{
+    font-size:15px;
+    color:#6b7280;
+    margin-bottom:25px;
+}
+
+/* ==========================================
+   HERO PREVIEW
+========================================== */
+
+.hero-preview{
+    width:180px;
+    height:90px;
+    margin:auto;
+    border:2px dashed #d4dbe7;
+    border-radius:10px;
+    overflow:hidden;
+    background:#fafbfd;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.hero-preview:hover{
+    border-color:#0d6efd;
+    background:#f4f8ff;
+}
+
+.hero-preview img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.hero-placeholder{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    height:100%;
+    color:#777;
+    font-size:14px;
+    font-weight:600;
+}
+/* ==========================================
+   HEADER
+========================================== */
+
+.company-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.company-header h1{
+    font-size:32px;
+    font-weight:700;
+    color:#1b2b4b;
+    margin-bottom:8px;
+}
+
+.company-header p{
+    font-size:15px;
+    color:#6b7280;
+}
+
+/* ==========================================
+   ADD COMPANY BUTTON
+========================================== */
+
+.add-company-btn{
+    background:#0d6efd;
+    color:#fff;
+    border:none;
+    outline:none;
+    padding:12px 28px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.add-company-btn:hover{
+    background:#0b5ed7;
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(13,110,253,.25);
+}
+
+/* ==========================================
+   CONTAINER
+========================================== */
+
+.company-container{
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+}
+
+/* ==========================================
+   COMPANY FORM
+========================================== */
+
+.company-form{
+    width:100%;
+    background:#fff;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.company-form h2{
+    color:#1b2b4b;
+    font-size:30px;
+    margin-bottom:25px;
+}
+
+/* ==========================================
+   UPLOAD BOX
+========================================== */
+
+.upload-box{
+    width:260px;
+    height:220px;
+    border:2px dashed #d4dbe7;
+    border-radius:16px;
+    background:#fafbfd;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    transition:.3s;
+    overflow:hidden;
+    margin-bottom:30px;
+}
+
+.upload-box:hover{
+    border-color:#0d6efd;
+    background:#f4f8ff;
+}
+
+.upload-box img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.upload-icon{
+    font-size:55px;
+    margin-bottom:12px;
+}
+
+.upload-box h3{
+    color:#1b2b4b;
+    margin-bottom:8px;
+    font-size:18px;
+}
+
+.upload-box p{
+    color:#777;
+    font-size:14px;
+}
+
+.hidden-file-input{
+    display:none;
+}
+
+/* ==========================================
+   FORM GROUP
+========================================== */
+
+.form-group{
+    margin-bottom:22px;
+}
+
+.form-group label{
+    display:block;
+    font-size:15px;
+    font-weight:600;
+    margin-bottom:8px;
+    color:#1b2b4b;
+}
+
+.form-group input,
+.form-group textarea{
+    width:100%;
+    border:1px solid #d8dee8;
+    border-radius:10px;
+    padding:14px 16px;
+    outline:none;
+    font-size:15px;
+    transition:.3s;
+    background:#fff;
+}
+
+.form-group textarea{
+    resize:none;
+    min-height:140px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+    border-color:#0d6efd;
+    box-shadow:0 0 0 4px rgba(13,110,253,.10);
+}
+
+/* ==========================================
+   BUTTON GROUP
+========================================== */
+
+.button-group{
+    display:flex;
+    gap:15px;
+    margin-top:10px;
+}
+
+.button-group button{
+    flex:1;
+    border:none;
+    border-radius:10px;
+    padding:14px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.save-btn{
+    background:#0d6efd;
+    color:#fff;
+}
+
+.save-btn:hover{
+    background:#0b5ed7;
+}
+
+.cancel-btn{
+    background:#eceff3;
+    color:#222;
+}
+
+.cancel-btn:hover{
+    background:#dfe4ea;
+}
+/* ==========================================
+   COMPANY LIST
+========================================== */
+
+.company-list{
+    width:100%;
+    background:#fff;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.company-list h2{
+    font-size:28px;
+    color:#1b2b4b;
+    margin-bottom:25px;
+    font-weight:700;
+}
+
+/* ==========================================
+   TABLE WRAPPER
+========================================== */
+
+.company-table-wrapper{
+    width:100%;
+    overflow-x:auto;
+    border-radius:12px;
+}
+
+/* ==========================================
+   COMPANY TABLE
+========================================== */
+
+.company-table{
+    width:100%;
+    min-width:1100px;
+    border-collapse:collapse;
+    background:#fff;
+}
+
+.company-table thead{
+    background:#f5f7fb;
+}
+
+.company-table th{
+    padding:18px;
+    text-align:center;
+    color:#1b2b4b;
+    font-size:15px;
+    font-weight:700;
+    border-bottom:2px solid #e8edf5;
+    white-space:nowrap;
+}
+
+.company-table td{
+    padding:18px 15px;
+    text-align:center;
+    border-bottom:1px solid #eef2f7;
+    color:#555;
+    font-size:14px;
+    vertical-align:middle;
+}
+
+.company-table tbody tr{
+    transition:.3s;
+}
+
+.company-table tbody tr:hover{
+    background:#f9fbff;
+}
+
+/* ==========================================
+   PREVIEW IMAGE
+========================================== */
+
+.table-image{
+    width:60px;
+    height:60px;
+    object-fit:contain;
+    background:#fff;
+    border:1px solid #dfe5ec;
+    border-radius:8px;
+    padding:4px;
+    display:block;
+    margin:auto;
+    transition:.3s;
+}
+
+.table-image:hover{
+    transform:scale(1.08);
+}
+
+/* ==========================================
+   DESCRIPTION
+========================================== */
+
+.company-description{
+    max-width:250px;
+    margin:auto;
+    line-height:1.6;
+    color:#666;
+}
+
+/* ==========================================
+   WEBSITE LINK
+========================================== */
+
+.company-table a{
+    color:#0d6efd;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.company-table a:hover{
+    color:#084298;
+    text-decoration:underline;
+}
+
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+
+.action-buttons{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.edit-btn,
+.delete-btn{
+    border:none;
+    outline:none;
+    cursor:pointer;
+    padding:9px 18px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:600;
+    color:#fff;
+    transition:.3s;
+}
+
+.edit-btn{
+    background:#198754;
+}
+
+.edit-btn:hover{
+    background:#157347;
+    transform:translateY(-2px);
+}
+
+.delete-btn{
+    background:#dc3545;
+}
+
+.delete-btn:hover{
+    background:#bb2d3b;
+    transform:translateY(-2px);
+}
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.empty-row td{
+    padding:60px 20px;
+    color:#8a94a6;
+    font-size:16px;
+    text-align:center;
+}
+
+/* ==========================================
+   TABLE SCROLLBAR
+========================================== */
+
+.company-table-wrapper::-webkit-scrollbar{
+    height:8px;
+}
+
+.company-table-wrapper::-webkit-scrollbar-track{
+    background:#edf2f7;
+    border-radius:20px;
+}
+
+.company-table-wrapper::-webkit-scrollbar-thumb{
+    background:#b8c4d6;
+    border-radius:20px;
+}
+
+.company-table-wrapper::-webkit-scrollbar-thumb:hover{
+    background:#98a8c0;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+@media (max-width:1200px){
+
+    .company-table{
+        min-width:1000px;
+    }
+
+}
+
+@media (max-width:992px){
+
+    .company-admin{
+        padding:20px;
+    }
+
+    .company-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .company-header h1{
+        font-size:28px;
+    }
+
+    .company-header p{
+        font-size:14px;
+    }
+
+    .add-company-btn{
+        width:100%;
+        justify-content:center;
+    }
+
+    .company-form{
+        padding:20px;
+    }
+
+    .upload-box{
+        width:100%;
+        height:220px;
+    }
+
+    .button-group{
+        flex-direction:column;
+    }
+
+}
+
+@media (max-width:768px){
+
+    .company-admin{
+        padding:15px;
+    }
+
+    .company-list{
+        padding:15px;
+    }
+
+    .company-form{
+        padding:15px;
+    }
+
+    .company-form h2{
+        font-size:24px;
+    }
+
+    .company-list h2{
+        font-size:24px;
+    }
+
+    .company-table th,
+    .company-table td{
+        padding:12px;
+        font-size:13px;
+    }
+
+    .table-image{
+        width:80px;
+        height:55px;
+    }
+
+    .edit-btn,
+    .delete-btn{
+        padding:7px 12px;
+        font-size:12px;
+    }
+
+}
+
+@media (max-width:576px){
+
+    .company-header h1{
+        font-size:22px;
+    }
+
+    .company-header p{
+        font-size:13px;
+    }
+
+    .upload-box{
+        height:180px;
+    }
+
+    .upload-icon{
+        font-size:42px;
+    }
+
+    .upload-box h3{
+        font-size:16px;
+    }
+
+    .upload-box p{
+        font-size:13px;
+    }
+
+}
+
+/* ==========================================
+   HOVER ANIMATIONS
+========================================== */
+
+.company-form,
+.company-list{
+    transition:.35s ease;
+}
+
+.company-form:hover,
+.company-list:hover{
+    box-shadow:0 15px 40px rgba(0,0,0,.10);
+}
+
+.upload-box{
+    transition:.35s ease;
+}
+
+.upload-box:hover{
+    transform:translateY(-3px);
+}
+
+.table-image{
+    transition:.35s;
+}
+
+.table-image:hover{
+    transform:scale(1.08);
+}
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.empty-company{
+    width:100%;
+    padding:80px 20px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.empty-company h3{
+    font-size:24px;
+    color:#1b2b4b;
+    margin-bottom:10px;
+}
+
+.empty-company p{
+    color:#6b7280;
+    font-size:15px;
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+    width:8px;
+    height:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#eef2f7;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#b7c3d7;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#9eb0c8;
+}
+
+/* ==========================================
+   SELECTION
+========================================== */
+
+::selection{
+    background:#0d6efd;
+    color:#fff;
+}
+
+/* ==========================================
+   SMOOTH TRANSITIONS
+========================================== */
+
+button,
+input,
+textarea,
+a,
+img,
+.company-table tbody tr{
+    transition:.3s ease;
+}

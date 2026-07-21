@@ -1,0 +1,215 @@
+/* ======================================
+   COUNTING SECTION
+====================================== */
+
+.counting-section {
+  width: 100%;
+  position: relative;
+  z-index: 20;
+  padding: 0 5% 80px;
+}
+
+/* Home Slider Image */
+.image-counting {
+  margin-top: -50px;
+}
+
+/* Home Slider Video */
+.video-counting {
+  margin-top: 10px;
+}
+
+/* ======================================
+   CONTAINER
+====================================== */
+
+.counting-container {
+  max-width: 1400px;
+  margin: auto;
+
+  background: #fff;
+  border-radius: 25px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 45px 30px;
+
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+}
+
+/* ======================================
+   COUNTER ITEM
+====================================== */
+
+.counter-item {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 20px;
+
+  position: relative;
+
+  transition: 0.3s;
+}
+
+/* Divider */
+
+.counter-item:not(:last-child)::after {
+  content: "";
+
+  position: absolute;
+
+  right: 0;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 1px;
+  height: 80px;
+
+  background: #e5e5e5;
+}
+
+/* ======================================
+   ICON
+====================================== */
+
+.counter-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #C89A2B;
+
+  transition: 0.3s;
+}
+
+.counter-icon svg {
+  width: 46px;
+  height: 46px;
+}
+
+/* ======================================
+   TEXT
+====================================== */
+
+.counter-text h2 {
+  margin: 0;
+
+  font-size: 55px;
+  font-weight: 300;
+
+  color: #111;
+
+  line-height: 1;
+}
+
+.counter-text p {
+  margin-top: 10px;
+
+  font-size: 18px;
+  color: #666;
+}
+
+/* ======================================
+   HOVER
+====================================== */
+
+.counter-item:hover {
+  transform: translateY(-8px);
+}
+
+.counter-item:hover .counter-icon {
+  transform: scale(1.1);
+}
+
+.counter-item:hover h2 {
+  color: #C89A2B;
+}
+
+/* ======================================
+   TABLET
+====================================== */
+
+@media (max-width:1100px){
+
+.image-counting{
+margin-top:-50px;
+}
+
+.video-counting{
+margin-top:20px;
+}
+
+.counting-container{
+flex-wrap:wrap;
+gap:40px;
+padding:35px;
+}
+
+.counter-item{
+flex:0 0 calc(50% - 20px);
+}
+
+.counter-item::after{
+display:none;
+}
+
+.counter-text h2{
+font-size:45px;
+}
+
+.counter-text p{
+font-size:17px;
+}
+
+}
+
+/* ======================================
+   MOBILE
+====================================== */
+
+@media (max-width:768px){
+
+.counting-section{
+padding:0 20px 50px;
+}
+
+.image-counting{
+margin-top:-30px;
+}
+
+.video-counting{
+margin-top:20px;
+}
+
+.counting-container{
+flex-direction:column;
+gap:30px;
+padding:30px 20px;
+}
+
+.counter-item{
+width:100%;
+justify-content:flex-start;
+}
+
+.counter-text h2{
+font-size:38px;
+}
+
+.counter-text p{
+font-size:16px;
+}
+
+.counter-icon svg{
+width:38px;
+height:38px;
+}
+
+}

@@ -1,0 +1,336 @@
+/* ===================================
+   PAGE
+=================================== */
+
+.project-page {
+  padding: 30px;
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+/* ===================================
+   HEADER
+=================================== */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.page-header h2 {
+  font-size: 28px;
+  color: #1d3557;
+}
+
+.add-btn {
+  background: #0d6efd;
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: .3s;
+}
+
+.add-btn:hover {
+  background: #0b5ed7;
+}
+
+/* ===================================
+   MODAL
+=================================== */
+
+ .modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+  overflow-y: auto;
+
+  z-index: 9999;
+}
+
+ .project-modal {
+  width: 650px;
+  max-width: 95%;
+  max-height: 90vh;
+
+  background: #fff;
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+
+  animation: popup 0.25s ease;
+}
+
+@keyframes popup{
+  from{
+    transform: scale(.9);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+.modal-header{
+  background:#0d1324;
+  color:white;
+  padding:18px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.modal-header h3{
+  margin:0;
+}
+
+.modal-header button{
+  background:none;
+  border:none;
+  color:white;
+  font-size:22px;
+  cursor:pointer;
+}
+
+/* ===================================
+   FORM
+=================================== */
+
+.form-group{
+  padding:18px 25px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:8px;
+  font-weight:600;
+  color:#222;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #d9d9d9;
+  border-radius:8px;
+  font-size:15px;
+  outline:none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+  border-color:#0d6efd;
+}
+
+.form-group textarea{
+  resize:none;
+}
+
+/* ===================================
+   IMAGE PREVIEW
+=================================== */
+
+.image-preview{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  margin-top:15px;
+  border-radius:10px;
+  border:1px solid #ddd;
+}
+
+/* ===================================
+   FOOTER
+=================================== */
+
+.modal-footer{
+  padding:20px 25px;
+  text-align:right;
+}
+
+.save-btn{
+  background:#198754;
+  color:white;
+  border:none;
+  padding:12px 30px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:600;
+}
+
+.save-btn:hover{
+  background:#157347;
+}
+
+/* ===================================
+   PROJECT LIST
+=================================== */
+
+.project-list{
+  margin-top:40px;
+}
+
+.project-list h2{
+  margin-bottom:20px;
+  color:#1d3557;
+}
+
+/* ===================================
+   GRID
+=================================== */
+
+.projects-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:25px;
+}
+
+/* ===================================
+   CARD
+=================================== */
+
+.project-card{
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.project-card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+}
+
+.project-content{
+  padding:18px;
+}
+
+.project-content h3{
+  margin-bottom:10px;
+  color:#1d3557;
+}
+
+.project-content p{
+  margin-bottom:8px;
+  color:#555;
+  line-height:1.5;
+}
+
+/* ===============================
+   TABLE
+================================ */
+
+.table-wrapper {
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,.08);
+}
+
+.project-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.project-table thead {
+  background: #f7f8fb;
+}
+
+.project-table th {
+  padding: 18px;
+  text-align: center;
+  font-size: 15px;
+  color: #1d3557;
+  border-bottom: 1px solid #ececec;
+}
+
+.project-table td {
+  padding: 18px;
+  text-align: center;
+  border-bottom: 1px solid #f1f1f1;
+  vertical-align: middle;
+}
+
+.project-table tbody tr:hover {
+  background: #fafcff;
+}
+
+.table-image {
+  width: 100px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.desc-cell {
+  max-width: 350px;
+  line-height: 1.6;
+}
+
+.status-badge {
+  display: inline-block;
+  background: #16a34a;
+  color: #fff;
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+}
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media(max-width:768px){
+
+.project-modal{
+    width:95%;
+}
+
+.page-header{
+    flex-direction:column;
+    gap:20px;
+}
+
+.add-btn{
+    width:100%;
+}
+
+}

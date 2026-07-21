@@ -1,0 +1,302 @@
+/* ==========================================
+   ABOUT IMAGE PAGE
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.about-image-admin{
+    width:100%;
+    min-height:100vh;
+    background:#f5f7fb;
+    padding:30px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.about-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.about-header h2{
+    font-size:28px;
+    color:#222;
+    font-weight:700;
+}
+
+/* ==========================================
+   ADD BUTTON
+========================================== */
+
+.add-about-btn{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    padding:12px 22px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.add-about-btn:hover{
+    background:#1d4ed8;
+}
+
+/* ==========================================
+   FORM
+========================================== */
+
+.about-form{
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+    margin-bottom:30px;
+}
+
+.about-form h3{
+    font-size:22px;
+    margin-bottom:20px;
+    color:#222;
+}
+
+.upload-group{
+    margin-bottom:22px;
+}
+
+.upload-group label{
+    display:block;
+    margin-bottom:10px;
+    font-size:16px;
+    font-weight:600;
+    color:#333;
+}
+
+/* ==========================================
+   PREVIEW IMAGE
+========================================== */
+
+.preview-image{
+    width:220px;
+    height:120px;
+    object-fit:cover;
+    border-radius:8px;
+    border:1px solid #ddd;
+    display:block;
+    margin-bottom:12px;
+}
+
+/* ==========================================
+   CHOOSE BUTTON
+========================================== */
+
+.choose-btn{
+    background:#0ea5e9;
+    color:#fff;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+.choose-btn:hover{
+    background:#0284c7;
+}
+/* ==========================================
+   FORM BUTTONS
+========================================== */
+
+.form-buttons{
+    display:flex;
+    gap:15px;
+    margin-top:30px;
+}
+
+.save-btn{
+    background:#16a34a;
+    color:#fff;
+    border:none;
+    padding:12px 28px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.save-btn:hover{
+    background:#15803d;
+}
+
+.cancel-btn{
+    background:#ef4444;
+    color:#fff;
+    border:none;
+    padding:12px 28px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.cancel-btn:hover{
+    background:#dc2626;
+}
+
+/* ==========================================
+   TABLE
+========================================== */
+
+.about-table-section{
+    margin-top:30px;
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
+
+.about-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.about-table thead{
+    background:#2563eb;
+    color:#fff;
+}
+
+.about-table th{
+    padding:16px;
+    text-align:center;
+    font-size:15px;
+}
+
+.about-table td{
+    padding:16px;
+    text-align:center;
+    border-bottom:1px solid #ececec;
+}
+
+.about-table tbody tr:hover{
+    background:#f8f9fc;
+}
+
+/* ==========================================
+   TABLE IMAGE
+========================================== */
+
+.table-image{
+    width:90px;
+    height:60px;
+    object-fit:cover;
+    border-radius:6px;
+    border:1px solid #ddd;
+}
+
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+
+.edit-btn{
+    background:#f59e0b;
+    color:#fff;
+    border:none;
+    padding:8px 16px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-right:8px;
+    font-weight:600;
+}
+
+.edit-btn:hover{
+    background:#d97706;
+}
+
+.delete-btn{
+    background:#ef4444;
+    color:#fff;
+    border:none;
+    padding:8px 16px;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .about-header{
+        flex-direction:column;
+        gap:20px;
+        align-items:flex-start;
+    }
+
+    .about-table-section{
+        overflow-x:auto;
+    }
+
+    .about-table{
+        min-width:900px;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .about-image-admin{
+        padding:20px;
+    }
+
+    .preview-image{
+        width:180px;
+        height:100px;
+    }
+
+    .form-buttons{
+        flex-direction:column;
+    }
+
+    .save-btn,
+    .cancel-btn{
+        width:100%;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .about-header h2{
+        font-size:24px;
+    }
+
+    .upload-group label{
+        font-size:15px;
+    }
+
+    .preview-image{
+        width:150px;
+        height:90px;
+    }
+
+}
