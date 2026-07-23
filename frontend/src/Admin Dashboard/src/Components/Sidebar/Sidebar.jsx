@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
 
- import {
+import {
   ChevronDown,
   ChevronRight,
   Home,
@@ -11,20 +11,21 @@ import "./Sidebar.css";
   Info,
   Factory,
   Newspaper,
-   Phone,
-   FolderOpen,  
+  Phone,
+  FolderOpen,
 } from "lucide-react";
 
 const Sidebar = ({ activePage, setActivePage }) => {
-  const [homeOpen, setHomeOpen] = useState(true);
-  const [aboutOpen, setAboutOpen] = useState(false);
-  const [industryOpen, setIndustryOpen] = useState(false);
-  const [mediaOpen, setMediaOpen] = useState(false);
-  const [contactOpen, setContactOpen] = useState(false);
-  const [projectOpen, setProjectOpen] = useState(false);
+
+  const [openMenu, setOpenMenu] = useState("");
+
+  const toggleMenu = (menu) => {
+    setOpenMenu(openMenu === menu ? "" : menu);
+  };
 
   return (
     <div className="sidebar">
+
       {/* ================= LOGO ================= */}
 
       <div className="sidebar-logo">
@@ -34,9 +35,10 @@ const Sidebar = ({ activePage, setActivePage }) => {
       {/* ================= HOME ================= */}
 
       <div className="menu-section">
+
         <div
           className="menu-title"
-          onClick={() => setHomeOpen(!homeOpen)}
+          onClick={() => toggleMenu("home")}
         >
           <span
             style={{
@@ -49,15 +51,17 @@ const Sidebar = ({ activePage, setActivePage }) => {
             Home
           </span>
 
-          {homeOpen ? (
+          {openMenu === "home" ? (
             <ChevronDown size={18} />
           ) : (
             <ChevronRight size={18} />
           )}
         </div>
 
-        {homeOpen && (
+        {openMenu === "home" && (
+
           <div className="submenu">
+
             {/* Home Slider */}
 
             <div
@@ -99,258 +103,269 @@ const Sidebar = ({ activePage, setActivePage }) => {
               <Image size={16} />
               Project Image
             </div>
-     {/* Our Companies */}
 
-<div
-  className={
-    activePage === "companyadmin"
-      ? "submenu-item active"
-      : "submenu-item"
-  }
-  onClick={() => setActivePage("companyadmin")}
->
-  <Building2 size={16} />
-  Our Companies
-</div>
+            {/* Our Companies */}
+
+            <div
+              className={
+                activePage === "companyadmin"
+                  ? "submenu-item active"
+                  : "submenu-item"
+              }
+              onClick={() => setActivePage("companyadmin")}
+            >
+              <Building2 size={16} />
+              Our Companies
+            </div>
 
           </div>
+
         )}
-      </div> 
 
-
-      
-
-       {/* ================= ABOUT ================= */}
-
-<div className="menu-section">
-  <div
-    className="menu-title"
-    onClick={() => setAboutOpen(!aboutOpen)}
-  >
-    <span
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "10px",
-      }}
-    >
-      <Info size={18} />
-      About
-    </span>
-
-    {aboutOpen ? (
-      <ChevronDown size={18} />
-    ) : (
-      <ChevronRight size={18} />
-    )}
-  </div>
-
-  {aboutOpen && (
-    <div className="submenu">
-
-      <div
-        className={
-          activePage === "aboutimage"
-            ? "submenu-item active"
-            : "submenu-item"
-        }
-        onClick={() => setActivePage("aboutimage")}
-      >
-        <Image size={16} />
-        About Image
       </div>
 
-    </div>
-  )}
-</div>  
-  
-    {/* ================= INDUSTRY ================= */}
-
-<div className="menu-section">
-  <div
-    className="menu-title"
-    onClick={() => setIndustryOpen(!industryOpen)}
-  >
-    <span
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "10px",
-      }}
-    >
-      <Factory size={18} />
-      Industry
-    </span>
-
-    {industryOpen ? (
-      <ChevronDown size={18} />
-    ) : (
-      <ChevronRight size={18} />
-    )}
-  </div>
-
-  {industryOpen && (
-    <div className="submenu">
-
-      <div
-        className={
-          activePage === "industryimage"
-            ? "submenu-item active"
-            : "submenu-item"
-        }
-        onClick={() => setActivePage("industryimage")}
-      >
-        <Image size={16} />
-        Industry Image
-      </div>
-
-    </div>
-  )}
-</div>
-
-  {/* ================= MEDIA ================= */}
-
-<div className="menu-section">
-  <div
-    className="menu-title"
-    onClick={() => setMediaOpen(!mediaOpen)}
-  >
-    <span
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "10px",
-      }}
-    >
-      <Newspaper size={18} />
-      Career
-    </span>
-
-    {mediaOpen ? (
-      <ChevronDown size={18} />
-    ) : (
-      <ChevronRight size={18} />
-    )}
-  </div>
-
-  {mediaOpen && (
-    <div className="submenu">
-
-      <div
-        className={
-          activePage === "careerpage"
-            ? "submenu-item active"
-            : "submenu-item"
-        }
-        onClick={() => setActivePage("careerpage")}
-      >
-        <Image size={16} />
-        Career Page
-      </div>
-
-    </div>
-  )}
-</div>  
-
-  
-   {/* ================= PROJECT ================= */}
-
-<div className="menu-section">
-
-  <div
-    className="menu-title"
-    onClick={() => setProjectOpen(!projectOpen)}
-  >
-
-    <span
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "10px",
-      }}
-    >
-      <FolderOpen size={18} />
-      Project
-    </span>
-
-    {projectOpen ? (
-      <ChevronDown size={18} />
-    ) : (
-      <ChevronRight size={18} />
-    )}
-
-  </div>
-
-  {projectOpen && (
-
-    <div className="submenu">
-
-      <div
-        className={
-          activePage === "projectpage"
-            ? "submenu-item active"
-            : "submenu-item"
-        }
-        onClick={() => setActivePage("projectpage")}
-      >
-        <Image size={16} />
-        Project Page
-      </div>
-
-    </div>
-
-  )}
-
-</div>
-
-
-   {/* ================= CONTACT ================= */}
-
-<div className="menu-section">
-  <div
-    className="menu-title"
-    onClick={() => setContactOpen(!contactOpen)}
-  >
-    <span
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "10px",
-      }}
-    >
-      <Phone size={18} />
-      Contact
-    </span>
-
-    {contactOpen ? (
-      <ChevronDown size={18} />
-    ) : (
-      <ChevronRight size={18} />
-    )}
-  </div>
-
-  {contactOpen && (
-    <div className="submenu">
-
-      <div
-        className={
-          activePage === "contactpage"
-            ? "submenu-item active"
-            : "submenu-item"
-        }
-        onClick={() => setActivePage("contactpage")}
-      >
-        <Image size={16} />
-        Contact Page
-      </div>
-
-    </div>
-  )}
-</div>
-
-      {/* ================= SETTINGS ================= */}
+      {/* ================= ABOUT ================= */}
 
       <div className="menu-section">
+
+        <div
+          className="menu-title"
+          onClick={() => toggleMenu("about")}
+        >
+          <span
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <Info size={18} />
+            About
+          </span>
+
+          {openMenu === "about" ? (
+            <ChevronDown size={18} />
+          ) : (
+            <ChevronRight size={18} />
+          )}
+        </div>
+
+        {openMenu === "about" && (
+
+          <div className="submenu">
+
+            <div
+              className={
+                activePage === "aboutimage"
+                  ? "submenu-item active"
+                  : "submenu-item"
+              }
+              onClick={() => setActivePage("aboutimage")}
+            >
+              <Image size={16} />
+              About Image
+            </div>
+
+          </div>
+
+        )}
+
+      </div>
+            {/* ================= INDUSTRY ================= */}
+
+      <div className="menu-section">
+
+        <div
+          className="menu-title"
+          onClick={() => toggleMenu("industry")}
+        >
+          <span
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <Factory size={18} />
+            Industry
+          </span>
+
+          {openMenu === "industry" ? (
+            <ChevronDown size={18} />
+          ) : (
+            <ChevronRight size={18} />
+          )}
+        </div>
+
+        {openMenu === "industry" && (
+
+          <div className="submenu">
+
+            <div
+              className={
+                activePage === "industryimage"
+                  ? "submenu-item active"
+                  : "submenu-item"
+              }
+              onClick={() => setActivePage("industryimage")}
+            >
+              <Image size={16} />
+              Industry Image
+            </div>
+
+          </div>
+
+        )}
+
+      </div>
+
+      {/* ================= CAREER ================= */}
+
+      <div className="menu-section">
+
+        <div
+          className="menu-title"
+          onClick={() => toggleMenu("career")}
+        >
+          <span
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <Newspaper size={18} />
+            Career
+          </span>
+
+          {openMenu === "career" ? (
+            <ChevronDown size={18} />
+          ) : (
+            <ChevronRight size={18} />
+          )}
+        </div>
+
+        {openMenu === "career" && (
+
+          <div className="submenu">
+
+            <div
+              className={
+                activePage === "careerpage"
+                  ? "submenu-item active"
+                  : "submenu-item"
+              }
+              onClick={() => setActivePage("careerpage")}
+            >
+              <Image size={16} />
+              Career Page
+            </div>
+
+          </div>
+
+        )}
+
+      </div>
+
+      {/* ================= PROJECT ================= */}
+
+      <div className="menu-section">
+
+        <div
+          className="menu-title"
+          onClick={() => toggleMenu("project")}
+        >
+          <span
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <FolderOpen size={18} />
+            Project
+          </span>
+
+          {openMenu === "project" ? (
+            <ChevronDown size={18} />
+          ) : (
+            <ChevronRight size={18} />
+          )}
+        </div>
+
+        {openMenu === "project" && (
+
+          <div className="submenu">
+
+            <div
+              className={
+                activePage === "projectpage"
+                  ? "submenu-item active"
+                  : "submenu-item"
+              }
+              onClick={() => setActivePage("projectpage")}
+            >
+              <Image size={16} />
+              Project Page
+            </div>
+
+          </div>
+
+        )}
+
+      </div>
+
+      {/* ================= CONTACT ================= */}
+
+      <div className="menu-section">
+
+        <div
+          className="menu-title"
+          onClick={() => toggleMenu("contact")}
+        >
+          <span
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <Phone size={18} />
+            Contact
+          </span>
+
+          {openMenu === "contact" ? (
+            <ChevronDown size={18} />
+          ) : (
+            <ChevronRight size={18} />
+          )}
+        </div>
+
+        {openMenu === "contact" && (
+
+          <div className="submenu">
+
+            <div
+              className={
+                activePage === "contactpage"
+                  ? "submenu-item active"
+                  : "submenu-item"
+              }
+              onClick={() => setActivePage("contactpage")}
+            >
+              <Image size={16} />
+              Contact Page
+            </div>
+
+          </div>
+
+        )}
+
+      </div>
+            {/* ================= SETTINGS ================= */}
+
+      <div className="menu-section">
+
         <div
           className={
             activePage === "settings"
@@ -370,7 +385,9 @@ const Sidebar = ({ activePage, setActivePage }) => {
             Site Settings
           </span>
         </div>
+
       </div>
+
     </div>
   );
 };
