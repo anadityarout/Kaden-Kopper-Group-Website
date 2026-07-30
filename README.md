@@ -1,2 +1,2 @@
-ipm install
+npm install
 npm run dev 
