@@ -1,0 +1,197 @@
+/* ==========================================
+   CLIENT TESTIMONIALS SECTION
+========================================== */
+
+.rk-ts-section{
+    width:100%;
+    background:#fdf6f2;
+    padding:70px 5% 50px;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.rk-ts-header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.rk-ts-subtitle{
+    display:inline-block;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#C89A2B;
+    margin-bottom:10px;
+}
+
+.rk-ts-header h2{
+    font-family:"Playfair Display", serif;
+    font-size:28px;
+    font-weight:700;
+    color:#2a2226;
+}
+
+/* ==========================================
+   CAROUSEL
+========================================== */
+
+.rk-ts-carousel{
+    max-width:1300px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.rk-ts-row{
+    flex:1;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+    align-items:center;
+}
+
+/* ==========================================
+   CARD
+========================================== */
+
+.rk-ts-card{
+    background:#fff;
+    border-radius:14px;
+    padding:26px 24px;
+    box-shadow:0 6px 20px rgba(0,0,0,.06);
+    transition:.3s;
+}
+
+.rk-ts-card-active{
+    transform:translateY(-14px);
+    box-shadow:0 14px 34px rgba(0,0,0,.1);
+}
+
+.rk-ts-quote-mark{
+    font-family:"Playfair Display", serif;
+    font-size:44px;
+    color:#C89A2B;
+    line-height:.5;
+    margin-bottom:10px;
+}
+
+.rk-ts-quote{
+    font-size:14px;
+    line-height:1.7;
+    color:#3a2f2c;
+    margin-bottom:20px;
+    min-height:95px;
+}
+
+/* ==========================================
+   PROFILE
+========================================== */
+
+.rk-ts-profile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:10px;
+}
+
+.rk-ts-avatar{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #C89A2B;
+    flex-shrink:0;
+}
+
+.rk-ts-profile-text{
+    min-width:0;
+}
+
+.rk-ts-name{
+    font-size:14px;
+    font-weight:700;
+    color:#2a2226;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.rk-ts-role{
+    font-size:12px;
+    color:#8a7a75;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.rk-ts-stars{
+    display:flex;
+    gap:3px;
+}
+
+/* ==========================================
+   ARROWS
+========================================== */
+
+.rk-ts-arrow{
+    flex-shrink:0;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:1px solid #C89A2B;
+    background:#fff;
+    color:#C89A2B;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.rk-ts-arrow:hover{
+    background:#C89A2B;
+    color:#fff;
+}
+
+
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media(max-width:900px){
+
+.rk-ts-row{
+    grid-template-columns:1fr;
+}
+
+.rk-ts-card-active{
+    transform:none;
+}
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:600px){
+
+.rk-ts-section{
+    padding:50px 20px 40px;
+}
+
+.rk-ts-carousel{
+    gap:10px;
+}
+
+.rk-ts-arrow{
+    width:34px;
+    height:34px;
+}
+
+}

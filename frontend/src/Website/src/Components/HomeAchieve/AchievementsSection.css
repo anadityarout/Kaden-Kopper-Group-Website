@@ -1,0 +1,126 @@
+/* ==========================================
+   OUR ACHIEVEMENTS SECTION
+========================================== */
+
+.rk-ach-section{
+    width:100%;
+    background:linear-gradient(135deg, #ffd6e0 0%, #ffe8ee 60%, #fff0f4 100%);
+    padding:50px 5%;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.rk-ach-header{
+    text-align:center;
+    margin-bottom:34px;
+}
+
+.rk-ach-subtitle{
+    display:inline-block;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#C89A2B;
+}
+
+/* ==========================================
+   ROW
+========================================== */
+
+.rk-ach-row{
+    max-width:1300px;
+    margin:0 auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.rk-ach-item{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    padding:0 20px;
+    position:relative;
+}
+
+.rk-ach-item:not(:last-child)::after{
+    content:"";
+    position:absolute;
+    right:0;
+    top:50%;
+    transform:translateY(-50%);
+    height:50px;
+    width:1px;
+    background:rgba(200,154,43,.35);
+}
+
+.rk-ach-icon{
+    color:#C89A2B;
+    flex-shrink:0;
+}
+
+.rk-ach-text h3{
+    font-family:"Playfair Display", serif;
+    font-size:30px;
+    font-weight:700;
+    color:#2a2226;
+    line-height:1;
+    margin-bottom:4px;
+}
+
+.rk-ach-text p{
+    font-size:13px;
+    color:#6b5a5f;
+    white-space:nowrap;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media(max-width:1000px){
+
+.rk-ach-row{
+    flex-wrap:wrap;
+    row-gap:30px;
+}
+
+.rk-ach-item{
+    flex:0 0 33.33%;
+}
+
+.rk-ach-item::after{
+    display:none;
+}
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:600px){
+
+.rk-ach-section{
+    padding:40px 20px;
+}
+
+.rk-ach-item{
+    flex:0 0 50%;
+    gap:10px;
+}
+
+.rk-ach-text h3{
+    font-size:24px;
+}
+
+.rk-ach-text p{
+    font-size:11px;
+}
+
+}

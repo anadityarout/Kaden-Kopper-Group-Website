@@ -15,10 +15,18 @@ const IndustryImage = () => {
   const [industryList, setIndustryList] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
+  const [editingIndustry, setEditingIndustry] = useState(null);
+
+const [oldKeys, setOldKeys] = useState({
+  industrySlideKey: "",
+  operateImageKey: "",
+});
+
   const [formData, setFormData] = useState({
     industrySlide: "",
     projectName: "",
     description: "",
+      url: "",
     operateImage: "",
   });
 
@@ -58,35 +66,82 @@ const IndustryImage = () => {
   ============================== */
 
   const resetForm = () => {
-    setFormData({
-      industrySlide: "",
-      projectName: "",
-      description: "",
-      operateImage: "",
-    });
 
-    setSelectedFiles({
-      industrySlide: null,
-      operateImage: null,
-    });
+  setEditingIndustry(null);
 
-    if (slideInputRef.current) {
-      slideInputRef.current.value = "";
-    }
+  setOldKeys({
+    industrySlideKey: "",
+    operateImageKey: "",
+  });
 
-    if (operateInputRef.current) {
-      operateInputRef.current.value = "";
-    }
-  };
+  setFormData({
+    industrySlide: "",
+    projectName: "",
+    description: "",
+    url: "",
+    operateImage: "",
+  });
 
+  setSelectedFiles({
+    industrySlide: null,
+    operateImage: null,
+  });
+
+  if (slideInputRef.current) {
+    slideInputRef.current.value = "";
+  }
+
+  if (operateInputRef.current) {
+    operateInputRef.current.value = "";
+  }
+
+};
   /* ===============================
       Add Industry
   ============================== */
 
   const handleAddIndustry = () => {
-    resetForm();
-    setShowModal(true);
-  };
+
+  resetForm();
+
+  setEditingIndustry(null);
+
+  setShowModal(true);
+
+};
+
+   const handleEdit = (item) => {
+
+  setEditingIndustry(item);
+
+  setOldKeys({
+    industrySlideKey: item.industrySlideKey || "",
+    operateImageKey: item.operateImageKey || "",
+  });
+
+  setSelectedFiles({
+    industrySlide: null,
+    operateImage: null,
+  });
+
+  setFormData({
+
+    industrySlide: item.industrySlide || "",
+
+    projectName: item.projectName || "",
+
+    description: item.description || "",
+
+    url: item.url || "",
+
+    operateImage: item.operateImage || "",
+
+  });
+
+  setShowModal(true);
+
+};
+
     /* ===============================
       Upload Image
   ============================== */
@@ -160,75 +215,155 @@ const IndustryImage = () => {
 
   const handleSave = async () => {
     try {
-      if (
-        !selectedFiles.industrySlide &&
-        !selectedFiles.operateImage
-      ) {
-        alert("Please upload at least one image.");
-        return;
-      }
+     
 
       let industrySlide = {
-  fileUrl: "",
-  key: "",
+  fileUrl: formData.industrySlide,
+  key: oldKeys.industrySlideKey,
 };
 
 let operateImage = {
-  fileUrl: "",
-  key: "",
+  fileUrl: formData.operateImage,
+  key: oldKeys.operateImageKey,
 };
 
 if (selectedFiles.industrySlide) {
-  industrySlide = await uploadFile(
-    selectedFiles.industrySlide
-  );
+
+  industrySlide =
+    await uploadFile(selectedFiles.industrySlide);
+
 }
 
 if (selectedFiles.operateImage) {
-  operateImage = await uploadFile(
-    selectedFiles.operateImage
-  );
+
+  operateImage =
+    await uploadFile(selectedFiles.operateImage);
+
+}
+ if (editingIndustry) {
+
+  const updateRes = await fetch(API_URL,{
+
+    method:"PUT",
+
+    headers:{
+      "Content-Type":"application/json",
+    },
+
+    body:JSON.stringify({
+
+      id:editingIndustry.id,
+
+      industrySlide:
+        industrySlide.fileUrl,
+
+      industrySlideKey:
+        industrySlide.key,
+
+      oldIndustrySlideKey:
+        oldKeys.industrySlideKey,
+
+      projectName:
+        formData.projectName,
+
+      description:
+        formData.description,
+
+      url:
+        formData.url,
+
+      operateImage:
+        operateImage.fileUrl,
+
+      operateImageKey:
+        operateImage.key,
+
+      oldOperateImageKey:
+        oldKeys.operateImageKey,
+
+    }),
+
+  });
+
+  if(!updateRes.ok){
+
+    throw new Error("Update Failed");
+
+  }
+
+  alert("Industry Updated Successfully");
+
 }
 
-const body = {
-  id: Date.now(),
+else{
 
-  industrySlide: industrySlide.fileUrl,
-  industrySlideKey: industrySlide.key,
+  const saveRes = await fetch(API_URL,{
 
-  projectName: formData.projectName,
-  description: formData.description,
+    method:"POST",
 
-  operateImage: operateImage.fileUrl,
-  operateImageKey: operateImage.key,
+    headers:{
+      "Content-Type":"application/json",
+    },
 
-  created: new Date().toLocaleDateString(),
-};
+    body:JSON.stringify({
 
-      const saveRes = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
+      id:Date.now(),
 
-      if (!saveRes.ok) {
-        throw new Error("Failed to save industry");
-      }
+      industrySlide:
+        industrySlide.fileUrl,
+
+      industrySlideKey:
+        industrySlide.key,
+
+      projectName:
+        formData.projectName,
+
+      description:
+        formData.description,
+
+      url:
+        formData.url,
+
+      operateImage:
+        operateImage.fileUrl,
+
+      operateImageKey:
+        operateImage.key,
+
+      created:
+        new Date().toLocaleDateString(),
+
+    }),
+
+  });
+
+  if(!saveRes.ok){
+
+    throw new Error("Save Failed");
+
+  }
+
+  alert("Industry Saved Successfully");
+
+}
 
       await loadIndustry();
 
-      resetForm();
+resetForm();
+setEditingIndustry(null);
 
-      setShowModal(false);
 
-      alert("Industry saved successfully.");
-    } catch (err) {
-      console.error(err);
-      alert("Error saving industry.");
-    }
-  };
+setShowModal(false);
+
+} catch(err){
+
+  console.error(err);
+
+  alert(err.message);
+
+}
+
+};
     /* ===============================
       Delete Industry
   ============================== */
@@ -279,6 +414,7 @@ const body = {
             <th>No</th>
             <th>Industry Slide</th>
             <th>Industries We Operate In</th>
+            <th>URL</th>
             <th>Created</th>
             <th>Action</th>
           </tr>
@@ -332,16 +468,45 @@ const body = {
                   )}
                 </td>
 
-                <td>{item.created}</td>
+                <td>
+
+  {item.url ? (
+
+    <a
+      href={item.url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Visit
+    </a>
+
+  ) : (
+
+    "-"
+
+  )}
+
+</td>
+
+<td>{item.created}</td>
 
                 <td>
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(item.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
+
+<button
+  className="edit-btn"
+  onClick={() => handleEdit(item)}
+>
+  Edit
+</button>
+
+<button
+  className="delete-btn"
+  onClick={() => handleDelete(item.id)}
+>
+  Delete
+</button>
+
+</td>
 
               </tr>
 
@@ -360,7 +525,11 @@ const body = {
       <div className="modal-overlay">
         <div className="modal-box">
 
-          <h3>Add Industry</h3>
+          <h3>
+  {editingIndustry
+    ? "Update Industry"
+    : "Add Industry"}
+</h3>
 
           {/* Industry Slide */}
 
@@ -437,6 +606,25 @@ const body = {
 
             </div>
 
+            <div className="input-group">
+
+  <label>URL</label>
+
+  <input
+    type="text"
+    className="industry-input"
+    placeholder="https://example.com"
+    value={formData.url}
+    onChange={(e)=>
+      setFormData({
+        ...formData,
+        url:e.target.value,
+      })
+    }
+  />
+
+</div>
+
             <div
               className="upload-box"
               onClick={() => operateInputRef.current.click()}
@@ -475,11 +663,11 @@ const body = {
             </button>
 
             <button
-              className="save-btn"
-              onClick={handleSave}
-            >
-              Save
-            </button>
+  className="save-btn"
+  onClick={handleSave}
+>
+  {editingIndustry ? "Update Industry" : "Save Industry"}
+</button>
 
           </div>
 

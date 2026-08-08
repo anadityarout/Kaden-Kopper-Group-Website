@@ -111,59 +111,445 @@ const companies = [
 
 const ProjectPage = () => {
 
+  /* ==========================================
+      STATES
+  ========================================== */
+
   const [showModal, setShowModal] = useState(false);
 
-  const [selectedCompany, setSelectedCompany] = useState("");
-
-  const [selectedCategory, setSelectedCategory] = useState("");
-
-  const [projectName, setProjectName] = useState("");
-
-  const [description, setDescription] = useState("");
-
-  const [image, setImage] = useState(null);
   const [projects, setProjects] = useState([]);
 
-  const currentCompany = companies.find(
-    (item) => item.name === selectedCompany
-  );
+  const [editingProject, setEditingProject] =
+    useState(null);
+
+  const [oldImageKey, setOldImageKey] =
+    useState("");
+
+  const [selectedCompany, setSelectedCompany] =
+    useState("");
+
+  const [selectedCategory, setSelectedCategory] =
+    useState("");
+
+  const [projectName, setProjectName] =
+    useState("");
+
+  const [description, setDescription] =
+    useState("");
+
+  const [image, setImage] =
+    useState(null);
+
+  const currentCompany =
+    companies.find(
+      (item) =>
+        item.name === selectedCompany
+    );
+
+  /* ==========================================
+      LOAD PROJECTS
+  ========================================== */
 
   const loadProjects = async () => {
-  try {
-    const response = await fetch(API_URL);
-    const data = await response.json();
-    setProjects(data);
-  } catch (error) {
-    console.error(error);
-  }
-};
 
-useEffect(() => {
-  loadProjects();
-}, []);
+    try {
 
-const uploadImage = async (file) => {
-  const response = await fetch(
-    `${API_URL}?upload=true&fileName=${encodeURIComponent(
-      file.name
-    )}&fileType=${encodeURIComponent(file.type)}`
-  );
+      const response =
+        await fetch(API_URL);
 
-  const uploadData = await response.json();
+      if (!response.ok) {
 
-  await fetch(uploadData.uploadUrl, {
-    method: "PUT",
-    headers: {
-      "Content-Type": file.type,
-    },
-    body: file,
-  });
+        throw new Error(
+          "Unable to load projects"
+        );
 
-  return uploadData.fileUrl;
-};
+      }
+
+      const data =
+        await response.json();
+
+      setProjects(
+        Array.isArray(data)
+          ? data
+          : []
+      );
+
+    } catch (err) {
+
+      console.error(err);
+
+      setProjects([]);
+
+    }
+
+  };
+
+  useEffect(() => {
+
+    loadProjects();
+
+  }, []);
+
+  /* ==========================================
+      RESET FORM
+  ========================================== */
+
+  const resetForm = () => {
+
+    setEditingProject(null);
+
+    setOldImageKey("");
+
+    setSelectedCompany("");
+
+    setSelectedCategory("");
+
+    setProjectName("");
+
+    setDescription("");
+
+    setImage(null);
+
+  };
+
+  /* ==========================================
+      ADD PROJECT
+  ========================================== */
+
+  const handleAddProject = () => {
+
+    resetForm();
+
+    setShowModal(true);
+
+  };
+
+  /* ==========================================
+      EDIT PROJECT
+  ========================================== */
+
+  const handleEditProject = (project) => {
+
+    setEditingProject(project);
+
+    setOldImageKey(
+      project.key || ""
+    );
+
+    setSelectedCompany(
+      project.company || ""
+    );
+
+    setSelectedCategory(
+      project.category || ""
+    );
+
+    setProjectName(
+      project.projectName || ""
+    );
+
+    setDescription(
+      project.description || ""
+    );
+
+    setImage(
+      project.image || null
+    );
+
+    setShowModal(true);
+
+  };
+
+  /* ==========================================
+      UPLOAD IMAGE
+  ========================================== */
+
+  const uploadImage = async (file) => {
+
+    const response =
+      await fetch(
+
+        `${API_URL}?upload=true&fileName=${encodeURIComponent(
+          file.name
+        )}&fileType=${encodeURIComponent(
+          file.type
+        )}`
+
+      );
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Unable to create upload URL"
+      );
+
+    }
+
+    const uploadData =
+      await response.json();
+
+    const upload =
+      await fetch(
+        uploadData.uploadUrl,
+        {
+
+          method: "PUT",
+
+          headers: {
+            "Content-Type":
+              file.type,
+          },
+
+          body: file,
+
+        }
+      );
+
+    if (!upload.ok) {
+
+      throw new Error(
+        "Image Upload Failed"
+      );
+
+    }
+
+    return {
+
+      image:
+        uploadData.fileUrl,
+
+      key:
+        uploadData.key,
+
+    };
+
+  };
+    /* ==========================================
+      SAVE PROJECT (ADD + EDIT)
+  ========================================== */
+
+  const handleSave = async () => {
+
+    try {
+
+      if (
+        !selectedCompany ||
+        !selectedCategory ||
+        !projectName.trim() ||
+        !description.trim()
+      ) {
+
+        alert("Please fill all fields.");
+
+        return;
+
+      }
+
+      let projectImage = {
+
+        image: image,
+
+        key: oldImageKey,
+
+      };
+
+      /* ===============================
+          Upload New Image
+      ============================== */
+
+      if (
+        image &&
+        typeof image !== "string"
+      ) {
+
+        projectImage =
+          await uploadImage(image);
+
+      }
+
+      /* ===============================
+          UPDATE PROJECT
+      ============================== */
+
+      if (editingProject) {
+
+        const response =
+          await fetch(API_URL, {
+
+            method: "PUT",
+
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+
+            body: JSON.stringify({
+
+              id:
+                editingProject.id,
+
+              company:
+                selectedCompany,
+
+              category:
+                selectedCategory,
+
+              projectName,
+
+              description,
+
+              image:
+                projectImage.image,
+
+              key:
+                projectImage.key,
+
+              oldKey:
+                oldImageKey,
+
+            }),
+
+          });
+
+        if (!response.ok) {
+
+          throw new Error(
+            "Update Failed"
+          );
+
+        }
+
+        alert(
+          "Project Updated Successfully"
+        );
+
+      }
+
+      /* ===============================
+          ADD PROJECT
+      ============================== */
+
+      else {
+
+        const response =
+          await fetch(API_URL, {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+
+            body: JSON.stringify({
+
+              id: Date.now(),
+
+              company:
+                selectedCompany,
+
+              category:
+                selectedCategory,
+
+              projectName,
+
+              description,
+
+              image:
+                projectImage.image,
+
+              key:
+                projectImage.key,
+
+              created:
+                new Date().toLocaleDateString(),
+
+            }),
+
+          });
+
+        if (!response.ok) {
+
+          throw new Error(
+            "Save Failed"
+          );
+
+        }
+
+        alert(
+          "Project Added Successfully"
+        );
+
+      }
+
+      await loadProjects();
+
+      resetForm();
+
+      setShowModal(false);
+
+    } catch (err) {
+
+      console.error(err);
+
+      alert(err.message);
+
+    }
+
+  };
+    /* ==========================================
+      DELETE PROJECT
+  ========================================== */
+
+  const handleDelete = async (id) => {
+
+    if (!window.confirm("Delete this project?")) {
+      return;
+    }
+
+    try {
+
+      const response = await fetch(API_URL, {
+
+        method: "DELETE",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          id,
+        }),
+
+      });
+
+      if (!response.ok) {
+        throw new Error("Delete Failed");
+      }
+
+      await loadProjects();
+
+      alert("Project Deleted Successfully");
+
+    } catch (err) {
+
+      console.error(err);
+
+      alert(err.message);
+
+    }
+
+  };
+
+  /* ==========================================
+      JSX
+  ========================================== */
 
   return (
+
     <div className="project-page">
+
+      {/* ================= HEADER ================= */}
 
       <div className="page-header">
 
@@ -171,23 +557,14 @@ const uploadImage = async (file) => {
 
         <button
           className="add-btn"
-          onClick={() => {
-            setShowModal(true);
-            setSelectedCompany("");
-            setSelectedCategory("");
-            setProjectName("");
-            setDescription("");
-            setImage(null);
-          }}
+          onClick={handleAddProject}
         >
           + Add Images
         </button>
 
       </div>
 
-      {/* ==========================
-            MODAL
-      =========================== */}
+      {/* ================= MODAL ================= */}
 
       {showModal && (
 
@@ -197,47 +574,76 @@ const uploadImage = async (file) => {
 
             <div className="modal-header">
 
-              <h3>Add Project</h3>
+              <h3>
+
+                {editingProject
+                  ? "Edit Project"
+                  : "Add Project"}
+
+              </h3>
 
               <button
-                onClick={() => setShowModal(false)}
+                onClick={() => {
+
+                  resetForm();
+
+                  setShowModal(false);
+
+                }}
               >
                 ✕
+
               </button>
 
             </div>
 
-            {/* Company */}
+            {/* ================= COMPANY ================= */}
 
             <div className="form-group">
 
               <label>Company</label>
 
               <select
+
                 value={selectedCompany}
+
                 onChange={(e) => {
-                  setSelectedCompany(e.target.value);
+
+                  setSelectedCompany(
+                    e.target.value
+                  );
+
                   setSelectedCategory("");
+
                 }}
+
               >
+
                 <option value="">
                   Select Company
                 </option>
 
                 {companies.map((company) => (
+
                   <option
+
                     key={company.id}
+
                     value={company.name}
+
                   >
+
                     {company.name}
+
                   </option>
+
                 ))}
 
               </select>
 
             </div>
 
-            {/* Category */}
+            {/* ================= CATEGORY ================= */}
 
             {selectedCompany && (
 
@@ -246,22 +652,35 @@ const uploadImage = async (file) => {
                 <label>Category</label>
 
                 <select
+
                   value={selectedCategory}
+
                   onChange={(e) =>
-                    setSelectedCategory(e.target.value)
+                    setSelectedCategory(
+                      e.target.value
+                    )
                   }
+
                 >
+
                   <option value="">
                     Select Category
                   </option>
 
                   {currentCompany.categories.map((cat) => (
+
                     <option
+
                       key={cat}
+
                       value={cat}
+
                     >
+
                       {cat}
+
                     </option>
+
                   ))}
 
                 </select>
@@ -270,134 +689,100 @@ const uploadImage = async (file) => {
 
             )}
 
-            {/* Remaining fields */}
+            {/* ================= PROJECT DETAILS ================= */}
 
             {selectedCategory && (
 
               <>
-                          {/* Project Image */}
+                              {/* ================= PROJECT IMAGE ================= */}
 
-            <div className="form-group">
+                <div className="form-group">
 
-              <label>Project Image</label>
+                  <label>Project Image</label>
 
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
 
-                  if (e.target.files[0]) {
-  setImage(e.target.files[0]);
-}
+                      if (e.target.files[0]) {
 
-                }}
-              />
+                        setImage(e.target.files[0]);
 
-              {image && (
+                      }
 
-                <img
-  src={URL.createObjectURL(image)}
-  alt="Preview"
-  className="image-preview"
-/>
-              )}
+                    }}
+                  />
 
-            </div>
+                  {image && (
 
-            {/* Project Name */}
+                    <img
+                      src={
+                        typeof image === "string"
+                          ? image
+                          : URL.createObjectURL(image)
+                      }
+                      alt="Preview"
+                      className="image-preview"
+                    />
 
-            <div className="form-group">
+                  )}
 
-              <label>Project Name</label>
+                </div>
 
-              <input
-                type="text"
-                placeholder="Enter Project Name"
-                value={projectName}
-                onChange={(e) =>
-                  setProjectName(e.target.value)
-                }
-              />
+                {/* ================= PROJECT NAME ================= */}
 
-            </div>
+                <div className="form-group">
 
-            {/* Description */}
+                  <label>Project Name</label>
 
-            <div className="form-group">
+                  <input
+                    type="text"
+                    placeholder="Enter Project Name"
+                    value={projectName}
+                    onChange={(e) =>
+                      setProjectName(e.target.value)
+                    }
+                  />
 
-              <label>Description</label>
+                </div>
 
-              <textarea
-                rows="5"
-                placeholder="Enter Description"
-                value={description}
-                onChange={(e) =>
-                  setDescription(e.target.value)
-                }
-              />
+                {/* ================= DESCRIPTION ================= */}
 
-            </div>
+                <div className="form-group">
 
-            {/* Save */}
+                  <label>Description</label>
 
-            <div className="modal-footer">
+                  <textarea
+                    rows="5"
+                    placeholder="Enter Description"
+                    value={description}
+                    onChange={(e) =>
+                      setDescription(e.target.value)
+                    }
+                  />
 
-             <button
-  className="save-btn"
-    onClick={async () => {
-  if (
-    !selectedCompany ||
-    !selectedCategory ||
-    !projectName.trim() ||
-    !description.trim() ||
-    !image
-  ) {
-    alert("Please fill all fields.");
-    return;
-  }
+                </div>
 
-  try {
-    const imageUrl = await uploadImage(image);
+                {/* ================= SAVE / UPDATE ================= */}
 
-    await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        company: selectedCompany,
-        category: selectedCategory,
-        projectName,
-        description,
-        image: imageUrl,
-      }),
-    });
+                <div className="modal-footer">
 
-    await loadProjects();
+                  <button
+                    className="save-btn"
+                    onClick={handleSave}
+                  >
 
-    setSelectedCompany("");
-    setSelectedCategory("");
-    setProjectName("");
-    setDescription("");
-    setImage(null);
+                    {editingProject
+                      ? "Update Project"
+                      : "Save Project"}
 
-    setShowModal(false);
+                  </button>
 
-    alert("Project Added Successfully");
-  } catch (error) {
-    console.error(error);
-    alert("Upload Failed");
-  }
-}}
->
-  Save Project
-</button>
+                </div>
 
-            </div>
-
-          </>
-
-            )}
+              </>
+                          )}
 
           </div>
 
@@ -411,110 +796,150 @@ const uploadImage = async (file) => {
 
       <div className="project-list">
 
-  {projects.length === 0 ? (
+        {projects.length === 0 ? (
 
-    <div className="empty-state">
-      <h3>No Projects Added</h3>
-      <p>Click <b>+ Add Images</b> to create your first project.</p>
+          <div className="empty-state">
+
+            <h3>No Projects Added</h3>
+
+            <p>
+              Click <b>+ Add Images</b> to create your first project.
+            </p>
+
+          </div>
+
+        ) : (
+
+          <div className="table-wrapper">
+
+            <table className="project-table">
+
+              <thead>
+
+                <tr>
+
+                  <th>No</th>
+
+                  <th>Preview</th>
+
+                  <th>Company</th>
+
+                  <th>Category</th>
+
+                  <th>Project Name</th>
+
+                  <th>Description</th>
+
+                  <th>Status</th>
+
+                  <th>Action</th>
+
+                </tr>
+
+              </thead>
+
+              <tbody>
+
+                {projects.map((project, index) => (
+
+                  <tr key={project.id}>
+
+                    <td>{index + 1}</td>
+
+                    <td>
+
+                      <img
+                        src={project.image}
+                        alt={project.projectName}
+                        className="table-image"
+                      />
+
+                    </td>
+
+                    <td>{project.company}</td>
+
+                    <td>{project.category}</td>
+
+                    <td>{project.projectName}</td>
+
+                    <td className="desc-cell">
+
+                      {project.description}
+
+                    </td>
+
+                    <td>
+
+                      <span className="status-badge">
+
+                        Show
+
+                      </span>
+
+                    </td>
+
+                    <td>
+
+                      <button
+  className="edit-btn"
+  onClick={() => handleEditProject(project)}
+>
+  Edit
+</button>
+
+                      <button
+                        className="delete-btn"
+                        onClick={async () => {
+
+                          if (
+                            !window.confirm(
+                              "Delete this project?"
+                            )
+                          )
+                            return;
+
+                          await fetch(API_URL, {
+
+                            method: "DELETE",
+
+                            headers: {
+                              "Content-Type":
+                                "application/json",
+                            },
+
+                            body: JSON.stringify({
+                              id: project.id,
+                            }),
+
+                          });
+
+                          await loadProjects();
+
+                        }}
+                      >
+
+                        Delete
+
+                      </button>
+
+                    </td>
+
+                  </tr>
+
+                ))}
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        )}
+
+      </div>
+
     </div>
-
-  ) : (
-
-    <div className="table-wrapper">
-
-      <table className="project-table">
-
-        <thead>
-
-          <tr>
-            <th>No</th>
-            <th>Preview</th>
-            <th>Company</th>
-            <th>Category</th>
-            <th>Project Name</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          {projects.map((project, index) => (
-
-            <tr key={project.id}>
-
-              <td>{index + 1}</td>
-
-              <td>
-                <img
-                  src={project.image}
-                  alt={project.projectName}
-                  className="table-image"
-                />
-              </td>
-
-              <td>{project.company}</td>
-
-              <td>{project.category}</td>
-
-              <td>{project.projectName}</td>
-
-              <td className="desc-cell">
-                {project.description}
-              </td>
-
-              <td>
-                <span className="status-badge">
-                  Show
-                </span>
-              </td>
-
-              <td>
-
-                <button
-                  className="delete-btn"
-                  onClick={async () => {
-
-  if (!window.confirm("Delete this project?")) return;
-
-  await fetch(API_URL, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id: project.id,
-    }),
-  });
-
-  loadProjects();
-
-}}
-                >
-                  Delete
-                </button>
-
-              </td>
-
-            </tr>
-
-          ))}
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  )}
-
-</div>
-
-    </div>
-
-  );
+      );
 
 };
 

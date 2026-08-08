@@ -1,0 +1,1154 @@
+/* =========================================================
+   SERVICE PAGE
+========================================================= */
+
+.service-page {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+}
+
+
+/* =========================================================
+   SERVICE BANNER
+========================================================= */
+
+.service-banner {
+  width: 100%;
+  height: 70vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #111111;
+
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   BANNER CONTENT
+========================================================= */
+
+.service-banner-content {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+
+  text-align: center;
+}
+
+.service-banner-content h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-family: "Oswald", sans-serif;
+  font-size: 64px;
+  font-weight: 600;
+
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   SERVICES GRID SECTION
+========================================================= */
+
+.rk-serv-section {
+  width: 100%;
+
+  padding: 80px 5%;
+
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    180deg,
+    #fff5f8 0%,
+    #ffffff 100%
+  );
+}
+
+.rk-serv-container {
+  width: 100%;
+  max-width: 1700px;
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   SERVICES HEADER
+========================================================= */
+
+.rk-serv-header {
+  text-align: center;
+
+  margin-bottom: 60px;
+}
+
+.rk-serv-eyebrow {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-bottom: 16px;
+
+  color: #c89a2b;
+
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.rk-serv-eyebrow-line {
+  width: 30px;
+  height: 1px;
+
+  background-color: #c89a2b;
+}
+
+.rk-serv-heading {
+  margin: 0 0 14px;
+
+  color: #1a1a1a;
+
+  font-family: "Playfair Display", serif;
+  font-size: 42px;
+  font-weight: 700;
+
+  line-height: 1.2;
+}
+
+.rk-serv-subtext {
+  max-width: 600px;
+
+  margin: 0 auto;
+
+  color: #555555;
+
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   SERVICES GRID
+========================================================= */
+
+.rk-serv-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 30px;
+}
+
+
+/* =========================================================
+   SERVICE CARD
+========================================================= */
+
+.rk-serv-card {
+  background-color: #ffffff;
+
+  border: 1px solid #eeeeee;
+  border-radius: 12px;
+
+  padding: 40px 28px;
+
+  text-align: center;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.rk-serv-card:hover {
+  transform: translateY(-6px);
+
+  border-color: #e6d4a7;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   SERVICE ICON
+========================================================= */
+
+.rk-serv-icon-badge {
+  width: 60px;
+  height: 60px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 20px;
+
+  background-color: #c89a2b;
+
+  border-radius: 50%;
+}
+
+
+/* =========================================================
+   SERVICE CARD TITLE
+========================================================= */
+
+.rk-serv-card-title {
+  margin: 0 0 12px;
+
+  color: #1a1a1a;
+
+  font-family: "Playfair Display", serif;
+  font-size: 19px;
+  font-weight: 700;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   SERVICE CARD DESCRIPTION
+========================================================= */
+
+.rk-serv-card-desc {
+  margin: 0 0 18px;
+
+  color: #666666;
+
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   SERVICE CARD UNDERLINE
+========================================================= */
+
+.rk-serv-underline {
+  display: inline-block;
+
+  width: 36px;
+  height: 2px;
+
+  background-color: #c89a2b;
+}
+
+
+/* =========================================================
+   HIGHLIGHTS STRIP
+========================================================= */
+
+.rk-serv-highlights-section {
+  width: 100%;
+
+  padding: 50px 5%;
+
+  box-sizing: border-box;
+
+  background-color: #fafafa;
+
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.rk-serv-highlights-container {
+  width: 100%;
+  max-width: 1700px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.rk-serv-highlight-item {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  padding: 0 20px;
+
+  text-align: center;
+
+  border-right: 1px solid #e2e2e2;
+}
+
+.rk-serv-highlight-item:last-child {
+  border-right: none;
+}
+
+
+/* =========================================================
+   HIGHLIGHT TITLE
+========================================================= */
+
+.rk-serv-highlight-title {
+  margin: 16px 0 6px;
+
+  color: #1a1a1a;
+
+  font-family: "Playfair Display", serif;
+  font-size: 17px;
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+
+/* =========================================================
+   HIGHLIGHT DESCRIPTION
+========================================================= */
+
+.rk-serv-highlight-desc {
+  margin: 0;
+
+  color: #777777;
+
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   COMPANY SPOTLIGHT SECTION
+========================================================= */
+
+.rk-serv-spotlight-section {
+  width: 100%;
+
+  padding: 80px 5%;
+
+  box-sizing: border-box;
+
+  background-color: #ffffff;
+}
+
+.rk-serv-spotlight-container {
+  width: 100%;
+  max-width: 1700px;
+
+  margin: 0 auto;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 30px;
+}
+
+
+/* =========================================================
+   COMPANY SPOTLIGHT CARD
+========================================================= */
+
+.rk-serv-spotlight-card {
+  display: grid;
+
+  grid-template-columns:
+    260px
+    minmax(0, 1fr)
+    360px;
+
+  align-items: stretch;
+
+  background-color: #fafafa;
+
+  border: 1px solid #eeeeee;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.rk-serv-spotlight-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.07);
+}
+
+
+/* =========================================================
+   COMPANY LOGO COLUMN
+========================================================= */
+
+.rk-serv-spotlight-logo {
+  width: 100%;
+  min-height: 220px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px 20px;
+
+  box-sizing: border-box;
+
+  background-color: #ffffff;
+
+  border-right: 1px solid #eeeeee;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   COMPANY LOGO IMAGE
+========================================================= */
+
+.rk-serv-company-logo {
+  width: 190px;
+  height: 150px;
+
+  max-width: 100%;
+
+  object-fit: contain;
+
+  object-position: center;
+
+  display: block;
+
+  transition:
+    transform 0.3s ease;
+}
+
+.rk-serv-spotlight-card:hover .rk-serv-company-logo {
+  transform: scale(1.03);
+}
+
+
+/* =========================================================
+   COMPANY CONTENT
+========================================================= */
+
+.rk-serv-spotlight-content {
+  min-width: 0;
+
+  padding: 30px 34px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+
+/* =========================================================
+   COMPANY TITLE
+========================================================= */
+
+.rk-serv-spotlight-title {
+  margin: 0 0 6px;
+
+  color: #1a1a1a;
+
+  font-family: "Playfair Display", serif;
+  font-size: 24px;
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+
+/* =========================================================
+   COMPANY TAGLINE
+========================================================= */
+
+.rk-serv-spotlight-tagline {
+  margin: 0 0 12px;
+
+  color: var(--rk-spot-color, #c89a2b);
+
+  font-family: "Inter", sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   COMPANY DESCRIPTION
+========================================================= */
+
+.rk-serv-spotlight-desc {
+  margin: 0 0 22px;
+
+  color: #666666;
+
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   COMPANY FEATURES
+========================================================= */
+
+.rk-serv-spotlight-features {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 24px;
+}
+
+
+/* =========================================================
+   COMPANY FEATURE
+========================================================= */
+
+.rk-serv-spotlight-feature {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 8px;
+}
+
+.rk-serv-spotlight-feature span {
+  color: #333333;
+
+  font-family: "Inter", sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+
+  line-height: 1.4;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   COMPANY IMAGE COLUMN
+========================================================= */
+
+.rk-serv-spotlight-image {
+  width: 100%;
+  height: 220px;
+
+  align-self: center;
+
+  padding: 16px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   COMPANY IMAGE
+========================================================= */
+
+.rk-serv-spotlight-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  border-radius: 8px;
+}
+
+
+/* =========================================================
+   CTA STRIP
+========================================================= */
+
+.rk-serv-strip-section {
+  width: 100%;
+
+  padding: 0 5% 80px;
+
+  box-sizing: border-box;
+
+  background-color: #ffffff;
+}
+
+.rk-serv-strip-bar {
+  width: 100%;
+  max-width: 1700px;
+
+  margin: 0 auto;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  flex-wrap: wrap;
+
+  gap: 24px;
+
+  padding: 22px 40px;
+
+  box-sizing: border-box;
+
+  background-color: #0b1b33;
+
+  border-radius: 60px;
+}
+
+
+/* =========================================================
+   CTA STRIP ITEM
+========================================================= */
+
+.rk-serv-strip-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+
+/* =========================================================
+   CTA STRIP TITLE
+========================================================= */
+
+.rk-serv-strip-text h4 {
+  margin: 0 0 2px;
+
+  color: #ffffff;
+
+  font-family: "Inter", sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+
+  line-height: 1.3;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   CTA STRIP DESCRIPTION
+========================================================= */
+
+.rk-serv-strip-text p {
+  margin: 0;
+
+  color: #b7c0cf;
+
+  font-family: "Inter", sans-serif;
+  font-size: 12.5px;
+  font-weight: 400;
+
+  line-height: 1.4;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   CTA BUTTON
+========================================================= */
+
+.rk-serv-strip-btn {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 13px 26px;
+
+  background-color: #c89a2b;
+
+  color: #ffffff;
+
+  border: none;
+
+  border-radius: 40px;
+
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.rk-serv-strip-btn:hover {
+  background-color: #b3891f;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   TABLET — 1024px
+========================================================= */
+
+@media (max-width: 1024px) {
+
+  /* Services */
+
+  .rk-serv-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+
+  /* Company Spotlight */
+
+  .rk-serv-spotlight-card {
+    grid-template-columns: 1fr;
+
+    overflow: hidden;
+  }
+
+  .rk-serv-spotlight-logo {
+    min-height: 200px;
+
+    padding: 25px;
+
+    border-right: none;
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  .rk-serv-company-logo {
+    width: 190px;
+    height: 140px;
+  }
+
+
+  /* Company Content */
+
+  .rk-serv-spotlight-content {
+    padding: 30px;
+  }
+
+
+  /* Company Image */
+
+  .rk-serv-spotlight-image {
+    height: 240px;
+
+    padding: 16px;
+  }
+
+
+  /* CTA */
+
+  .rk-serv-strip-bar {
+    border-radius: 35px;
+
+    padding: 24px 30px;
+  }
+}
+
+
+/* =========================================================
+   TABLET — 768px
+========================================================= */
+
+@media (max-width: 768px) {
+
+  /* Banner */
+
+  .service-banner {
+    height: 55vh;
+  }
+
+  .service-banner-content h1 {
+    font-size: 52px;
+  }
+
+
+  /* Services */
+
+  .rk-serv-section {
+    padding: 70px 5%;
+  }
+
+  .rk-serv-header {
+    margin-bottom: 45px;
+  }
+
+  .rk-serv-heading {
+    font-size: 36px;
+  }
+
+  .rk-serv-subtext {
+    font-size: 15px;
+  }
+
+
+  /* Highlights */
+
+  .rk-serv-highlights-section {
+    padding: 45px 5%;
+  }
+
+  .rk-serv-highlights-container {
+    grid-template-columns: repeat(2, 1fr);
+
+    row-gap: 30px;
+  }
+
+  .rk-serv-highlight-item {
+    border-right: none;
+  }
+
+  .rk-serv-highlight-item:nth-child(odd) {
+    border-right: 1px solid #e2e2e2;
+  }
+
+
+  /* Company Spotlight */
+
+  .rk-serv-spotlight-section {
+    padding: 70px 5%;
+  }
+
+  .rk-serv-spotlight-container {
+    gap: 24px;
+  }
+
+  .rk-serv-spotlight-logo {
+    min-height: 190px;
+  }
+
+  .rk-serv-company-logo {
+    width: 180px;
+    height: 130px;
+  }
+
+  .rk-serv-spotlight-content {
+    padding: 28px;
+  }
+
+  .rk-serv-spotlight-title {
+    font-size: 22px;
+  }
+
+  .rk-serv-spotlight-features {
+    gap: 20px;
+  }
+
+
+  /* Company Image */
+
+  .rk-serv-spotlight-image {
+    height: 230px;
+  }
+
+
+  /* CTA */
+
+  .rk-serv-strip-section {
+    padding: 0 5% 60px;
+  }
+
+  .rk-serv-strip-bar {
+    gap: 20px;
+
+    padding: 26px 30px;
+
+    border-radius: 28px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE — 600px
+========================================================= */
+
+@media (max-width: 600px) {
+
+  /* Banner */
+
+  .service-banner {
+    height: 50vh;
+  }
+
+  .service-banner-content h1 {
+    font-size: 42px;
+
+    letter-spacing: 1.5px;
+  }
+
+
+  /* Services */
+
+  .rk-serv-section {
+    padding: 60px 5%;
+  }
+
+  .rk-serv-header {
+    margin-bottom: 40px;
+  }
+
+  .rk-serv-eyebrow {
+    font-size: 11px;
+
+    letter-spacing: 1.5px;
+
+    gap: 8px;
+  }
+
+  .rk-serv-eyebrow-line {
+    width: 22px;
+  }
+
+  .rk-serv-heading {
+    font-size: 32px;
+  }
+
+  .rk-serv-subtext {
+    font-size: 14px;
+  }
+
+  .rk-serv-grid {
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
+
+
+  /* Service Card */
+
+  .rk-serv-card {
+    padding: 35px 24px;
+  }
+
+  .rk-serv-card-title {
+    font-size: 18px;
+  }
+
+  .rk-serv-card-desc {
+    font-size: 13.5px;
+  }
+
+
+  /* Highlights */
+
+  .rk-serv-highlights-section {
+    padding: 45px 5%;
+  }
+
+  .rk-serv-highlights-container {
+    grid-template-columns: 1fr;
+
+    row-gap: 0;
+  }
+
+  .rk-serv-highlight-item {
+    padding: 24px 10px;
+
+    border-right: none !important;
+
+    border-bottom: 1px solid #e2e2e2;
+  }
+
+  .rk-serv-highlight-item:first-child {
+    padding-top: 0;
+  }
+
+  .rk-serv-highlight-item:last-child {
+    border-bottom: none;
+  }
+
+
+  /* Company Spotlight */
+
+  .rk-serv-spotlight-section {
+    padding: 60px 5%;
+  }
+
+  .rk-serv-spotlight-container {
+    gap: 20px;
+  }
+
+  .rk-serv-spotlight-card {
+    border-radius: 8px;
+  }
+
+
+  /* Logo */
+
+  .rk-serv-spotlight-logo {
+    min-height: 180px;
+
+    padding: 20px;
+  }
+
+  .rk-serv-company-logo {
+    width: 170px;
+    height: 120px;
+  }
+
+
+  /* Content */
+
+  .rk-serv-spotlight-content {
+    padding: 25px 22px;
+  }
+
+  .rk-serv-spotlight-title {
+    font-size: 21px;
+  }
+
+  .rk-serv-spotlight-tagline {
+    font-size: 13.5px;
+  }
+
+  .rk-serv-spotlight-desc {
+    margin-bottom: 20px;
+
+    font-size: 13.5px;
+  }
+
+  .rk-serv-spotlight-features {
+    gap: 18px;
+  }
+
+  .rk-serv-spotlight-feature {
+    gap: 6px;
+  }
+
+  .rk-serv-spotlight-feature span {
+    font-size: 12px;
+
+    white-space: normal;
+  }
+
+
+  /* Company Image */
+
+  .rk-serv-spotlight-image {
+    height: 200px;
+
+    padding: 12px;
+  }
+
+
+  /* CTA */
+
+  .rk-serv-strip-section {
+    padding: 0 5% 50px;
+  }
+
+  .rk-serv-strip-bar {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 20px;
+
+    padding: 26px 24px;
+
+    border-radius: 24px;
+  }
+
+  .rk-serv-strip-item {
+    align-items: flex-start;
+  }
+
+  .rk-serv-strip-text h4 {
+    font-size: 13.5px;
+
+    white-space: normal;
+  }
+
+  .rk-serv-strip-text p {
+    font-size: 12px;
+
+    white-space: normal;
+  }
+
+  .rk-serv-strip-btn {
+    width: 100%;
+
+    justify-content: center;
+
+    padding: 14px 20px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE — 400px
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .service-banner {
+    height: 45vh;
+  }
+
+  .service-banner-content h1 {
+    font-size: 36px;
+  }
+
+  .rk-serv-heading {
+    font-size: 28px;
+  }
+
+  .rk-serv-company-logo {
+    width: 155px;
+    height: 110px;
+  }
+
+  .rk-serv-spotlight-content {
+    padding: 22px 18px;
+  }
+
+  .rk-serv-spotlight-title {
+    font-size: 19px;
+  }
+
+  .rk-serv-spotlight-image {
+    height: 180px;
+  }
+
+  .rk-serv-strip-bar {
+    padding: 24px 20px;
+  }
+}

@@ -14,6 +14,8 @@ const ProjectImage = () => {
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+   const [editingProject, setEditingProject] = useState(null);
+   const [oldKey, setOldKey] = useState("");
 
 
   // =============================
@@ -63,90 +65,138 @@ useEffect(() => {
   // Save Project
   // =============================
 
-    const handleSave = async () => {
+   const handleSave = async () => {
 
-  if (!selectedFile || !name || !location) {
+  if (!name.trim() || !location.trim()) {
     alert("Please fill all fields.");
     return;
   }
 
   try {
 
-    /* ==========================
-       GET UPLOAD URL
-    ========================== */
-
-    const uploadResponse = await fetch(
-
-      `${API_URL}?upload=true&fileName=${encodeURIComponent(
-        selectedFile.name
-      )}&fileType=${encodeURIComponent(
-        selectedFile.type
-      )}`
-
-    );
-
-    if (!uploadResponse.ok) {
-      throw new Error("Failed to get upload URL");
-    }
-
-    const uploadData =
-      await uploadResponse.json();
+    let imageUrl = image;
+    let key = oldKey;
 
     /* ==========================
-       UPLOAD IMAGE TO S3
+       Upload New Image (Optional)
     ========================== */
 
-    const upload = await fetch(
-      uploadData.uploadUrl,
-      {
+    if (selectedFile) {
+
+      const uploadResponse = await fetch(
+        `${API_URL}?upload=true&fileName=${encodeURIComponent(
+          selectedFile.name
+        )}&fileType=${encodeURIComponent(
+          selectedFile.type
+        )}`
+      );
+
+      if (!uploadResponse.ok) {
+        throw new Error("Failed to get upload URL");
+      }
+
+      const uploadData = await uploadResponse.json();
+
+      const upload = await fetch(uploadData.uploadUrl, {
         method: "PUT",
         headers: {
           "Content-Type": selectedFile.type,
         },
         body: selectedFile,
-      }
-    );
+      });
 
-    if (!upload.ok) {
-      throw new Error("Image upload failed");
+      if (!upload.ok) {
+        throw new Error("Image upload failed");
+      }
+
+      imageUrl = uploadData.fileUrl;
+      key = uploadData.key;
     }
 
     /* ==========================
-       SAVE PROJECT
+       UPDATE PROJECT
     ========================== */
 
-    const save = await fetch(API_URL, {
+    if (editingProject) {
 
-      method: "POST",
+      const response = await fetch(API_URL, {
 
-      headers: {
-        "Content-Type": "application/json",
-      },
+        method: "PUT",
 
-      body: JSON.stringify({
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-        name,
+        body: JSON.stringify({
 
-        location,
+          id: editingProject.id,
 
-        image: uploadData.fileUrl,
+          name,
 
-        key: uploadData.key,
+          location,
 
-      }),
+          image: imageUrl,
 
-    });
+          key,
 
-    if (!save.ok) {
-      throw new Error("Project save failed");
+          oldKey,
+
+        }),
+
+      });
+
+      if (!response.ok) {
+        throw new Error("Update failed");
+      }
+
+      alert("Project Updated Successfully");
+
     }
 
-    alert("Project Added Successfully");
+    /* ==========================
+       ADD PROJECT
+    ========================== */
+
+    else {
+
+      if (!selectedFile) {
+        alert("Please select image.");
+        return;
+      }
+
+      const response = await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+
+          name,
+
+          location,
+
+          image: imageUrl,
+
+          key,
+
+        }),
+
+      });
+
+      if (!response.ok) {
+        throw new Error("Project save failed");
+      }
+
+      alert("Project Added Successfully");
+
+    }
 
     resetForm();
 
-    loadProjects();
+    await loadProjects();
 
   } catch (err) {
 
@@ -164,10 +214,16 @@ useEffect(() => {
 
    const resetForm = () => {
 
+  setEditingProject(null);
+
+  setOldKey("");
+
   setSelectedFile(null);
 
   setImage("");
+
   setName("");
+
   setLocation("");
 
   setShowForm(false);
@@ -179,7 +235,23 @@ useEffect(() => {
 };
 
   
+const handleEdit = (project) => {
 
+  setEditingProject(project);
+
+  setOldKey(project.key);
+
+  setSelectedFile(null);
+
+  setImage(project.image);
+
+  setName(project.name);
+
+  setLocation(project.location);
+
+  setShowForm(true);
+
+};
   // =============================
   // Delete Project
   // =============================
@@ -224,14 +296,23 @@ useEffect(() => {
     <div className="project-image-admin">
 
       <div className="project-header">
-        <h2>Project Images</h2>
+        <h2>
+  {editingProject
+    ? "Edit Project"
+    : "Add Project"}
+</h2>
 
         <button
           className="add-project-btn"
           onClick={() => {
-            resetForm();
-            setShowForm(true);
-          }}
+
+  resetForm();
+
+  setEditingProject(null);
+
+  setShowForm(true);
+
+}}
         >
           + Add Project Image
         </button>
@@ -241,26 +322,40 @@ useEffect(() => {
         <div className="project-form">
 
           <div
-            className="upload-box"
-            onClick={() => fileInputRef.current.click()}
-          >
-            {image ? (
-              <img src={image} alt="preview" />
-            ) : (
-              <div className="upload-placeholder">
-                <span>📷</span>
-                <p>Click to Upload Image</p>
-              </div>
-            )}
+  className="upload-box"
+  onClick={() => fileInputRef.current.click()}
+>
 
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              hidden
-              onChange={handleImageUpload}
-            />
-          </div>
+  {image ? (
+    <img src={image} alt="preview" />
+  ) : (
+    <div className="upload-placeholder">
+      <span>📷</span>
+      <p>Click to Upload Image</p>
+    </div>
+  )}
+
+  <input
+    ref={fileInputRef}
+    type="file"
+    accept="image/*"
+    hidden
+    onChange={handleImageUpload}
+  />
+
+</div>
+
+{editingProject && (
+  <p
+    style={{
+      marginTop: "10px",
+      color: "#777",
+      fontSize: "13px",
+    }}
+  >
+    Leave empty if you don't want to replace the image.
+  </p>
+)}
 
           <div className="form-fields">
 
@@ -281,11 +376,13 @@ useEffect(() => {
             <div className="form-buttons">
 
               <button
-                className="save-btn"
-                onClick={handleSave}
-              >
-                Save Project
-              </button>
+  className="save-btn"
+  onClick={handleSave}
+>
+  {editingProject
+    ? "Save Changes"
+    : "Save Project"}
+</button>
 
               <button
                 className="cancel-btn"
@@ -352,12 +449,23 @@ className="table-image"
 <td>{new Date(project.id).toLocaleDateString()}</td>
 
  <td>
+ <div className="action-buttons">
+
+  <button
+    className="edit-btn"
+    onClick={() => handleEdit(project)}
+  >
+    Edit
+  </button>
+
   <button
     className="delete-btn"
     onClick={() => handleDelete(project.id)}
   >
     Delete
   </button>
+
+</div>
 </td>
 
 </tr>

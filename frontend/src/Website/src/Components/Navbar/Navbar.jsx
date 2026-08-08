@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import logo from "../../assets/kk.png";
-import { FaArrowRight, FaBars } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaArrowRight, FaBars, FaTimes } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import { Home, Info, Building2, Briefcase, Menu as MenuIcon } from "lucide-react";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
+  // Handle navbar scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -19,56 +22,302 @@ const Navbar = () => {
     };
   }, []);
 
+  // Close mobile menu
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  // Open mobile menu
+  const openMenu = () => {
+    setMenuOpen(true);
+  };
+
   return (
-    <header className={scrolled ? "navbar scrolled" : "navbar"}>
-      <div className="navbar-container">
+    <>
+      {/* ================= NAVBAR ================= */}
+      <header className={scrolled ? "navbar scrolled" : "navbar"}>
+        <div className="navbar-container">
 
-        {/* Left */}
-        <div className="navbar-left">
-          <Link to="/" className="logo">
-            <img
-  src={logo}
-  alt="Kaden Koppers Group"
-/>
-          </Link>
+          {/* ================= LEFT ================= */}
+          <div className="navbar-left">
 
-          <div className="logo-divider"></div>
+            <NavLink to="/" className="logo" onClick={closeMenu}>
+              <img
+                src={logo}
+                alt="Kaden Koppers Group"
+              />
+            </NavLink>
+
+            <div className="logo-divider"></div>
+
+          </div>
+
+          {/* ================= CENTER ================= */}
+          <nav className="nav-menu">
+
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                isActive ? "active" : ""
+              }
+            >
+              Home
+            </NavLink>
+
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                isActive ? "active" : ""
+              }
+            >
+              About Us
+            </NavLink>
+
+            <NavLink
+              to="/industries"
+              className={({ isActive }) =>
+                isActive ? "active" : ""
+              }
+            >
+              Industries
+            </NavLink>
+
+            <NavLink
+              to="/services"
+              className={({ isActive }) =>
+                isActive ? "active" : ""
+              }
+            >
+              Companies
+            </NavLink>
+
+            <NavLink
+              to="/projects"
+              className={({ isActive }) =>
+                isActive ? "active" : ""
+              }
+            >
+              Projects
+            </NavLink>
+
+            <NavLink
+              to="/careers"
+              className={({ isActive }) =>
+                isActive ? "active" : ""
+              }
+            >
+              Careers
+            </NavLink>
+
+            <NavLink
+              to="/contact"
+              className={({ isActive }) =>
+                isActive ? "active" : ""
+              }
+            >
+              Contact
+            </NavLink>
+
+          </nav>
+
+          {/* ================= RIGHT ================= */}
+          <div className="nav-right">
+
+            <NavLink
+              to="/contact"
+              className="connect-btn"
+              onClick={closeMenu}
+            >
+              <span>Let's Connect</span>
+
+              <div className="arrow-circle">
+                <FaArrowRight />
+              </div>
+            </NavLink>
+
+            <div className="menu-divider"></div>
+
+            <button
+              className="menu-btn"
+              onClick={openMenu}
+              aria-label="Open menu"
+              aria-expanded={menuOpen}
+            >
+              <FaBars />
+            </button>
+
+          </div>
+
+        </div>
+      </header>
+
+      {/* ================= OVERLAY ================= */}
+      <div
+        className={
+          menuOpen
+            ? "mobile-overlay active"
+            : "mobile-overlay"
+        }
+        onClick={closeMenu}
+      ></div>
+
+      {/* ================= MOBILE MENU ================= */}
+      <aside
+        className={
+          menuOpen
+            ? "mobile-menu active"
+            : "mobile-menu"
+        }
+      >
+
+        {/* Close Button */}
+        <div className="mobile-close">
+          <button
+            onClick={closeMenu}
+            aria-label="Close menu"
+          >
+            <FaTimes />
+          </button>
         </div>
 
-        {/* Center */}
-        <nav className="nav-menu">
-          <Link to="/about">About Us</Link>
+        {/* Mobile Logo */}
+        <div className="mobile-logo">
+          <NavLink to="/" onClick={closeMenu}>
+            <img
+              src={logo}
+              alt="Kaden Koppers Group"
+            />
+          </NavLink>
+        </div>
 
-          <Link to="/industries">Industries</Link>
+        {/* Mobile Navigation */}
+        <nav className="mobile-nav">
 
-          <Link to="/companies">Companies</Link>
+          <NavLink
+            to="/"
+            end
+            onClick={closeMenu}
+          >
+            Home
+          </NavLink>
 
-          <Link to="/projects">Projects</Link>
+          <NavLink
+            to="/about"
+            onClick={closeMenu}
+          >
+            About Us
+          </NavLink>
 
-          <Link to="/careers">Careers</Link>
+          <NavLink
+            to="/industries"
+            onClick={closeMenu}
+          >
+            Industries
+          </NavLink>
 
-          <Link to="/contact">Contact</Link>
+          <NavLink
+            to="/services"
+            onClick={closeMenu}
+          >
+            Companies
+          </NavLink>
+
+          <NavLink
+            to="/projects"
+            onClick={closeMenu}
+          >
+            Projects
+          </NavLink>
+
+          <NavLink
+            to="/careers"
+            onClick={closeMenu}
+          >
+            Careers
+          </NavLink>
+
+          <NavLink
+            to="/contact"
+            onClick={closeMenu}
+          >
+            Contact
+          </NavLink>
+
         </nav>
 
-        {/* Right */}
-        <div className="nav-right">
-          <button className="connect-btn">
-            <span>Let's Connect</span>
+        {/* Mobile Connect Button */}
+        <div className="mobile-connect">
 
-            <div className="arrow-circle">
-              <FaArrowRight />
-            </div>
-          </button>
+          <NavLink
+            to="/contact"
+            onClick={closeMenu}
+            className="mobile-connect-btn"
+          >
+            Let's Connect
 
-          <div className="menu-divider"></div>
+            <FaArrowRight />
+          </NavLink>
 
-          <button className="menu-btn">
-            <FaBars />
-          </button>
         </div>
 
-      </div>
-    </header>
+      </aside>
+
+      {/* ================= MOBILE BOTTOM TAB BAR ================= */}
+      <nav className="mobile-bottom-nav">
+
+        <NavLink
+          to="/"
+          end
+          className={({ isActive }) =>
+            isActive ? "bottom-tab active" : "bottom-tab"
+          }
+        >
+          <Home size={20} />
+          <span>Home</span>
+        </NavLink>
+
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            isActive ? "bottom-tab active" : "bottom-tab"
+          }
+        >
+          <Info size={20} />
+          <span>About</span>
+        </NavLink>
+
+        <NavLink
+          to="/services"
+          className={({ isActive }) =>
+            isActive ? "bottom-tab active" : "bottom-tab"
+          }
+        >
+          <Building2 size={20} />
+          <span>Services</span>
+        </NavLink>
+
+        <NavLink
+          to="/projects"
+          className={({ isActive }) =>
+            isActive ? "bottom-tab active" : "bottom-tab"
+          }
+        >
+          <Briefcase size={20} />
+          <span>Projects</span>
+        </NavLink>
+
+        <button
+          className="bottom-tab"
+          onClick={openMenu}
+          aria-label="More"
+        >
+          <MenuIcon size={20} />
+          <span>More</span>
+        </button>
+
+      </nav>
+    </>
   );
 };
 

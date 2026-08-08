@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Homeslider.css";
-import {
-  FaWhatsapp,
-  FaPhoneAlt,
-  FaEnvelope,
-} from "react-icons/fa";
+import { FaPause, FaPlay } from "react-icons/fa";
 
 /* ==========================================
    API
@@ -13,14 +9,25 @@ import {
 const API_URL =
   "https://a9vqiga5na.execute-api.ap-south-1.amazonaws.com/prod/homeslider";
 
-const HomeSlider = ({ setIsVideo }) => {
+const SLIDE_DURATION = 10000; // ms
 
+const HomeSlider = ({ setIsVideo }) => {
   /* ==========================================
       STATES
   ========================================== */
 
   const [slides, setSlides] = useState([]);
   const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [hoverIndex, setHoverIndex] = useState(null);
+  const [hoverPosition, setHoverPosition] = useState(0);
+  const [direction, setDirection] = useState("next"); // "next" = left-to-right, "prev" = right-to-left
+
+  const intervalRef = useRef(null);
+
+  // Tracks whether the user manually paused via the play/pause button,
+  // so touch-scrubbing doesn't accidentally resume autoplay afterwards.
+  const wasManuallyPausedRef = useRef(false);
 
   /* ==========================================
       LOAD SLIDES
@@ -39,7 +46,6 @@ const HomeSlider = ({ setIsVideo }) => {
       }
 
       const data = await response.json();
-
       setSlides(data);
     } catch (error) {
       console.error("Load Slider Error:", error);
@@ -51,16 +57,18 @@ const HomeSlider = ({ setIsVideo }) => {
   ========================================== */
 
   useEffect(() => {
-    if (slides.length <= 1) return;
+    if (slides.length <= 1 || isPaused) {
+      clearInterval(intervalRef.current);
+      return;
+    }
 
-    const interval = setInterval(() => {
-      setCurrent((prev) =>
-        prev === slides.length - 1 ? 0 : prev + 1
-      );
-    }, 5000);
+    intervalRef.current = setInterval(() => {
+      setDirection("next");
+      setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, SLIDE_DURATION);
 
-    return () => clearInterval(interval);
-  }, [slides]);
+    return () => clearInterval(intervalRef.current);
+  }, [slides, isPaused, current]);
 
   /* ==========================================
       RESET INDEX
@@ -84,27 +92,97 @@ const HomeSlider = ({ setIsVideo }) => {
   }, [slides, current, setIsVideo]);
 
   /* ==========================================
-      NEXT
+      NAVIGATION
   ========================================== */
 
-  const nextSlide = () => {
-    if (slides.length === 0) return;
+  const goToSlide = (index) => {
+    if (index === current) return;
+    setDirection(index > current ? "next" : "prev");
+    setCurrent(index);
+  };
 
-    setCurrent((prev) =>
-      prev === slides.length - 1 ? 0 : prev + 1
-    );
+  const togglePause = () => {
+    setIsPaused((prev) => {
+      const next = !prev;
+      wasManuallyPausedRef.current = next;
+      return next;
+    });
   };
 
   /* ==========================================
-      PREVIOUS
+      SCRUB PREVIEW (mouse-follow on progress track)
   ========================================== */
 
-  const prevSlide = () => {
+  const handleTrackMouseMove = (e) => {
     if (slides.length === 0) return;
 
-    setCurrent((prev) =>
-      prev === 0 ? slides.length - 1 : prev - 1
+    const track = e.currentTarget;
+    const rect = track.getBoundingClientRect();
+    const relativeX = e.clientX - rect.left;
+    const percent = Math.min(
+      Math.max((relativeX / rect.width) * 100, 0),
+      100
     );
+
+    const index = Math.min(
+      Math.floor((relativeX / rect.width) * slides.length),
+      slides.length - 1
+    );
+
+    setHoverPosition(percent);
+    setHoverIndex(index);
+  };
+
+  const handleTrackMouseLeave = () => {
+    setHoverIndex(null);
+  };
+
+  /* ==========================================
+      SCRUB PREVIEW (touch-follow on progress track)
+  ========================================== */
+
+  const handleTrackTouchMove = (e) => {
+    if (slides.length === 0) return;
+
+    const track = e.currentTarget;
+    const rect = track.getBoundingClientRect();
+    const touch = e.touches[0];
+    if (!touch) return;
+
+    const relativeX = touch.clientX - rect.left;
+    const percent = Math.min(
+      Math.max((relativeX / rect.width) * 100, 0),
+      100
+    );
+
+    const index = Math.min(
+      Math.floor((relativeX / rect.width) * slides.length),
+      slides.length - 1
+    );
+
+    setHoverPosition(percent);
+    setHoverIndex(index);
+
+    // Actually switch the main slide as the finger moves across the bar.
+    if (index !== current) {
+      setDirection(index > current ? "next" : "prev");
+      setCurrent(index);
+    }
+
+    // Pause autoplay while the user is actively scrubbing so the main
+    // slide doesn't change underneath their finger.
+    if (!isPaused) {
+      setIsPaused(true);
+    }
+  };
+
+  const handleTrackTouchEnd = () => {
+    setHoverIndex(null);
+
+    // Only resume autoplay if the user didn't manually pause it earlier.
+    if (!wasManuallyPausedRef.current) {
+      setIsPaused(false);
+    }
   };
 
   /* ==========================================
@@ -116,29 +194,26 @@ const HomeSlider = ({ setIsVideo }) => {
   return (
     <section
       className={`home-slider ${
-        activeSlide?.type === "video"
-          ? "video-slider"
-          : "image-slider"
+        activeSlide?.type === "video" ? "video-slider" : "image-slider"
       }`}
     >
       {slides.length > 0 ? (
         <>
-          <div className="slide active">
-                        {/* ==========================
-                IMAGE
-            ========================== */}
+          <div
+            key={current}
+            className={`slide active ${
+              direction === "prev" ? "slide-in-prev" : "slide-in-next"
+            }`}
+          >
+            {/* ========================== IMAGE / VIDEO ========================== */}
 
             {activeSlide?.type === "image" ? (
               <img
                 src={activeSlide.image}
-                alt={activeSlide.name}
+                alt={activeSlide.name || "Slide"}
                 className="slider-image"
               />
             ) : (
-              /* ==========================
-                  VIDEO
-              ========================== */
-
               <video
                 className="slider-video"
                 autoPlay
@@ -146,83 +221,115 @@ const HomeSlider = ({ setIsVideo }) => {
                 loop
                 playsInline
               >
-                <source
-                  src={activeSlide?.video}
-                  type="video/mp4"
-                />
+                <source src={activeSlide?.video} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             )}
 
-            {/* ==========================
-                OVERLAY
-            ========================== */}
+            {/* ========================== OVERLAY + CONTENT ========================== */}
 
             <div className="slider-overlay">
               <div className="slider-content">
+                {activeSlide?.tag && (
+                  <span className="slide-tag">{activeSlide.tag}</span>
+                )}
+
                 <h1>{activeSlide?.name}</h1>
 
                 {activeSlide?.description && (
                   <p>{activeSlide.description}</p>
                 )}
+
+                {activeSlide?.link && (
+                  <a href={activeSlide.link} className="slide-cta">
+                    {activeSlide.ctaText || "Read story"}
+                    <span className="cta-arrow">&#8594;</span>
+                  </a>
+                )}
               </div>
             </div>
-
           </div>
 
-          {/* ==========================
-              PREVIOUS BUTTON
-          ========================== */}
+          {/* ========================== PROGRESS BAR ========================== */}
 
-          <button
-            className="slider-btn prev"
-            onClick={prevSlide}
-          >
-            &#10094;
-          </button>
+          <div className="slider-progress">
+            <button
+              className="pause-btn"
+              onClick={togglePause}
+              aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
+            >
+              {isPaused ? <FaPlay /> : <FaPause />}
+            </button>
 
-          {/* ==========================
-              NEXT BUTTON
-          ========================== */}
+            <span className="slide-counter">
+              {current + 1} / {slides.length}
+            </span>
 
-          <button
-            className="slider-btn next"
-            onClick={nextSlide}
-          >
-            &#10095;
-          </button>
+            <div
+              className="progress-track"
+              onMouseMove={handleTrackMouseMove}
+              onMouseLeave={handleTrackMouseLeave}
+              onTouchStart={handleTrackTouchMove}
+              onTouchMove={handleTrackTouchMove}
+              onTouchEnd={handleTrackTouchEnd}
+            >
+              {slides.map((_, index) => (
+                <button
+                  key={index}
+                  className="progress-segment"
+                  onClick={() => goToSlide(index)}
+                  aria-label={`Go to slide ${index + 1}`}
+                >
+                  {index === current ? (
+                    <span
+                      key={`fill-${current}-${isPaused}`}
+                      className="progress-fill animate"
+                      style={{
+                        animationDuration: `${SLIDE_DURATION}ms`,
+                        animationPlayState: isPaused ? "paused" : "running",
+                      }}
+                    />
+                  ) : (
+                    <span
+                      className={`progress-fill ${
+                        index < current ? "filled" : ""
+                      }`}
+                    />
+                  )}
+                </button>
+              ))}
+
+              {/* ===== PREVIEW CARD THAT FOLLOWS THE MOUSE / TOUCH ===== */}
+              {hoverIndex !== null && slides[hoverIndex] && (
+                <div
+                  className="segment-preview"
+                  style={{ left: `${hoverPosition}%` }}
+                >
+                  <img
+                    src={
+                      slides[hoverIndex]?.image ||
+                      slides[hoverIndex]?.thumbnail
+                    }
+                    alt={slides[hoverIndex]?.name || "Preview"}
+                    className="segment-preview-img"
+                  />
+                  <span className="segment-preview-title">
+                    {slides[hoverIndex]?.name}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
         </>
       ) : (
         <div className="empty-slider">
           <p>
             Home Slider
             <br />
-            Upload images or videos from the
-            Admin Dashboard.
+            Upload images or videos from the Admin Dashboard.
           </p>
         </div>
       )}
-
-      {/* ==========================
-          FLOATING CONTACT
-      ========================== */}
-
-      <div className="floating-contact">
-        <a href="#" className="contact-icon">
-          <FaWhatsapp className="contact-svg" />
-          <p>WhatsApp</p>
-        </a>
-
-        <a href="#" className="contact-icon">
-          <FaPhoneAlt className="contact-svg" />
-          <p>Call Us</p>
-        </a>
-
-        <a href="#" className="contact-icon">
-          <FaEnvelope className="contact-svg" />
-          <p>Email Us</p>
-        </a>
-      </div>
     </section>
   );
 };

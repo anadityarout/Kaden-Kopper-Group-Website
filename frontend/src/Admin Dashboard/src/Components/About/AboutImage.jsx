@@ -15,6 +15,15 @@ const defaultImages = {
 const AboutImage = () => {
 
   const [aboutList, setAboutList] = useState([]);
+  const [editing, setEditing] = useState(false);
+
+const [oldKeys, setOldKeys] = useState({
+  aboutSlideKey: "",
+  whoWeAreKey: "",
+  ourValuesKey: "",
+  ourApproachKey: "",
+  whatDrivesUsKey: "",
+});
 
   const [showForm, setShowForm] = useState(false);
 
@@ -160,59 +169,175 @@ const AboutImage = () => {
   /* ==========================================
       SAVE ABOUT
   ========================================== */
-     const saveAbout = async () => {
+    
+  const saveAbout = async () => {
+
   try {
-    console.log("1. Save started");
 
-    const aboutSlide = await uploadImage(selectedFiles.aboutSlide);
-    console.log("2. aboutSlide uploaded");
+    let aboutSlide = {
+      image: images.aboutSlide,
+      key: oldKeys.aboutSlideKey,
+    };
 
-    const whoWeAre = await uploadImage(selectedFiles.whoWeAre);
-    console.log("3. whoWeAre uploaded");
+    let whoWeAre = {
+      image: images.whoWeAre,
+      key: oldKeys.whoWeAreKey,
+    };
 
-    const ourValues = await uploadImage(selectedFiles.ourValues);
-    console.log("4. ourValues uploaded");
+    let ourValues = {
+      image: images.ourValues,
+      key: oldKeys.ourValuesKey,
+    };
 
-    const ourApproach = await uploadImage(selectedFiles.ourApproach);
-    console.log("5. ourApproach uploaded");
+    let ourApproach = {
+      image: images.ourApproach,
+      key: oldKeys.ourApproachKey,
+    };
 
-    const whatDrivesUs = await uploadImage(selectedFiles.whatDrivesUs);
-    console.log("6. whatDrivesUs uploaded");
+    let whatDrivesUs = {
+      image: images.whatDrivesUs,
+      key: oldKeys.whatDrivesUsKey,
+    };
 
-    console.log("7. Sending POST request");
+    /* =============================
+       Upload only replaced images
+    ============================== */
 
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        aboutSlide: aboutSlide.image,
-        aboutSlideKey: aboutSlide.key,
-        whoWeAre: whoWeAre.image,
-        whoWeAreKey: whoWeAre.key,
-        ourValues: ourValues.image,
-        ourValuesKey: ourValues.key,
-        ourApproach: ourApproach.image,
-        ourApproachKey: ourApproach.key,
-        whatDrivesUs: whatDrivesUs.image,
-        whatDrivesUsKey: whatDrivesUs.key,
-      }),
-    });
+    if (selectedFiles.aboutSlide) {
+      aboutSlide = await uploadImage(selectedFiles.aboutSlide);
+    }
 
-    console.log("8. POST status:", response.status);
+    if (selectedFiles.whoWeAre) {
+      whoWeAre = await uploadImage(selectedFiles.whoWeAre);
+    }
 
-    const result = await response.json();
-    console.log("9. POST response:", result);
+    if (selectedFiles.ourValues) {
+      ourValues = await uploadImage(selectedFiles.ourValues);
+    }
+
+    if (selectedFiles.ourApproach) {
+      ourApproach = await uploadImage(selectedFiles.ourApproach);
+    }
+
+    if (selectedFiles.whatDrivesUs) {
+      whatDrivesUs = await uploadImage(selectedFiles.whatDrivesUs);
+    }
+
+    /* =============================
+       EDIT
+    ============================== */
+
+    if (editing) {
+
+      const response = await fetch(API_URL, {
+
+        method: "PUT",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+
+          aboutSlide: aboutSlide.image,
+          aboutSlideKey: aboutSlide.key,
+          oldAboutSlideKey: oldKeys.aboutSlideKey,
+
+          whoWeAre: whoWeAre.image,
+          whoWeAreKey: whoWeAre.key,
+          oldWhoWeAreKey: oldKeys.whoWeAreKey,
+
+          ourValues: ourValues.image,
+          ourValuesKey: ourValues.key,
+          oldOurValuesKey: oldKeys.ourValuesKey,
+
+          ourApproach: ourApproach.image,
+          ourApproachKey: ourApproach.key,
+          oldOurApproachKey: oldKeys.ourApproachKey,
+
+          whatDrivesUs: whatDrivesUs.image,
+          whatDrivesUsKey: whatDrivesUs.key,
+          oldWhatDrivesUsKey: oldKeys.whatDrivesUsKey,
+
+        }),
+
+      });
+
+      if (!response.ok) {
+        throw new Error("Update Failed");
+      }
+
+      alert("About Images Updated");
+
+    }
+
+    /* =============================
+       ADD
+    ============================== */
+
+    else {
+
+      const response = await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+
+          aboutSlide: aboutSlide.image,
+          aboutSlideKey: aboutSlide.key,
+
+          whoWeAre: whoWeAre.image,
+          whoWeAreKey: whoWeAre.key,
+
+          ourValues: ourValues.image,
+          ourValuesKey: ourValues.key,
+
+          ourApproach: ourApproach.image,
+          ourApproachKey: ourApproach.key,
+
+          whatDrivesUs: whatDrivesUs.image,
+          whatDrivesUsKey: whatDrivesUs.key,
+
+        }),
+
+      });
+
+      if (!response.ok) {
+        throw new Error("Save Failed");
+      }
+
+      alert("About Images Saved");
+
+    }
 
     await loadAbout();
 
-    alert("About Images Saved");
+    setShowForm(false);
+
+    setEditing(false);
+
+    setImages(defaultImages);
+
+    setSelectedFiles({
+      aboutSlide: null,
+      whoWeAre: null,
+      ourValues: null,
+      ourApproach: null,
+      whatDrivesUs: null,
+    });
 
   } catch (err) {
-    console.error("SAVE ERROR:", err);
-    alert("Upload Failed");
+
+    console.error(err);
+
+    alert(err.message);
+
   }
+
 };
   
     /* ==========================================
@@ -275,25 +400,52 @@ const AboutImage = () => {
 
   const openForm = () => {
 
-    if (aboutList.length > 0) {
+  if (aboutList.length > 0) {
 
-      setImages({
-        aboutSlide: aboutList[0].aboutSlide || "",
-        whoWeAre: aboutList[0].whoWeAre || "",
-        ourValues: aboutList[0].ourValues || "",
-        ourApproach: aboutList[0].ourApproach || "",
-        whatDrivesUs: aboutList[0].whatDrivesUs || "",
-      });
+    const item = aboutList[0];
 
-    } else {
+    setEditing(true);
 
-      setImages(defaultImages);
+    setImages({
 
-    }
+      aboutSlide: item.aboutSlide || "",
 
-    setShowForm(true);
+      whoWeAre: item.whoWeAre || "",
 
-  };
+      ourValues: item.ourValues || "",
+
+      ourApproach: item.ourApproach || "",
+
+      whatDrivesUs: item.whatDrivesUs || "",
+
+    });
+
+    setOldKeys({
+
+      aboutSlideKey: item.aboutSlideKey || "",
+
+      whoWeAreKey: item.whoWeAreKey || "",
+
+      ourValuesKey: item.ourValuesKey || "",
+
+      ourApproachKey: item.ourApproachKey || "",
+
+      whatDrivesUsKey: item.whatDrivesUsKey || "",
+
+    });
+
+  } else {
+
+    setEditing(false);
+
+    setImages(defaultImages);
+
+  }
+
+  setShowForm(true);
+
+};
+
 
   return (
 
@@ -304,9 +456,13 @@ const AboutImage = () => {
         <h2>About Image</h2>
 
         <button
-          className="add-about-btn"
-          onClick={openForm}
-        >
+className="add-about-btn"
+onClick={() => {
+
+    openForm();
+
+}}
+>
           {aboutList.length > 0
             ? "Edit About Images"
             : "+ Add About Image"}
@@ -647,16 +803,23 @@ const AboutImage = () => {
 
                   <td>{item.created || "-"}</td>
 
-                  <td>
+                 <td>
 
-                    <button
-                      className="delete-btn"
-                      onClick={deleteAbout}
-                    >
-                      Delete
-                    </button>
+  <button
+    className="edit-btn"
+    onClick={() => openForm()}
+  >
+    Edit
+  </button>
 
-                  </td>
+  <button
+    className="delete-btn"
+    onClick={deleteAbout}
+  >
+    Delete
+  </button>
+
+</td>
 
                 </tr>
 

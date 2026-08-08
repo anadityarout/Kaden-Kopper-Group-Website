@@ -1,0 +1,155 @@
+/* ==========================================
+   SUSTAINABILITY & CSR SECTION
+========================================== */
+
+.rk-sus-section{
+    width:100%;
+    background:#fdf6f2;
+    display:flex;
+    align-items:center;
+}
+
+/* ==========================================
+   LEFT
+========================================== */
+
+.rk-sus-left{
+    flex:1;
+    padding:50px 5%;
+}
+
+.rk-sus-header{
+    margin-bottom:30px;
+}
+
+.rk-sus-subtitle{
+    display:inline-block;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#C89A2B;
+    margin-bottom:10px;
+}
+
+.rk-sus-header h2{
+    font-family:"Playfair Display", serif;
+    font-size:26px;
+    font-weight:700;
+    color:#2a2226;
+}
+
+.rk-sus-row{
+    display:flex;
+}
+
+.rk-sus-item{
+    flex:1;
+    padding:0 20px;
+    position:relative;
+}
+
+.rk-sus-item:first-child{
+    padding-left:0;
+}
+
+.rk-sus-item:not(:last-child)::after{
+    content:"";
+    position:absolute;
+    right:0;
+    top:6px;
+    height:60px;
+    width:1px;
+    background:rgba(200,154,43,.3);
+}
+
+.rk-sus-icon{
+    color:#C89A2B;
+    margin-bottom:12px;
+}
+
+.rk-sus-item h4{
+    font-size:15px;
+    font-weight:700;
+    color:#2a2226;
+    margin-bottom:6px;
+}
+
+.rk-sus-item p{
+    font-size:12px;
+    line-height:1.5;
+    color:#8a7a75;
+}
+
+/* ==========================================
+   RIGHT: IMAGE
+========================================== */
+
+.rk-sus-right{
+    flex:0 0 40%;
+    height:280px;
+    overflow:hidden;
+}
+
+.rk-sus-right img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media(max-width:1000px){
+
+.rk-sus-section{
+    flex-direction:column;
+}
+
+.rk-sus-right{
+    flex:none;
+    width:100%;
+    height:220px;
+}
+
+.rk-sus-row{
+    flex-wrap:wrap;
+    row-gap:24px;
+}
+
+.rk-sus-item{
+    flex:0 0 33.33%;
+}
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:600px){
+
+.rk-sus-left{
+    padding:40px 20px;
+}
+
+.rk-sus-item{
+    flex:0 0 100%;
+    padding:0;
+}
+
+.rk-sus-item::after{
+    display:none;
+}
+
+.rk-sus-header h2{
+    font-size:22px;
+}
+
+.rk-sus-right{
+    height:180px;
+}
+
+}

@@ -1,0 +1,117 @@
+/* ==========================================
+   WHY CHOOSE SECTION
+========================================== */
+
+.rk-wc-section{
+    width:100%;
+    background:linear-gradient(135deg, #ffd6e0 0%, #ffe8ee 60%, #fff0f4 100%);
+    padding:60px 5%;
+    margin-top:60px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:40px;
+}
+
+/* ==========================================
+   LABEL
+========================================== */
+
+.rk-wc-label{
+    flex-shrink:0;
+    max-width:100%;
+    text-align:center;
+}
+
+.rk-wc-label span{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:#C89A2B;
+    margin-bottom:4px;
+}
+
+.rk-wc-label h3{
+    font-family:"Playfair Display", serif;
+    font-size:24px;
+    font-weight:700;
+    line-height:1.3;
+    color:#2a2226;
+}
+
+/* ==========================================
+   ROW
+========================================== */
+
+.rk-wc-row{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.rk-wc-item{
+    flex:1;
+    min-width:0;
+}
+
+.rk-wc-icon{
+    color:#C89A2B;
+    margin-bottom:10px;
+}
+
+.rk-wc-item h4{
+    font-size:14px;
+    font-weight:700;
+    color:#2a2226;
+    margin-bottom:6px;
+    line-height:1.3;
+}
+
+.rk-wc-item p{
+    font-size:12px;
+    line-height:1.5;
+    color:#6b5a5f;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media(max-width:1000px){
+
+.rk-wc-row{
+    flex-wrap:wrap;
+}
+
+.rk-wc-item{
+    flex:0 0 30%;
+}
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:600px){
+
+.rk-wc-section{
+    padding:40px 20px;
+}
+
+.rk-wc-row{
+    gap:20px;
+}
+
+.rk-wc-item{
+    flex:0 0 45%;
+}
+
+.rk-wc-label h3{
+    font-size:20px;
+}
+
+}

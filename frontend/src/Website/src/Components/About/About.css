@@ -1,6 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap');
 
 /* =====================================================
+   GLOBAL SAFETY
+===================================================== */
+
+.about-section,
+.who-we-are,
+.our-values,
+.company-stats,
+.approach-section,
+.drives-section{
+    max-width:100%;
+    overflow-x:hidden;
+    box-sizing:border-box;
+}
+
+.about-section *,
+.who-we-are *,
+.our-values *,
+.company-stats *,
+.approach-section *,
+.drives-section *{
+    box-sizing:border-box;
+}
+
+/* =====================================================
    ABOUT BANNER
 ===================================================== */
 
@@ -16,9 +40,10 @@
 .about-image{
     width:100%;
     height:100%;
-        object-fit:cover;
+    object-fit:cover;
     display:block;
 }
+
 /* =====================================================
    WHO WE ARE
 ===================================================== */
@@ -87,10 +112,12 @@ CENTER IMAGE
     display:flex;
     justify-content:center;
     align-items:center;
+    width:100%;
 }
 
 .whoimage img{
     width:550px;
+    max-width:100%;
     height:500px;
     object-fit:cover;
     border-radius:12px;
@@ -148,57 +175,6 @@ RIGHT
 }
 
 /* =====================================================
-   RESPONSIVE
-===================================================== */
-
-@media (max-width:1100px){
-
-    .about-section{
-        height:250px;
-    }
-
-    .who-we-are{
-        grid-template-columns:1fr;
-        gap:40px;
-        text-align:center;
-    }
-
-    .gold-line{
-        margin:0 auto 28px;
-    }
-
-    .who-image{
-        height:400px;
-    }
-
-    .vision-box{
-        text-align:left;
-    }
-
-}
-
-@media (max-width:768px){
-
-    .about-section{
-        height:200px;
-    }
-
-    .who-title{
-        font-size:38px;
-    }
-
-    .who-image{
-        height:300px;
-    }
-
-    .vision-box{
-        flex-direction:column;
-        align-items:center;
-        text-align:center;
-    }
-
-}
- /* =====================================================
    OUR VALUES
 ===================================================== */
 
@@ -330,49 +306,14 @@ RIGHT
 }
 
 /* =====================================================
-   RESPONSIVE
-===================================================== */
-
-@media (max-width:1100px){
-
-    .values-grid{
-        grid-template-columns:repeat(3,1fr);
-    }
-
-    .stats-container{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-}
-
-@media (max-width:768px){
-
-    .values-grid{
-        grid-template-columns:1fr;
-    }
-
-    .stats-container{
-        grid-template-columns:1fr;
-    }
-
-    .value-card{
-        padding:35px 25px;
-    }
-
-    .stat-box h2{
-        font-size:38px;
-    }
-
-}
- /* =====================================================
    OUR APPROACH
 ===================================================== */
 
- .approach-section{
+.approach-section{
     width:100%;
     max-width:1400px;
     margin:100px auto;
-    padding:0 2%;
+    padding:0 5%;
 
     display:grid;
     grid-template-columns:55% 45%;
@@ -380,15 +321,23 @@ RIGHT
     align-items:center;
 }
 
-  .approach-image{
+.approach-image{
     width:100%;
     height:430px;
-
-    margin-left:-250px;   /* Move image left */
+    margin-left:0;
 
     border-radius:12px;
     overflow:hidden;
     box-shadow:0 20px 40px rgba(0,0,0,.12);
+}
+
+/* Desktop-only visual offset — pulls the image slightly
+   left for a staggered layout. Only applied on large screens
+   where there is room, so it never causes overflow below. */
+@media (min-width:1300px){
+    .approach-image{
+        margin-left:-120px;
+    }
 }
 
 .approach-image img{
@@ -475,7 +424,7 @@ OUR APPROACH ICONS
    WHAT DRIVES US
 ===================================================== */
 
- .drives-section{
+.drives-section{
     width:100%;
     margin:100px 0;
     background:#08111d;
@@ -510,14 +459,14 @@ OUR APPROACH ICONS
     letter-spacing:4px;
 }
 
-  .drives-grid{
+.drives-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:0;
     margin-top:40px;
 }
 
- .drive-card{
+.drive-card{
     background:transparent;
     border:none;
     border-right:1px solid rgba(255,255,255,.15);
@@ -536,7 +485,7 @@ OUR APPROACH ICONS
     transform:translateY(-6px);
 }
 
- .drive-icon{
+.drive-icon{
     font-size:52px;
     color:#c89b53;
     margin-bottom:18px;
@@ -550,7 +499,7 @@ OUR APPROACH ICONS
     margin-bottom:15px;
 }
 
- .drive-card p{
+.drive-card p{
     color:#d6d6d6;
     font-size:15px;
     line-height:1.8;
@@ -569,10 +518,91 @@ OUR APPROACH ICONS
 }
 
 /* =====================================================
-   RESPONSIVE
+   TABLET (1024px and below)
+===================================================== */
+
+@media (max-width:1024px){
+
+    .who-we-are{
+        gap:45px;
+    }
+
+    .who-title{
+        font-size:44px;
+    }
+
+    .whoimage img{
+        width:100%;
+        height:420px;
+    }
+
+    .values-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .stats-container{
+        grid-template-columns:repeat(3,1fr);
+        gap:20px;
+    }
+
+    .approach-title{
+        font-size:42px;
+    }
+
+    .approach-image{
+        height:360px;
+    }
+
+    .drives-grid{
+        grid-template-columns:repeat(2,1fr);
+        row-gap:35px;
+    }
+
+    .drive-card{
+        border-right:1px solid rgba(255,255,255,.15);
+        border-bottom:1px solid rgba(255,255,255,.15);
+    }
+
+    .drive-card:nth-child(2n){
+        border-right:none;
+    }
+
+    .drive-card:nth-last-child(-n+2){
+        border-bottom:none;
+    }
+
+}
+
+/* =====================================================
+   TABLET / SMALL LAPTOP (1100px and below)
 ===================================================== */
 
 @media (max-width:1100px){
+
+    .about-section{
+        height:250px;
+    }
+
+    .who-we-are{
+        grid-template-columns:1fr;
+        gap:40px;
+        text-align:center;
+    }
+
+    .gold-line{
+        margin:0 auto 28px;
+    }
+
+    .whoimage img{
+        width:100%;
+        max-width:500px;
+        height:400px;
+        margin:0 auto;
+    }
+
+    .vision-box{
+        text-align:left;
+    }
 
     .approach-section{
         grid-template-columns:1fr;
@@ -581,6 +611,7 @@ OUR APPROACH ICONS
 
     .approach-image{
         height:380px;
+        margin-left:0;
     }
 
     .drives-section{
@@ -593,39 +624,209 @@ OUR APPROACH ICONS
 
 }
 
+/* =====================================================
+   MOBILE (768px and below)
+===================================================== */
+
 @media (max-width:768px){
 
+    .about-section{
+        height:200px;
+    }
+
+    .who-we-are{
+        margin:60px auto;
+        gap:35px;
+    }
+
+    .who-title{
+        font-size:34px;
+    }
+
+    .whoimage img{
+        height:280px;
+    }
+
+    .vision-box{
+        flex-direction:column;
+        align-items:center;
+        text-align:center;
+    }
+
+    .our-values{
+        margin:60px auto;
+    }
+
+    .values-heading{
+        margin-bottom:40px;
+    }
+
+    .values-grid{
+        grid-template-columns:1fr;
+    }
+
+    .value-card{
+        padding:35px 25px;
+    }
+
+    .company-stats{
+        margin:60px 0;
+        padding:50px 5%;
+    }
+
+    .stats-container{
+        grid-template-columns:repeat(2,1fr);
+        gap:20px;
+    }
+
+    .stat-box h2{
+        font-size:34px;
+    }
+
+    .stat-icon{
+        font-size:34px;
+    }
+
+    .approach-section{
+        margin:60px auto;
+    }
+
     .approach-title{
-        font-size:36px;
+        font-size:32px;
+    }
+
+    .approach-description{
+        font-size:16px;
+        margin-bottom:30px;
+    }
+
+    .approach-image{
+        height:260px;
+    }
+
+    .approach-grid{
+        grid-template-columns:1fr 1fr;
+        display:grid;
+        border-top:1px solid #ececec;
+        border-bottom:none;
+    }
+
+    .approach-item{
+        border-right:1px solid #ececec;
+        border-bottom:1px solid #ececec;
+        padding:25px 15px;
+    }
+
+    .approach-item:nth-child(2n){
+        border-right:none;
+    }
+
+    .drives-section{
+        margin:60px 0;
+    }
+
+    .drives-content{
+        padding:50px 6%;
+    }
+
+    .drives-heading{
+        flex-direction:column;
+        gap:12px;
+        margin-bottom:40px;
+    }
+
+    .drives-heading h2{
+        font-size:17px;
+        text-align:center;
+    }
+
+    .drives-grid{
+        grid-template-columns:1fr;
+        row-gap:0;
+    }
+
+    .drive-card{
+        border-right:none;
+        border-bottom:1px solid rgba(255,255,255,.15);
+        padding:30px 20px;
+    }
+
+    .drive-card:last-child{
+        border-bottom:none;
+    }
+
+    .drives-image{
+        height:280px;
+    }
+
+}
+
+/* =====================================================
+   SMALL MOBILE (480px and below)
+===================================================== */
+
+@media (max-width:480px){
+
+    .about-section{
+        height:160px;
+    }
+
+    .who-title{
+        font-size:28px;
+    }
+
+    .whoimage img{
+        height:220px;
+        border-radius:8px;
+    }
+
+    .vision-icon{
+        width:64px;
+        height:64px;
+        font-size:26px;
+    }
+
+    .value-icon{
+        width:70px;
+        height:70px;
+        font-size:32px;
+    }
+
+    .value-card h3{
+        font-size:19px;
+    }
+
+    .stats-container{
+        grid-template-columns:1fr 1fr;
+        gap:14px;
+    }
+
+    .stat-box{
+        padding:18px 10px;
+    }
+
+    .stat-box h2{
+        font-size:28px;
+    }
+
+    .approach-title{
+        font-size:26px;
+    }
+
+    .approach-image{
+        height:200px;
     }
 
     .approach-grid{
         grid-template-columns:1fr;
     }
 
-    .approach-image{
-        height:300px;
+    .approach-item{
+        border-right:none;
     }
 
-    .drives-content{
-        padding:50px 20px;
-    }
-
-    .drives-heading{
-        flex-direction:column;
-        gap:12px;
-    }
-
-    .drives-grid{
-        grid-template-columns:1fr;
-    }
-
-    .drive-card{
-        padding:30px 20px;
-    }
-
-    .drive-card h3{
-        font-size:22px;
+    .drives-image{
+        height:220px;
     }
 
 }

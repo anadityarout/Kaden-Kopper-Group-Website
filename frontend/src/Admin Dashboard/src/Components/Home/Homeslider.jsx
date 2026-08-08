@@ -12,7 +12,8 @@ const HomeSlider = () => {
   const [slides, setSlides] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
   const [slideType, setSlideType] = useState("");
-  
+  const [editingSlide, setEditingSlide] = useState(null);
+const [existingPreview, setExistingPreview] = useState("");
 
    const [formData, setFormData] = useState({
   name: "",
@@ -96,19 +97,23 @@ const handleFile = (e) => {
 
   const resetForm = () => {
 
+  setShowOptions(false);
 
-    setShowOptions(false);
+  setSlideType("");
 
-    setSlideType("");
+  setEditingSlide(null);
 
-   setFormData({
-  name: "",
-  description: "",
-  image: null,
-  video: null,
-});
+  setExistingPreview("");
 
-  };
+  setFormData({
+    name: "",
+    description: "",
+    image: null,
+    video: null,
+  });
+
+}; 
+
     /* ==========================================
       SAVE SLIDE
   ========================================== */
@@ -117,99 +122,175 @@ const handleFile = (e) => {
 
   try {
 
-    const file =
-    
-
+    let file =
       slideType === "image"
         ? formData.image
         : formData.video;
 
-    if (!file) {
-      alert("Select a file");
-      return;
+    let fileUrl = editingSlide
+      ? (slideType === "image"
+          ? editingSlide.image
+          : editingSlide.video)
+      : "";
+
+    let key = editingSlide ? editingSlide.key : "";
+
+    /* ======================================
+       Upload New File (Only if Selected)
+    ====================================== */
+
+    if (file) {
+
+      const uploadResponse = await fetch(
+
+        `${API_URL}?upload=true&fileName=${encodeURIComponent(
+          file.name
+        )}&fileType=${encodeURIComponent(file.type)}`
+
+      );
+
+      const uploadData = await uploadResponse.json();
+
+      if (!uploadResponse.ok) {
+        alert(uploadData.message);
+        return;
+      }
+
+      const s3Response = await fetch(
+        uploadData.uploadUrl,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": file.type,
+          },
+          body: file,
+        }
+      );
+
+      if (!s3Response.ok) {
+        alert("S3 Upload Failed");
+        return;
+      }
+
+      fileUrl = uploadData.fileUrl;
+      key = uploadData.key;
+
     }
 
     /* ======================================
-       GET PRESIGNED URL
+       ADD NEW SLIDE
     ====================================== */
 
-    const uploadResponse = await fetch(
+    if (!editingSlide) {
 
-      `${API_URL}?upload=true&fileName=${encodeURIComponent(file.name)}&fileType=${encodeURIComponent(file.type)}`
+      if (!file) {
+        alert("Select a file");
+        return;
+      }
 
-    );
+      const response = await fetch(API_URL, {
 
-    const uploadData = await uploadResponse.json();
+        method: "POST",
 
-console.log("Upload URL Response:", uploadData);
-console.log("Upload URL Status:", uploadResponse.status);
-    if (!uploadResponse.ok) {
-  alert(uploadData.message);
-  return;
-}
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+
+          type: slideType,
+          name: formData.name,
+          description: formData.description,
+
+          image:
+            slideType === "image"
+              ? fileUrl
+              : "",
+
+          video:
+            slideType === "video"
+              ? fileUrl
+              : "",
+
+          key,
+
+        }),
+
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message);
+        return;
+      }
+
+      alert("Slide Uploaded");
+
+    }
 
     /* ======================================
-       UPLOAD FILE TO S3
+       UPDATE SLIDE
     ====================================== */
 
-     const s3Response = await fetch(uploadData.uploadUrl, {
-  method: "PUT",
-  headers: {
-    "Content-Type": file.type,
-  },
-  body: file,
-});
+    else {
 
-  console.log("S3 Status:", s3Response.status);
-console.log("S3 OK:", s3Response.ok);
+      const response = await fetch(API_URL, {
 
-if (!s3Response.ok) {
-  const text = await s3Response.text();
-  console.log(text);
+        method: "PUT",
 
-  alert("S3 Upload Failed");
-  return;
-}
-    /* ======================================
-       SAVE METADATA
-    ====================================== */
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-    const saveResponse = await fetch(API_URL, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    type: slideType,
-    name: formData.name,
-    description: formData.description,
-    image: slideType === "image" ? uploadData.fileUrl : "",
-    video: slideType === "video" ? uploadData.fileUrl : "",
-    key: uploadData.key,
-  }),
-});
+        body: JSON.stringify({
 
-  const saveData = await saveResponse.json();
+          id: editingSlide.id,
 
-console.log("POST Status:", saveResponse.status);
-console.log("POST Response:", saveData);
+          name: formData.name,
 
-if (!saveResponse.ok) {
-  alert(saveData.message);
-  return;
-}
+          description: formData.description,
+
+          image:
+            slideType === "image"
+              ? fileUrl
+              : "",
+
+          video:
+            slideType === "video"
+              ? fileUrl
+              : "",
+
+          key,
+
+          oldKey: editingSlide.key,
+
+        }),
+
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message);
+        return;
+      }
+
+      alert("Slide Updated");
+
+    }
 
     await getSlides();
 
     resetForm();
 
-    alert("Slide Uploaded");
+  }
 
-  } catch (err) {
+  catch (err) {
 
     console.error(err);
 
-    alert("Upload Failed");
+    alert("Operation Failed");
 
   }
 
@@ -250,6 +331,33 @@ alert("Slide Deleted");
     console.error(err);
 
   }
+
+};
+
+/* ==========================================
+      EDIT SLIDE
+========================================== */
+
+const handleEdit = (slide) => {
+
+  setEditingSlide(slide);
+
+  setShowOptions(true);
+
+  setSlideType(slide.type);
+
+  setFormData({
+    name: slide.name,
+    description: slide.description || "",
+    image: null,
+    video: null,
+  });
+
+  setExistingPreview(
+    slide.type === "image"
+      ? slide.image
+      : slide.video
+  );
 
 };
 
@@ -307,7 +415,9 @@ alert("Slide Deleted");
 
         <div className="upload-form">
 
-          <h3>Image Slide</h3>
+          <h3>
+  {editingSlide ? "Edit Image Slide" : "Image Slide"}
+</h3>
 
           <input
             type="text"
@@ -333,25 +443,53 @@ alert("Slide Deleted");
             onChange={handleFile}
           />
 
-          {formData.image && (
+          <div className="preview-container">
 
-  <div className="preview-container">
+  {formData.image ? (
 
-     <img
-  src={URL.createObjectURL(formData.image)}
-  alt="Preview"
-  className="preview-image"
-/>
-  </div>
+    <img
+      src={URL.createObjectURL(formData.image)}
+      alt="Preview"
+      className="preview-image"
+    />
 
-)}
+  ) : (
 
-          <button
-  className="save-btn"
-  onClick={saveSlide}
->
-  Save Slide
-</button>
+    existingPreview && (
+
+      <img
+        src={existingPreview}
+        alt="Current"
+        className="preview-image"
+      />
+
+    )
+
+  )}
+
+</div>
+
+          <div className="form-buttons">
+
+  <button
+    className="save-btn"
+    onClick={saveSlide}
+  >
+    {editingSlide ? "Save Changes" : "Save Slide"}
+  </button>
+
+  {editingSlide && (
+
+    <button
+      className="cancel-btn"
+      onClick={resetForm}
+    >
+      Cancel
+    </button>
+
+  )}
+
+</div>
 
         </div>
 
@@ -363,7 +501,9 @@ alert("Slide Deleted");
 
         <div className="upload-form">
 
-          <h3>Video Slide</h3>
+          <h3>
+  {editingSlide ? "Edit Video Slide" : "Video Slide"}
+</h3>
 
           <input
             type="text"
@@ -382,22 +522,52 @@ alert("Slide Deleted");
             onChange={handleFile}
           />
 
-          {formData.video && (
+          <div>
 
-            <video
-  src={URL.createObjectURL(formData.video)}
-  controls
-  className="preview-video"
-/>
+  {formData.video ? (
 
-          )}
+    <video
+      src={URL.createObjectURL(formData.video)}
+      controls
+      className="preview-video"
+    />
 
-          <button
-  className="save-btn"
-  onClick={saveSlide}
->
-  Save Video
-</button>
+  ) : (
+
+    existingPreview && (
+
+      <video
+        src={existingPreview}
+        controls
+        className="preview-video"
+      />
+
+    )
+
+  )}
+
+</div>
+          <div className="form-buttons">
+
+  <button
+    className="save-btn"
+    onClick={saveSlide}
+  >
+    {editingSlide ? "Save Changes" : "Save Video"}
+  </button>
+
+  {editingSlide && (
+
+    <button
+      className="cancel-btn"
+      onClick={resetForm}
+    >
+      Cancel
+    </button>
+
+  )}
+
+</div>
 
         </div>
 
@@ -517,18 +687,21 @@ alert("Slide Deleted");
 
                   <td>
 
-                  
+  <button
+    className="edit-btn"
+    onClick={() => handleEdit(slide)}
+  >
+    Edit
+  </button>
 
-                    <button
-                      className="delete-btn"
-                      onClick={() =>
-                        deleteSlide(slide.id)
-                      }
-                    >
-                      Delete
-                    </button>
+  <button
+    className="delete-btn"
+    onClick={() => deleteSlide(slide.id)}
+  >
+    Delete
+  </button>
 
-                  </td>
+</td>
 
                 </tr>
 

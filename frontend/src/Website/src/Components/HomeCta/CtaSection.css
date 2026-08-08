@@ -1,0 +1,121 @@
+/* ==========================================
+   CTA SECTION
+========================================== */
+
+.rk-cta-section{
+    position:relative;
+    width:100%;
+    padding:60px 5%;
+    background-image:url("https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1600&auto=format&fit=crop");
+    background-size:cover;
+    background-position:center;
+    overflow:hidden;
+}
+
+.rk-cta-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        to bottom,
+        rgba(10,14,22,.75) 0%,
+        rgba(10,14,22,.85) 100%
+    );
+}
+
+.rk-cta-content{
+    position:relative;
+    z-index:2;
+    max-width:700px;
+    margin:0 auto;
+    text-align:center;
+}
+
+.rk-cta-content h2{
+    font-family:"Playfair Display", serif;
+    font-size:32px;
+    font-weight:700;
+    color:#fff;
+    margin-bottom:10px;
+}
+
+.rk-cta-content p{
+    font-size:15px;
+    color:#d8d8d8;
+    margin-bottom:26px;
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.rk-cta-buttons{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+}
+
+.rk-cta-btn-filled{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:14px 28px;
+    border:none;
+    background:#C89A2B;
+    color:#0b0e14;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.rk-cta-btn-filled:hover{
+    background:#e0b23a;
+}
+
+.rk-cta-btn-outline{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:14px 28px;
+    border:1px solid #fff;
+    background:transparent;
+    color:#fff;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.rk-cta-btn-outline:hover{
+    background:#fff;
+    color:#0b0e14;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:600px){
+
+.rk-cta-section{
+    padding:50px 20px;
+}
+
+.rk-cta-content h2{
+    font-size:24px;
+}
+
+.rk-cta-buttons{
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+}
+
+.rk-cta-btn-filled,
+.rk-cta-btn-outline{
+    width:100%;
+    max-width:260px;
+    justify-content:center;
+}
+
+}

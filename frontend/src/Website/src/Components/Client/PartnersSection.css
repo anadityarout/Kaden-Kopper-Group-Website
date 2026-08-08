@@ -1,0 +1,92 @@
+/* ==========================================
+   OUR PARTNERS SECTION
+========================================== */
+
+.rk-part-section{
+    width:100%;
+    background:linear-gradient(135deg, #ffd6e0 0%, #ffe8ee 60%, #fff0f4 100%);
+    padding:60px 5%;
+}
+
+.rk-part-header{
+    text-align:center;
+    margin-bottom:34px;
+}
+
+.rk-part-subtitle{
+    display:inline-block;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#C89A2B;
+}
+
+/* ==========================================
+   GRID
+========================================== */
+
+.rk-part-grid{
+    max-width:1300px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:20px;
+}
+
+.rk-part-card{
+    background:#fff;
+    border-radius:10px;
+    height:110px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    box-shadow:0 4px 14px rgba(0,0,0,.05);
+    transition:.3s;
+}
+
+.rk-part-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 24px rgba(0,0,0,.1);
+}
+
+.rk-part-card img{
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media(max-width:1000px){
+
+.rk-part-grid{
+    grid-template-columns:repeat(3, 1fr);
+}
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:600px){
+
+.rk-part-section{
+    padding:40px 20px;
+}
+
+.rk-part-grid{
+    grid-template-columns:repeat(2, 1fr);
+    gap:14px;
+}
+
+.rk-part-card{
+    height:90px;
+    padding:14px;
+}
+
+}

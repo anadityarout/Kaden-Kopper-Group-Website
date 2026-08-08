@@ -1,0 +1,119 @@
+/* ==========================================
+   AWARDS & CERTIFICATIONS SECTION
+========================================== */
+
+.rk-aw-section{
+    width:100%;
+    background:#fdf6f2;
+    padding:60px 5%;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.rk-aw-header{
+    text-align:center;
+    margin-bottom:36px;
+}
+
+.rk-aw-subtitle{
+    display:inline-block;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#C89A2B;
+    margin-bottom:10px;
+}
+
+.rk-aw-header h2{
+    font-family:"Playfair Display", serif;
+    font-size:28px;
+    font-weight:700;
+    color:#2a2226;
+}
+
+/* ==========================================
+   ROW OF CARDS
+========================================== */
+
+.rk-aw-row{
+    max-width:1300px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:20px;
+}
+
+.rk-aw-card{
+    background:#fff;
+    border-radius:10px;
+    padding:26px 16px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    box-shadow:0 4px 14px rgba(0,0,0,.05);
+    transition:.3s;
+}
+
+.rk-aw-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 24px rgba(0,0,0,.1);
+}
+
+.rk-aw-icon{
+    color:#C89A2B;
+    margin-bottom:14px;
+}
+
+.rk-aw-card h4{
+    font-size:13px;
+    font-weight:700;
+    color:#2a2226;
+    line-height:1.4;
+}
+
+.rk-aw-card p{
+    font-size:12px;
+    color:#8a7a75;
+    margin-top:2px;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media(max-width:1000px){
+
+.rk-aw-row{
+    grid-template-columns:repeat(3, 1fr);
+}
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:600px){
+
+.rk-aw-section{
+    padding:40px 20px;
+}
+
+.rk-aw-row{
+    grid-template-columns:repeat(2, 1fr);
+    gap:14px;
+}
+
+.rk-aw-card{
+    padding:20px 12px;
+}
+
+.rk-aw-header h2{
+    font-size:22px;
+}
+
+}

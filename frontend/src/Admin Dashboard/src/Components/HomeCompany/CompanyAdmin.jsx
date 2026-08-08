@@ -18,7 +18,8 @@ const CompanyAdmin = () => {
     image: "",
   });
 const [selectedFile, setSelectedFile] = useState(null);
- 
+ const [editingCompany, setEditingCompany] = useState(null);
+const [oldKey, setOldKey] = useState("");
 
 const loadCompanies = async () => {
   try {
@@ -78,7 +79,11 @@ useEffect(() => {
       RESET FORM
   ============================ */
 
-    const resetForm = () => {
+   const resetForm = () => {
+
+  setEditingCompany(null);
+
+  setOldKey("");
 
   setSelectedFile(null);
 
@@ -92,10 +97,14 @@ useEffect(() => {
   /* ===========================
     CANCEL FORM
 =========================== */
-
 const cancelForm = () => {
+
   resetForm();
+
+  setEditingCompany(null);
+
   setShowForm(false);
+
 };
 
   /* ===========================
@@ -109,58 +118,106 @@ const cancelForm = () => {
     return;
   }
 
-  if (!selectedFile) {
-    alert("Please select image.");
-    return;
-  }
-
   try {
 
-    const uploadResponse = await fetch(
+    let imageUrl = form.image;
+    let key = oldKey;
 
-      `${API_URL}?upload=true&fileName=${encodeURIComponent(
-        selectedFile.name
-      )}&fileType=${encodeURIComponent(
-        selectedFile.type
-      )}`
+    /* ===========================
+       Upload New Image (Optional)
+    ============================ */
 
-    );
+    if (selectedFile) {
 
-    if (!uploadResponse.ok) {
-  throw new Error("Failed to get upload URL");
-}
+      const uploadResponse = await fetch(
+        `${API_URL}?upload=true&fileName=${encodeURIComponent(
+          selectedFile.name
+        )}&fileType=${encodeURIComponent(
+          selectedFile.type
+        )}`
+      );
 
-const uploadData = await uploadResponse.json();
+      if (!uploadResponse.ok) {
+        throw new Error("Failed to get upload URL");
+      }
 
-    const upload = await fetch(uploadData.uploadUrl, {
-  method: "PUT",
-  headers: {
-    "Content-Type": selectedFile.type,
-  },
-  body: selectedFile,
-});
+      const uploadData = await uploadResponse.json();
 
-if (!upload.ok) {
-  throw new Error("Image upload failed");
-}
+      const upload = await fetch(uploadData.uploadUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": selectedFile.type,
+        },
+        body: selectedFile,
+      });
 
-    const save = await fetch(API_URL, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    companyName: form.companyName,
-    companyDescription: form.companyDescription,
-    image: uploadData.fileUrl,
-    key: uploadData.key,
-  }),
-});
+      if (!upload.ok) {
+        throw new Error("Image upload failed");
+      }
 
-if (!save.ok) {
-  throw new Error("Company save failed");
-}
-    alert("Company Added");
+      imageUrl = uploadData.fileUrl;
+      key = uploadData.key;
+    }
+
+    /* ===========================
+       UPDATE COMPANY
+    ============================ */
+
+    if (editingCompany) {
+
+      const update = await fetch(API_URL, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: editingCompany.id,
+          companyName: form.companyName,
+          companyDescription: form.companyDescription,
+          image: imageUrl,
+          key,
+          oldKey,
+        }),
+      });
+
+      if (!update.ok) {
+        throw new Error("Update failed");
+      }
+
+      alert("Company Updated");
+
+    }
+
+    /* ===========================
+       ADD COMPANY
+    ============================ */
+
+    else {
+
+      if (!selectedFile) {
+        alert("Please select image.");
+        return;
+      }
+
+      const save = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          companyName: form.companyName,
+          companyDescription: form.companyDescription,
+          image: imageUrl,
+          key,
+        }),
+      });
+
+      if (!save.ok) {
+        throw new Error("Save failed");
+      }
+
+      alert("Company Added");
+    }
 
     resetForm();
 
@@ -172,47 +229,73 @@ if (!save.ok) {
 
     console.log(err);
 
-    alert("Upload Failed");
+    alert("Operation Failed");
 
   }
 
 };
 
+const editCompany = (company) => {
+
+  setEditingCompany(company);
+
+  setOldKey(company.key);
+
+  setSelectedFile(null);
+
+  setForm({
+    companyName: company.companyName,
+    companyDescription: company.companyDescription,
+    image: company.image,
+  });
+
+  setShowForm(true);
+
+};
   /* ===========================
       DELETE COMPANY
   ============================ */
 
   const deleteCompany = async (id) => {
 
-  if (!window.confirm("Delete this company?"))
-    return;
+  if (!window.confirm("Delete this company?")) return;
+
+  console.log("Deleting ID:", id);
 
   try {
 
     const response = await fetch(API_URL, {
-  method: "DELETE",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    id,
-  }),
-});
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: id,
+      }),
+    });
 
-if (!response.ok) {
-  throw new Error("Delete failed");
-}
+    console.log("Status:", response.status);
 
-loadCompanies();
+    const data = await response.json();
+
+    console.log("Response:", data);
+
+    if (!response.ok) {
+      alert(data.message);
+      return;
+    }
+
+    alert("Deleted Successfully");
+
+    await loadCompanies();
 
   } catch (err) {
 
-    console.log(err);
+    console.error(err);
 
   }
 
 };
-
 
   return (
     <div className="companyAdmin">
@@ -221,7 +304,11 @@ loadCompanies();
 
 <button
   className="addCompanyBtn"
-  onClick={() => setShowForm(true)}
+  onClick={() => {
+    resetForm();
+    setEditingCompany(null);
+    setShowForm(true);
+  }}
 >
   + Add Our Company
 </button>
@@ -246,23 +333,44 @@ loadCompanies();
           onChange={handleInput}
         />
 
-        <h3>Company Image</h3>
+        <h3>
+  {editingCompany
+    ? "Replace Company Image (Optional)"
+    : "Company Image"}
+</h3>
 
         <input
-          type="file"
-          accept="image/*"
-          onChange={(e) =>
-            handleImage(e.target.files[0])
-          }
-        />
+  type="file"
+  accept="image/*"
+  onChange={(e) =>
+    handleImage(e.target.files[0])
+  }
+/>
 
-        {form.image && (
-          <img
-            src={form.image}
-            alt="Preview"
-            className="preview"
-          />
-        )}
+{editingCompany && (
+  <p
+    style={{
+      marginTop: "8px",
+      color: "#777",
+      fontSize: "13px",
+    }}
+  >
+    Leave empty if you don't want to replace the image.
+  </p>
+)}
+       {form.image && (
+
+  <div className="previewWrapper">
+
+    <img
+      src={form.image}
+      alt="Preview"
+      className="preview"
+    />
+
+  </div>
+
+)}
 
        
 
@@ -272,7 +380,9 @@ loadCompanies();
   className="saveBtn"
   onClick={saveCompany}
 >
-  Save Company
+  {editingCompany
+    ? "Save Changes"
+    : "Save Company"}
 </button>
 
 <button
@@ -335,14 +445,23 @@ loadCompanies();
             <td>{company.created}</td>
 
             <td>
-              <button
-                className="deleteBtn"
-                onClick={() => deleteCompany(company.id)}
-              >
-                Delete
-              </button>
-            </td>
 
+  <button
+    className="editBtn"
+    onClick={() => editCompany(company)}
+  >
+    Edit
+  </button>
+
+  <button
+    className="deleteBtn"
+    onClick={() => deleteCompany(company.id)}
+  >
+    Delete
+  </button>
+
+</td>
+            
           </tr>
 
         ))}

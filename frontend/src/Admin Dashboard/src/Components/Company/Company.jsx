@@ -110,8 +110,7 @@ useEffect(() => {
     UPLOAD IMAGE TO S3
 ========================================== */
 
-const uploadFile = async (file) => {
-
+  const uploadFile = async (file) => {
   if (!file) {
     return {
       url: "",
@@ -119,27 +118,39 @@ const uploadFile = async (file) => {
     };
   }
 
+  // Get presigned URL
   const response = await fetch(
     `${API_URL}?upload=true&fileName=${encodeURIComponent(
       file.name
     )}&fileType=${encodeURIComponent(file.type)}`
   );
 
+  if (!response.ok) {
+    throw new Error("Failed to get upload URL");
+  }
+
   const uploadData = await response.json();
 
-  await fetch(uploadData.uploadUrl, {
+  console.log("Upload Data:", uploadData);
+
+  // Upload to S3
+  const uploadResponse = await fetch(uploadData.uploadUrl, {
     method: "PUT",
-    headers: {
-      "Content-Type": file.type,
-    },
     body: file,
   });
+
+  console.log("Upload Status:", uploadResponse.status);
+
+  if (!uploadResponse.ok) {
+    const errorText = await uploadResponse.text();
+    console.log(errorText);
+    throw new Error("S3 upload failed");
+  }
 
   return {
     url: uploadData.fileUrl,
     key: uploadData.key,
   };
-
 };
 
   /* ==========================================
@@ -584,20 +595,41 @@ console.log("Logo Upload:", logoUpload);
 
                   <td>
 
-                   <img
-  src={company.heroImage || ""}
-  alt="Hero"
-  className="table-image"
-/>
+                    {company.heroImage ? (
+
+                      <img
+                        src={company.heroImage}
+                        alt="Hero"
+                        className="table-image"
+                      />
+
+                    ) : (
+
+                      <div className="no-image-box">
+                        No Banner
+                      </div>
+
+                    )}
+
                   </td>
 
                   <td>
 
-                   <img
-  src={company.image || ""}
-  alt={company.name}
-  className="table-image"
-/>
+                    {company.image ? (
+
+                      <img
+                        src={company.image}
+                        alt={company.name}
+                        className="table-image"
+                      />
+
+                    ) : (
+
+                      <div className="no-image-box">
+                        No Logo
+                      </div>
+
+                    )}
 
                   </td>
 
@@ -605,21 +637,29 @@ console.log("Logo Upload:", logoUpload);
 
                   <td className="company-description">
 
-                    {company.description.length > 60
+                    {(company.description || "").length > 60
                       ? company.description.substring(0, 60) + "..."
-                      : company.description}
+                      : company.description || "-"}
 
                   </td>
 
                   <td>
 
-                    <a
-                      href={company.link}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Visit
-                    </a>
+                    {company.link ? (
+
+                      <a
+                        href={company.link}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Visit
+                      </a>
+
+                    ) : (
+
+                      "-"
+
+                    )}
 
                   </td>
 

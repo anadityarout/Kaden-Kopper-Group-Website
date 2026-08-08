@@ -11,7 +11,7 @@
 
 /* Home Slider Image */
 .image-counting {
-  margin-top: -50px;
+  margin-top: 10px;
 }
 
 /* Home Slider Video */
@@ -139,7 +139,7 @@
 @media (max-width:1100px){
 
 .image-counting{
-margin-top:-50px;
+margin-top:0;
 }
 
 .video-counting{
@@ -181,7 +181,7 @@ padding:0 20px 50px;
 }
 
 .image-counting{
-margin-top:-30px;
+margin-top:0;
 }
 
 .video-counting{

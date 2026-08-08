@@ -7,11 +7,6 @@ import {
 
 import "./CompanyPage.css";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-
-import "swiper/css";
-
 const API_URL =
   "https://a9vqiga5na.execute-api.ap-south-1.amazonaws.com/prod/company-page";
 
@@ -42,10 +37,24 @@ const CompanyPage = () => {
         if (Array.isArray(data)) {
 
           console.log(data);
-setCompanies(data);
 
-          if (data.length > 0) {
-            setCompanyHeroImage(data[0].heroImage || "");
+          /* Only keep companies that have a name,
+             so incomplete/test entries don't show
+             up on the public site */
+          const validCompanies = data.filter(
+            (company) => company.name && company.name.trim() !== ""
+          );
+
+          setCompanies(validCompanies);
+
+          /* Use the first company that actually has
+             a hero image, instead of always data[0] */
+          const firstWithHero = data.find(
+            (company) => company.heroImage
+          );
+
+          if (firstWithHero) {
+            setCompanyHeroImage(firstWithHero.heroImage);
           }
 
         } else {
@@ -96,46 +105,7 @@ setCompanies(data);
 
         <div className="section-line"></div>
 
-        {/* ================= LOGO SLIDER ================= */}
-
-        <div className="company-logo-slider">
-
-          <Swiper
-            modules={[Autoplay]}
-            slidesPerView={5}
-            spaceBetween={30}
-            loop={true}
-            autoplay={{
-              delay: 5000,
-              disableOnInteraction: false,
-            }}
-            breakpoints={{
-              320: {
-                slidesPerView: 2,
-              },
-              768: {
-                slidesPerView: 3,
-              },
-              1024: {
-                slidesPerView: 5,
-              },
-            }}
-          >
-
-            {companies.map((company) => (
-
-              <SwiperSlide key={company.id}>
-
-                
-
-              </SwiperSlide>
-
-            ))}
-
-          </Swiper>
-
-        </div>
-                {/* ================= COMPANY CARDS ================= */}
+        {/* ================= COMPANY CARDS ================= */}
 
         <div className="companies-grid">
 
@@ -146,20 +116,18 @@ setCompanies(data);
       key={company.id}
     >
 
-      <div className="company-image">
+      {company.image && (
 
-     
+        <div className="company-image">
 
-      </div>
+          <img
+            src={company.image}
+            alt={company.name}
+          />
 
-      <div className="company-icon">
+        </div>
 
-        <img
-          src={company.image}
-          alt={company.name}
-        />
-
-      </div>
+      )}
 
       <div className="company-content">
 
@@ -178,7 +146,7 @@ setCompanies(data);
 
             <button>
 
-              Visit Website
+              View More
 
               <FaArrowRight />
 

@@ -12,6 +12,11 @@ const CareerPage = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("banner");
+  const [editingBanner, setEditingBanner] = useState(null);
+
+const [editingJob, setEditingJob] = useState(null);
+
+const [oldBannerKey, setOldBannerKey] = useState("");
 
   /* =====================================
       CAREER BANNER
@@ -135,29 +140,35 @@ const CareerPage = () => {
 
   const clearBannerForm = () => {
 
-    setBannerTitle("");
+  setEditingBanner(null);
 
-    setBannerImage("");
+  setOldBannerKey("");
 
-    setBannerKey("");
+  setBannerTitle("");
 
-  };
+  setBannerImage("");
+
+  setBannerKey("");
+
+};
 
   const clearJobForm = () => {
 
-    setJobName("");
+  setEditingJob(null);
 
-    setJobRole("");
+  setJobName("");
 
-    setJobLocation("");
+  setJobRole("");
 
-    setJobDate("");
+  setJobLocation("");
 
-    setJobType("Full Time");
+  setJobDate("");
 
-    setJobDescription("");
+  setJobType("Full Time");
 
-  };
+  setJobDescription("");
+
+};
 
   /* =====================================
       OPEN MODAL
@@ -183,70 +194,128 @@ const CareerPage = () => {
 
   };
 
+    const handleEditBanner = (banner) => {
+
+  setEditingBanner(banner);
+
+  setOldBannerKey(banner.key || "");
+
+  setBannerTitle(banner.title || "");
+
+  setBannerImage(banner.image || "");
+
+  setBannerKey(banner.key || "");
+
+  setActiveTab("banner");
+
+  setShowModal(true);
+
+};
+
+
   /* =====================================
       SAVE BANNER
   ===================================== */
     const saveBanner = async () => {
 
-    if (!bannerImage) {
+  if (!bannerImage) {
 
-      alert("Please upload a banner image.");
+    alert("Please upload a banner image.");
+
+    return;
+
+  }
+
+  try {
+
+    const res = await fetch(API_URL, {
+
+      method: editingBanner ? "PUT" : "POST",
+
+      headers: {
+
+        "Content-Type": "application/json",
+
+      },
+
+      body: JSON.stringify({
+
+        type: "banner",
+
+        id: editingBanner
+          ? editingBanner.id
+          : Date.now(),
+
+        title: bannerTitle,
+
+        image: bannerImage,
+
+        key: bannerKey,
+
+        oldKey: oldBannerKey,
+
+      }),
+
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+
+      alert(data.message);
 
       return;
 
     }
 
-    try {
+    await loadCareer();
 
-      const res = await fetch(API_URL, {
+    clearBannerForm();
 
-        method: "POST",
+    setShowModal(false);
 
-        headers: {
+    alert(
 
-          "Content-Type": "application/json",
+      editingBanner
 
-        },
+        ? "Career Banner Updated Successfully"
 
-        body: JSON.stringify({
+        : "Career Banner Saved Successfully"
 
-          type: "banner",
+    );
 
-          title: bannerTitle,
+  } catch (err) {
 
-          image: bannerImage,
+    console.log(err);
 
-          key: bannerKey,
+    alert("Failed to save banner.");
 
-        }),
+  }
 
-      });
+};
 
-      const data = await res.json();
+   const handleEditJob = (job) => {
 
-      if (!data.success) {
+  setEditingJob(job);
 
-        alert(data.message);
+  setJobName(job.jobName || "");
 
-        return;
+  setJobRole(job.jobRole || "");
 
-      }
+  setJobLocation(job.jobLocation || "");
 
-      await loadCareer();
+  setJobDate(job.jobDate || "");
 
-      clearBannerForm();
+  setJobType(job.jobType || "Full Time");
 
-      setShowModal(false);
+  setJobDescription(job.jobDescription || "");
 
-    } catch (err) {
+  setActiveTab("job");
 
-      console.log(err);
+  setShowModal(true);
 
-      alert("Failed to save banner.");
+};
 
-    }
-
-  };
 
   /* =====================================
       SAVE JOB
@@ -254,71 +323,89 @@ const CareerPage = () => {
 
   const saveJob = async () => {
 
-    if (!jobName || !jobRole || !jobLocation) {
+  if (
+    !jobName ||
+    !jobRole ||
+    !jobLocation
+  ) {
 
-      alert("Please fill all required fields.");
+    alert("Please fill all required fields.");
+
+    return;
+
+  }
+
+  try {
+
+    const res = await fetch(API_URL, {
+
+      method: editingJob ? "PUT" : "POST",
+
+      headers: {
+
+        "Content-Type": "application/json",
+
+      },
+
+      body: JSON.stringify({
+
+        type: "job",
+
+        id: editingJob
+          ? editingJob.id
+          : Date.now(),
+
+        jobName,
+
+        jobRole,
+
+        jobLocation,
+
+        jobDate,
+
+        jobType,
+
+        jobDescription,
+
+      }),
+
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+
+      alert(data.message);
 
       return;
 
     }
 
-    try {
+    await loadCareer();
 
-      const res = await fetch(API_URL, {
+    clearJobForm();
 
-        method: "POST",
+    setShowModal(false);
 
-        headers: {
+    alert(
 
-          "Content-Type": "application/json",
+      editingJob
 
-        },
+        ? "Job Updated Successfully"
 
-        body: JSON.stringify({
+        : "Job Saved Successfully"
 
-          type: "job",
+    );
 
-          jobName,
+  } catch (err) {
 
-          jobRole,
+    console.log(err);
 
-          jobLocation,
+    alert("Failed to save job.");
 
-          jobDate,
+  }
 
-          jobType,
-
-          jobDescription,
-
-        }),
-
-      });
-
-      const data = await res.json();
-
-      if (!data.success) {
-
-        alert(data.message);
-
-        return;
-
-      }
-
-      await loadCareer();
-
-      clearJobForm();
-
-      setShowModal(false);
-
-    } catch (err) {
-
-      console.log(err);
-
-      alert("Failed to save job.");
-
-    }
-
-  };
+};
 
   /* =====================================
       DELETE BANNER
@@ -527,14 +614,21 @@ const CareerPage = () => {
 
                   <td>
 
-                    <button
-                      className="delete-btn"
-                      onClick={() => deleteBanner(banner.id)}
-                    >
-                      Delete
-                    </button>
+  <button
+    className="edit-btn"
+    onClick={() => handleEditBanner(banner)}
+  >
+    Edit
+  </button>
 
-                  </td>
+  <button
+    className="delete-btn"
+    onClick={() => deleteBanner(banner.id)}
+  >
+    Delete
+  </button>
+
+</td>
 
                 </tr>
 
@@ -609,14 +703,21 @@ const CareerPage = () => {
 
                   <td>
 
-                    <button
-                      className="delete-btn"
-                      onClick={() => deleteJob(job.id)}
-                    >
-                      Delete
-                    </button>
+  <button
+    className="edit-btn"
+    onClick={() => handleEditJob(job)}
+  >
+    Edit
+  </button>
 
-                  </td>
+  <button
+    className="delete-btn"
+    onClick={() => deleteJob(job.id)}
+  >
+    Delete
+  </button>
+
+</td>
 
                 </tr>
 
@@ -646,13 +747,25 @@ const CareerPage = () => {
 
             <div className="popup-header">
 
-              <h2>
+                <h2>
 
-                {activeTab === "banner"
-                  ? "Add Career Banner"
-                  : "Add Job Opening"}
+  {activeTab === "banner"
 
-              </h2>
+    ? editingBanner
+
+      ? "Edit Career Banner"
+
+      : "Add Career Banner"
+
+    : editingJob
+
+      ? "Edit Job Opening"
+
+      : "Add Job Opening"
+
+  }
+
+</h2>
 
               <button
                 className="close-btn"
@@ -752,11 +865,15 @@ const CareerPage = () => {
                 <div className="popup-buttons">
 
                   <button
-                    className="save-btn"
-                    onClick={saveBanner}
-                  >
-                    Save Banner
-                  </button>
+  className="save-btn"
+  onClick={saveBanner}
+>
+
+  {editingBanner
+    ? "Update Banner"
+    : "Save Banner"}
+
+</button>
 
                 </div>
 
@@ -867,11 +984,15 @@ const CareerPage = () => {
                 <div className="popup-buttons">
 
                   <button
-                    className="save-btn"
-                    onClick={saveJob}
-                  >
-                    Save Job
-                  </button>
+  className="save-btn"
+  onClick={saveJob}
+>
+
+  {editingJob
+    ? "Update Job"
+    : "Save Job"}
+
+</button>
 
                 </div>
 

@@ -1,0 +1,179 @@
+/* ==========================================
+   OUR PRESENCE SECTION
+========================================== */
+
+.rk-pr-section{
+    width:100%;
+    background:#fdf6f2;
+    padding:70px 5%;
+    box-sizing:border-box;
+}
+
+.rk-pr-inner{
+    max-width:1700px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:50px;
+}
+
+/* ==========================================
+   LEFT
+========================================== */
+
+.rk-pr-left{
+    flex:0 0 320px;
+}
+
+.rk-pr-subtitle{
+    display:inline-block;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#C89A2B;
+    margin-bottom:14px;
+}
+
+.rk-pr-left h2{
+    font-family:"Playfair Display", serif;
+    font-size:32px;
+    font-weight:700;
+    color:#2a2226;
+    margin-bottom:16px;
+}
+
+.rk-pr-left p{
+    font-size:15px;
+    line-height:1.7;
+    color:#6b5a5f;
+    margin-bottom:26px;
+}
+
+.rk-pr-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:13px 26px;
+    border:1px solid #C89A2B;
+    background:transparent;
+    color:#C89A2B;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.rk-pr-btn:hover{
+    background:#C89A2B;
+    color:#fff;
+}
+
+/* ==========================================
+   RIGHT: MAP
+========================================== */
+
+.rk-pr-right{
+    flex:1;
+    display:flex;
+    justify-content:center;
+}
+
+.rk-pr-map-wrap{
+    position:relative;
+    width:100%;
+    max-width:480px;
+    margin:0 auto;
+}
+
+.rk-pr-map-img{
+    width:100%;
+    display:block;
+    opacity:.55;
+}
+
+.rk-pr-pin-wrap{
+    position:absolute;
+    transform:translate(-50%, -100%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    cursor:pointer;
+}
+
+.rk-pr-pin{
+    color:#8c2f39;
+    filter:drop-shadow(0 1px 2px rgba(0,0,0,.25));
+    transition:transform .2s;
+}
+
+.rk-pr-pin-wrap:hover .rk-pr-pin{
+    transform:scale(1.3);
+    color:#C89A2B;
+}
+
+.rk-pr-pin-label{
+    position:absolute;
+    bottom:100%;
+    left:50%;
+    transform:translateX(-50%);
+    margin-bottom:6px;
+    background:#2a2226;
+    color:#fff;
+    font-size:11px;
+    font-weight:600;
+    padding:4px 9px;
+    border-radius:4px;
+    white-space:nowrap;
+    opacity:0;
+    visibility:hidden;
+    transition:.2s;
+    pointer-events:none;
+    z-index:2;
+}
+
+.rk-pr-pin-wrap:hover .rk-pr-pin-label{
+    opacity:1;
+    visibility:visible;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media(max-width:1000px){
+
+.rk-pr-inner{
+    flex-direction:column;
+    text-align:center;
+}
+
+.rk-pr-left{
+    flex:none;
+}
+
+.rk-pr-btn{
+    margin:0 auto;
+}
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:600px){
+
+.rk-pr-section{
+    padding:50px 20px;
+}
+
+.rk-pr-left h2{
+    font-size:26px;
+}
+
+.rk-pr-map-wrap{
+    max-width:100%;
+}
+
+}
