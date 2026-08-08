@@ -2,212 +2,444 @@
    OUR COMPANIES SECTION
 ========================================== */
 
-.rk-cos-section{
-    width:100%;
-    background:linear-gradient(135deg, #ffd6e0 0%, #ffe8ee 60%, #fff0f4 100%);
-    padding:90px 5%;
+.rk-cos-section {
+    width: 100%;
+    background: linear-gradient(
+        135deg,
+        #ffd6e0 0%,
+        #ffe8ee 60%,
+        #fff0f4 100%
+    );
+    padding: 90px 5%;
 }
 
-.rk-cos-container{
-    max-width:900px;
-    margin:0 auto 60px;
-    text-align:center;
+
+/* ==========================================
+   SECTION HEADER
+========================================== */
+
+.rk-cos-container {
+    max-width: 900px;
+    margin: 0 auto 60px;
+    text-align: center;
 }
 
-.rk-cos-subtitle{
-    display:inline-block;
-    font-size:13px;
-    font-weight:600;
-    letter-spacing:4px;
-    text-transform:uppercase;
-    color:#C89A2B;
-    margin-bottom:16px;
+.rk-cos-subtitle {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #c89a2b;
+    margin-bottom: 16px;
 }
 
-.rk-cos-container h2{
-    font-size:42px;
-    font-weight:400;
-    line-height:1.25;
-    color:#2a2226;
-    margin-bottom:16px;
+.rk-cos-container h2 {
+    font-size: 42px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: #2a2226;
+    margin: 0 0 16px;
 }
 
-.rk-cos-container p{
-    font-size:16px;
-    line-height:1.7;
-    color:#6b5a5f;
+.rk-cos-container p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #6b5a5f;
+    margin: 0;
 }
+
 
 /* ==========================================
    GRID
 ========================================== */
 
-.rk-cos-grid-wrapper{
-    max-width:1400px;
-    margin:0 auto;
+.rk-cos-grid-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.rk-cos-grid{
-    display:grid;
-    grid-template-columns:repeat(4, 1fr);
-    gap:22px;
+.rk-cos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
 }
+
 
 /* ==========================================
    CARD
 ========================================== */
 
-.rk-cos-card{
-    position:relative;
-    height:220px;
-    border-radius:12px;
-    overflow:hidden;
-    background-size:cover;
-    background-position:center;
-    background-color:#1a1d24;
-    transition:.35s;
+.rk-cos-card {
+    position: relative;
+
+    height: 220px;
+
+    border-radius: 12px;
+    overflow: hidden;
+
+    background: #1a1d24;
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+
+    isolation: isolate;
 }
 
-.rk-cos-card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 20px 40px rgba(0,0,0,.4);
+
+/* ==========================================
+   CARD IMAGE
+========================================== */
+
+.rk-cos-card-image {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+    object-position: center;
+
+    z-index: -2;
+
+    transition: transform 0.5s ease;
 }
 
-.rk-cos-card-overlay{
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
+
+/* ==========================================
+   IMAGE HOVER
+========================================== */
+
+.rk-cos-card:hover .rk-cos-card-image {
+    transform: scale(1.04);
+}
+
+
+/* ==========================================
+   CARD HOVER
+========================================== */
+
+.rk-cos-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+
+/* ==========================================
+   CARD OVERLAY
+========================================== */
+
+.rk-cos-card-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    background: linear-gradient(
         to top,
-        rgba(0,0,0,.9) 0%,
-        rgba(0,0,0,.55) 45%,
-        rgba(0,0,0,.05) 100%
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0.55) 45%,
+        rgba(0, 0, 0, 0.05) 100%
     );
+
+    z-index: -1;
+
+    pointer-events: none;
 }
+
 
 /* ==========================================
    BOTTOM CONTENT
 ========================================== */
 
-.rk-cos-card-bottom{
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:16px;
+.rk-cos-card-bottom {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 16px;
+
+    z-index: 2;
 }
 
-.rk-cos-icon{
-    width:34px;
-    height:34px;
-    flex-shrink:0;
-    border-radius:6px;
-    background:rgba(200,154,43,.15);
-    border:1px solid #C89A2B;
-    color:#C89A2B;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+
+/* ==========================================
+   COMPANY ICON
+========================================== */
+
+.rk-cos-icon {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    border-radius: 6px;
+
+    background: rgba(200, 154, 43, 0.15);
+
+    border: 1px solid #c89a2b;
+
+    color: #c89a2b;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.rk-cos-text{
-    flex:1;
-    min-width:0;
+
+/* ==========================================
+   COMPANY TEXT
+========================================== */
+
+.rk-cos-text {
+    flex: 1;
+    min-width: 0;
 }
 
-.rk-cos-text h3{
-    font-size:14px;
-    font-weight:700;
-    letter-spacing:.5px;
-    text-transform:uppercase;
-    color:#fff;
-    margin-bottom:3px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+.rk-cos-text h3 {
+    font-size: 14px;
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+
+    text-transform: uppercase;
+
+    color: #fff;
+
+    margin: 0 0 3px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
 }
 
-.rk-cos-text p{
-    font-size:12px;
-    color:#a9adb5;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+.rk-cos-text p {
+    font-size: 12px;
+
+    color: #a9adb5;
+
+    margin: 0;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
 }
 
-.rk-cos-arrow{
-    width:32px;
-    height:32px;
-    flex-shrink:0;
-    border:none;
-    border-radius:6px;
-    background:#C89A2B;
-    color:#0b0e14;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    transition:.3s;
+
+/* ==========================================
+   ARROW BUTTON
+========================================== */
+
+.rk-cos-arrow {
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    border: none;
+
+    border-radius: 6px;
+
+    background: #c89a2b;
+
+    color: #0b0e14;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease;
 }
 
-.rk-cos-arrow:hover{
-    background:#e0b23a;
+.rk-cos-arrow:hover {
+    background: #e0b23a;
+
+    transform: translateX(3px);
 }
+
 
 /* ==========================================
    EMPTY STATE
 ========================================== */
 
-.rk-cos-empty{
-    width:100%;
-    height:320px;
-    border:2px dashed #2a2e38;
-    border-radius:18px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    color:#9aa0ac;
+.rk-cos-empty {
+    width: 100%;
+    height: 320px;
+
+    border: 2px dashed #2a2e38;
+
+    border-radius: 18px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    color: #9aa0ac;
 }
 
-.rk-cos-empty h3{
-    font-size:26px;
-    margin-bottom:12px;
-    font-weight:500;
-    color:#fff;
+.rk-cos-empty h3 {
+    font-size: 26px;
+
+    margin: 0 0 12px;
+
+    font-weight: 500;
+
+    color: #fff;
 }
 
-.rk-cos-empty p{
-    font-size:16px;
+.rk-cos-empty p {
+    font-size: 16px;
+
+    margin: 0;
 }
+
 
 /* ==========================================
    TABLET
 ========================================== */
 
-@media(max-width:1100px){
-.rk-cos-grid{ grid-template-columns:repeat(3, 1fr); }
-.rk-cos-container h2{ font-size:34px; }
+@media (max-width: 1100px) {
+
+    .rk-cos-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .rk-cos-container h2 {
+        font-size: 34px;
+    }
 }
+
 
 /* ==========================================
    MOBILE
 ========================================== */
 
-@media(max-width:768px){
-.rk-cos-section{ padding:60px 20px; }
-.rk-cos-grid{ grid-template-columns:repeat(2, 1fr); gap:14px; }
-.rk-cos-container h2{ font-size:26px; }
-.rk-cos-card{ height:170px; }
-.rk-cos-text h3{ font-size:12px; }
-.rk-cos-text p{ font-size:10px; }
-.rk-cos-icon{ width:28px; height:28px; }
-.rk-cos-arrow{ width:28px; height:28px; }
+@media (max-width: 768px) {
+
+    .rk-cos-section {
+        padding: 60px 20px;
+    }
+
+    .rk-cos-grid {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 14px;
+    }
+
+    .rk-cos-container {
+        margin-bottom: 40px;
+    }
+
+    .rk-cos-container h2 {
+        font-size: 26px;
+    }
+
+    .rk-cos-container p {
+        font-size: 14px;
+    }
+
+    .rk-cos-card {
+        height: 170px;
+    }
+
+    .rk-cos-card-bottom {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .rk-cos-text h3 {
+        font-size: 12px;
+    }
+
+    .rk-cos-text p {
+        font-size: 10px;
+    }
+
+    .rk-cos-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .rk-cos-arrow {
+        width: 28px;
+        height: 28px;
+    }
 }
 
-@media(max-width:480px){
-.rk-cos-grid{ grid-template-columns:1fr 1fr; gap:10px; }
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+
+    .rk-cos-section {
+        padding: 50px 14px;
+    }
+
+    .rk-cos-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 10px;
+    }
+
+    .rk-cos-card {
+        height: 165px;
+    }
+
+    .rk-cos-card-bottom {
+        padding: 9px;
+        gap: 7px;
+    }
+
+    .rk-cos-icon {
+        width: 26px;
+        height: 26px;
+    }
+
+    .rk-cos-arrow {
+        width: 27px;
+        height: 27px;
+    }
+}
+
+
+/* ==========================================
+   VERY SMALL DEVICES
+========================================== */
+
+@media (max-width: 360px) {
+
+    .rk-cos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rk-cos-card {
+        height: 190px;
+    }
 }

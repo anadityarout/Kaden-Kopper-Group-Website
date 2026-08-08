@@ -2,220 +2,623 @@
    PROCESS + CHAIRMAN SECTION
 ========================================== */
 
-.rk-pc-section{
-    width:100%;
-    display:flex;
-    background:#fff;
+.rk-pc-section {
+    width: 100%;
+    display: flex;
+    background: #fff;
+    box-sizing: border-box;
 }
 
-.rk-pc-subtitle{
-    display:inline-block;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:#C89A2B;
-    margin-bottom:24px;
-}
 
 /* ==========================================
-   LEFT: OUR PROCESS (centered)
+   COMMON SUBTITLE
 ========================================== */
 
-.rk-pc-process{
-    flex:1;
-    background:#fdf6f2;
-    padding:60px 40px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
+.rk-pc-subtitle {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #C89A2B;
+    margin-bottom: 24px;
 }
 
-.rk-pc-steps{
-    display:flex;
-    align-items:flex-start;
-    justify-content:center;
-    flex-wrap:wrap;
-    row-gap:30px;
-}
-
-.rk-pc-step{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    width:110px;
-}
-
-.rk-pc-circle{
-    width:56px;
-    height:56px;
-    border:1.5px solid #C89A2B;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:"Playfair Display", serif;
-    font-size:18px;
-    font-weight:700;
-    color:#C89A2B;
-    margin-bottom:14px;
-}
-
-.rk-pc-step h4{
-    font-size:15px;
-    font-weight:700;
-    color:#2a2226;
-    margin-bottom:4px;
-}
-
-.rk-pc-step p{
-    font-size:12px;
-    color:#8a7a75;
-    line-height:1.4;
-}
-
-.rk-pc-dots{
-    align-self:flex-start;
-    margin-top:26px;
-    width:30px;
-    height:0;
-    border-top:2px dotted #C89A2B;
-}
 
 /* ==========================================
-   RIGHT: CHAIRMAN'S MESSAGE
+   LEFT: OUR PROCESS
 ========================================== */
 
-.rk-pc-chairman{
-    flex:1;
-    display:flex;
-    align-items:center;
-    background:#fdf6f2;
-    padding:36px;
-    gap:36px;
-    box-sizing:border-box;
+.rk-pc-process {
+    flex: 1;
+    background: #fdf6f2;
+    padding: 60px 40px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    box-sizing: border-box;
 }
 
-.rk-pc-chairman-text{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+
+.rk-pc-steps {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 30px;
 }
 
-.rk-pc-quote-mark{
-    font-family:"Playfair Display", serif;
-    font-size:60px;
-    color:#C89A2B;
-    line-height:.5;
-    margin-bottom:10px;
+
+.rk-pc-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 110px;
 }
 
-.rk-pc-quote{
-    font-family:"Playfair Display", serif;
-    font-style:italic;
-    font-size:16px;
-    line-height:1.7;
-    color:#3a2f2c;
-    margin-bottom:20px;
+
+.rk-pc-circle {
+    width: 56px;
+    height: 56px;
+
+    border: 1.5px solid #C89A2B;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+    font-weight: 700;
+
+    color: #C89A2B;
+
+    margin-bottom: 14px;
+    box-sizing: border-box;
 }
 
-.rk-pc-signature{
-    height:44px;
-    width:auto;
-    object-fit:contain;
-    margin-bottom:10px;
-    display:block;
+
+.rk-pc-step h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2a2226;
+
+    margin: 0 0 4px;
 }
 
-.rk-pc-name{
-    font-family:"Playfair Display", serif;
-    font-size:17px;
-    font-weight:700;
-    color:#2a2226;
-    margin-bottom:2px;
+
+.rk-pc-step p {
+    font-size: 12px;
+    color: #8a7a75;
+    line-height: 1.4;
+
+    margin: 0;
 }
 
-.rk-pc-role{
-    font-size:13px;
-    color:#8a7a75;
+
+/* ==========================================
+   PROCESS CONNECTING DOTS
+========================================== */
+
+.rk-pc-dots {
+    align-self: flex-start;
+
+    margin-top: 26px;
+
+    width: 30px;
+    height: 0;
+
+    border-top: 2px dotted #C89A2B;
 }
 
-.rk-pc-chairman-photo{
-    flex:0 0 260px;
-    height:320px;
-    border-radius:16px;
-    overflow:hidden;
+
+/* ==========================================
+   RIGHT: CHAIRMAN MESSAGE
+========================================== */
+
+.rk-pc-chairman {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+
+    background: #fdf6f2;
+
+    padding: 36px;
+    gap: 36px;
+
+    box-sizing: border-box;
 }
 
-.rk-pc-chairman-photo img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
+
+.rk-pc-chairman-text {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    min-width: 0;
 }
+
+
+/* ==========================================
+   QUOTE
+========================================== */
+
+.rk-pc-quote-mark {
+    font-family: "Playfair Display", serif;
+
+    font-size: 60px;
+    color: #C89A2B;
+
+    line-height: 0.5;
+
+    margin-bottom: 10px;
+}
+
+
+.rk-pc-quote {
+    font-family: "Playfair Display", serif;
+
+    font-style: italic;
+
+    font-size: 16px;
+    line-height: 1.7;
+
+    color: #3a2f2c;
+
+    margin: 0 0 20px;
+}
+
+
+/* ==========================================
+   SIGNATURE
+========================================== */
+
+.rk-pc-signature {
+    height: 44px;
+    width: auto;
+
+    object-fit: contain;
+
+    margin-bottom: 10px;
+
+    display: block;
+}
+
+
+/* ==========================================
+   NAME
+========================================== */
+
+.rk-pc-name {
+    font-family: "Playfair Display", serif;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    color: #2a2226;
+
+    margin: 0 0 2px;
+}
+
+
+.rk-pc-role {
+    font-size: 13px;
+
+    color: #8a7a75;
+
+    margin: 0;
+}
+
+
+/* ==========================================
+   CHAIRMAN PHOTO
+========================================== */
+
+.rk-pc-chairman-photo {
+    flex: 0 0 260px;
+
+    width: 260px;
+    height: 320px;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+}
+
+
+.rk-pc-chairman-photo img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+    object-position: center center;
+
+    border-radius: 16px;
+}
+
 
 /* ==========================================
    TABLET
 ========================================== */
 
-@media(max-width:1000px){
+@media (max-width: 1000px) {
 
-.rk-pc-section{
-    flex-direction:column;
+    .rk-pc-section {
+        flex-direction: column;
+    }
+
+
+    /* Chairman section */
+
+    .rk-pc-chairman {
+        flex-direction: column;
+
+        text-align: center;
+
+        padding: 50px 40px;
+
+        gap: 30px;
+    }
+
+
+    .rk-pc-chairman-text {
+        width: 100%;
+
+        align-items: center;
+    }
+
+
+    .rk-pc-signature {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    /* Tablet image */
+
+    .rk-pc-chairman-photo {
+        flex: none;
+
+        width: 100%;
+        max-width: 320px;
+
+        height: auto;
+
+        overflow: hidden;
+
+        border-radius: 18px;
+    }
+
+
+    .rk-pc-chairman-photo img {
+        width: 100%;
+        height: auto;
+
+        display: block;
+
+        object-fit: contain;
+        object-position: center;
+
+        border-radius: 18px;
+    }
+
 }
 
-.rk-pc-chairman{
-    flex-direction:column;
-    text-align:center;
-}
-
-.rk-pc-chairman-text{
-    align-items:center;
-}
-
-.rk-pc-signature{
-    margin-left:auto;
-    margin-right:auto;
-}
-
-.rk-pc-chairman-photo{
-    flex:0 0 260px;
-    width:100%;
-    max-width:260px;
-}
-
-}
 
 /* ==========================================
    MOBILE
 ========================================== */
 
-@media(max-width:600px){
+@media (max-width: 600px) {
 
-.rk-pc-process,
-.rk-pc-chairman{
-    padding:40px 24px;
+    /* ======================================
+       SECTION
+    ====================================== */
+
+    .rk-pc-section {
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    /* ======================================
+       PROCESS
+    ====================================== */
+
+    .rk-pc-process {
+        width: 100%;
+
+        padding: 40px 20px;
+
+        box-sizing: border-box;
+    }
+
+
+    .rk-pc-subtitle {
+        font-size: 11px;
+
+        letter-spacing: 1.8px;
+
+        margin-bottom: 22px;
+    }
+
+
+    .rk-pc-steps {
+        width: 100%;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: flex-start;
+
+        flex-wrap: wrap;
+
+        gap: 20px 0;
+    }
+
+
+    .rk-pc-step {
+        width: 82px;
+    }
+
+
+    .rk-pc-circle {
+        width: 46px;
+        height: 46px;
+
+        font-size: 15px;
+
+        margin-bottom: 10px;
+    }
+
+
+    .rk-pc-step h4 {
+        font-size: 14px;
+
+        margin-bottom: 4px;
+    }
+
+
+    .rk-pc-step p {
+        font-size: 11px;
+
+        line-height: 1.35;
+    }
+
+
+    .rk-pc-dots {
+        width: 16px;
+
+        margin-top: 22px;
+    }
+
+
+    /* ======================================
+       CHAIRMAN
+    ====================================== */
+
+    .rk-pc-chairman {
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        text-align: center;
+
+        padding: 40px 20px;
+
+        gap: 28px;
+
+        box-sizing: border-box;
+    }
+
+
+    .rk-pc-chairman-text {
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+    }
+
+
+    /* ======================================
+       QUOTE MARK
+    ====================================== */
+
+    .rk-pc-quote-mark {
+        font-size: 52px;
+
+        line-height: 0.5;
+
+        margin-bottom: 12px;
+    }
+
+
+    /* ======================================
+       QUOTE
+    ====================================== */
+
+    .rk-pc-quote {
+        width: 100%;
+        max-width: 500px;
+
+        font-size: 15px;
+
+        line-height: 1.65;
+
+        margin: 0 0 20px;
+    }
+
+
+    /* ======================================
+       NAME
+    ====================================== */
+
+    .rk-pc-name {
+        font-size: 17px;
+
+        margin-bottom: 3px;
+    }
+
+
+    .rk-pc-role {
+        font-size: 12px;
+
+        line-height: 1.5;
+    }
+
+
+    /* ======================================
+       MOBILE FOUNDER IMAGE
+       IMPORTANT
+    ====================================== */
+
+    .rk-pc-chairman-photo {
+        flex: none;
+
+        width: 100%;
+        max-width: 320px;
+
+        height: auto;
+
+        overflow: visible;
+
+        border-radius: 18px;
+
+        box-sizing: border-box;
+    }
+
+
+    .rk-pc-chairman-photo img {
+        width: 100%;
+        height: auto;
+
+        display: block;
+
+        object-fit: contain;
+        object-position: center center;
+
+        border-radius: 18px;
+    }
+
 }
 
-.rk-pc-step{
-    width:90px;
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+
+    .rk-pc-process {
+        padding: 36px 14px;
+    }
+
+
+    .rk-pc-chairman {
+        padding: 36px 16px;
+    }
+
+
+    .rk-pc-steps {
+        gap: 18px 0;
+    }
+
+
+    .rk-pc-step {
+        width: 76px;
+    }
+
+
+    .rk-pc-circle {
+        width: 44px;
+        height: 44px;
+
+        font-size: 14px;
+    }
+
+
+    .rk-pc-step h4 {
+        font-size: 13px;
+    }
+
+
+    .rk-pc-step p {
+        font-size: 10.5px;
+    }
+
+
+    .rk-pc-dots {
+        width: 12px;
+    }
+
+
+    .rk-pc-quote {
+        font-size: 14px;
+
+        line-height: 1.65;
+    }
+
+
+    /* Full image on small phones */
+
+    .rk-pc-chairman-photo {
+        width: 100%;
+        max-width: 300px;
+
+        height: auto;
+
+        overflow: visible;
+    }
+
+
+    .rk-pc-chairman-photo img {
+        width: 100%;
+        height: auto;
+
+        object-fit: contain;
+
+        border-radius: 16px;
+    }
+
 }
 
-.rk-pc-circle{
-    width:46px;
-    height:46px;
-    font-size:15px;
-}
 
-.rk-pc-quote{
-    font-size:15px;
-}
+/* ==========================================
+   VERY SMALL PHONES
+========================================== */
 
-.rk-pc-chairman-photo{
-    flex:0 0 220px;
-    height:260px;
-}
+@media (max-width: 360px) {
+
+    .rk-pc-chairman-photo {
+        max-width: 280px;
+    }
+
+
+    .rk-pc-quote {
+        font-size: 13.5px;
+    }
 
 }
