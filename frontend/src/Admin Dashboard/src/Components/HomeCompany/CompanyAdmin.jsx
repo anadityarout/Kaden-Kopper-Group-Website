@@ -4,6 +4,64 @@ import "./CompanyAdmin.css";
  const API_URL =
   "https://a9vqiga5na.execute-api.ap-south-1.amazonaws.com/prod/companies";
 
+/* ===========================
+    IMAGE COMPRESSION
+    Resizes + re-encodes the image client-side
+    before it ever reaches S3.
+============================ */
+
+const compressImage = (file, maxWidth = 800, maxHeight = 800, quality = 0.8) => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      img.src = e.target.result;
+    };
+
+    img.onload = () => {
+      let { width, height } = img;
+
+      if (width > maxWidth || height > maxHeight) {
+        const ratio = Math.min(maxWidth / width, maxHeight / height);
+        width = Math.round(width * ratio);
+        height = Math.round(height * ratio);
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, width, height);
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            reject(new Error("Compression failed"));
+            return;
+          }
+
+          const compressedFile = new File(
+            [blob],
+            file.name.replace(/\.[^.]+$/, "") + ".jpg",
+            { type: "image/jpeg" }
+          );
+
+          resolve(compressedFile);
+        },
+        "image/jpeg",
+        quality
+      );
+    };
+
+    img.onerror = () => reject(new Error("Failed to read image"));
+    reader.onerror = () => reject(new Error("Failed to read file"));
+
+    reader.readAsDataURL(file);
+  });
+};
+
 const CompanyAdmin = () => {
   /* ===========================
       STATES
@@ -20,6 +78,7 @@ const CompanyAdmin = () => {
 const [selectedFile, setSelectedFile] = useState(null);
  const [editingCompany, setEditingCompany] = useState(null);
 const [oldKey, setOldKey] = useState("");
+const [compressing, setCompressing] = useState(false);
 
 const loadCompanies = async () => {
   try {
@@ -59,19 +118,42 @@ useEffect(() => {
   };
 
   /* ===========================
-      IMAGE UPLOAD
+      IMAGE UPLOAD (with compression)
   ============================ */
 
-  const handleImage = (file) => {
+  const handleImage = async (file) => {
 
   if (!file) return;
 
-  setSelectedFile(file);
+  setCompressing(true);
 
-  setForm((prev) => ({
-    ...prev,
-    image: URL.createObjectURL(file),
-  }));
+  try {
+
+    const compressed = await compressImage(file);
+
+    setSelectedFile(compressed);
+
+    setForm((prev) => ({
+      ...prev,
+      image: URL.createObjectURL(compressed),
+    }));
+
+  } catch (err) {
+
+    console.error("Compression failed, using original file:", err);
+
+    setSelectedFile(file);
+
+    setForm((prev) => ({
+      ...prev,
+      image: URL.createObjectURL(file),
+    }));
+
+  } finally {
+
+    setCompressing(false);
+
+  }
 
 };
 
@@ -358,6 +440,19 @@ const editCompany = (company) => {
     Leave empty if you don't want to replace the image.
   </p>
 )}
+
+{compressing && (
+  <p
+    style={{
+      marginTop: "8px",
+      color: "#c89a2b",
+      fontSize: "13px",
+    }}
+  >
+    Optimizing image...
+  </p>
+)}
+
        {form.image && (
 
   <div className="previewWrapper">
@@ -379,6 +474,7 @@ const editCompany = (company) => {
 <button
   className="saveBtn"
   onClick={saveCompany}
+  disabled={compressing}
 >
   {editingCompany
     ? "Save Changes"
