@@ -190,26 +190,23 @@ const Contact = () => {
           <div className="info-card">
             <div className="info-icon">📞</div>
             <h3>Phone</h3>
-            <p>+91 9876543210</p>
-            <p>+91 9876543211</p>
+            <p>+91 9311826565</p>
           </div>
 
           <div className="info-card">
             <div className="info-icon">✉️</div>
             <h3>Email</h3>
-            <p>info@company.com</p>
-            <p>support@company.com</p>
+            <p>info@kadenkoppers.com</p>
           </div>
 
           <div className="info-card">
             <div className="info-icon">📍</div>
             <h3>Head Office</h3>
             <p>
-              123 Business Park
+              08, First Floor, DLF Galleria Mall, Mayur Vihar, Phase-1 Extension, Near Metro
               <br />
-              Sector 62
-              <br />
-              Noida
+              Mayur Vihar Extention, New Delhi - 110091
+              
             </p>
           </div>
 

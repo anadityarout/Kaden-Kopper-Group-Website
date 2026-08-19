@@ -66,7 +66,7 @@ const ProjectDetails = () => {
 
     {
       id: 2,
-      name: "THE ROYAL CRAFT",
+      name: "THE ROYAL KRAFT",
       logo: logo5,
       categories: [
         "ALL PROJECTS",

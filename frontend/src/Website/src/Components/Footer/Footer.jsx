@@ -83,19 +83,20 @@ const Footer = () => {
         <FaMapMarkerAlt className="contact-icon" />
         <div>
             <h4>Kaden Kopper Group</h4>
-            <span>Bhubaneswar, Odisha, India</span>
+            <span>108, First Floor, DLF Galleria Mall, Mayur Phase-1,
+Extension, Near Metro Mayur Extension New Delhi - 110091</span>
         </div>
     </div>
 
     <div className="footer-contact-item">
         <FaPhoneAlt className="contact-icon" />
-        <a href="tel:+919876543210">+91 98765 43210</a>
+        <a href="tel:+919876543210">91-9311826565</a>
     </div>
 
     <div className="footer-contact-item">
         <FaEnvelope className="contact-icon" />
-        <a href="mailto:info@kadenkopper.com">
-            info@kadenkopper.com
+        <a href="mailto:info@kadenkoppers.com">
+            info@kadenkoppers.com
         </a>
     </div>
 

@@ -34,56 +34,50 @@ const Career = () => {
   {
     id: 1,
     logo: logo,
-    companyName: "Kaden",
-    description: "Kaden Koppers"
+    companyName: "Kaden Koppers",
+   
   },
   {
     id: 2,
     logo: logo1,
-    companyName: "Alumenza",
-    description: "India Pvt. Ltd."
+    companyName: "Events Players",
   },
   {
     id: 3,
     logo: logo2,
-    companyName: "Alumilite",
-    description: "Facades India Pvt. Ltd."
+    companyName: "Go Green Life",
+    
   },
   {
     id: 4,
     logo: logo3,
-    companyName: "Alu-Win",
-    description: "India Pvt. Ltd."
+    companyName: "Kaden Kopper Foundation",
   },
   {
     id: 5,
     logo: logo4,
-    companyName: "Alu-Lite",
-    description: "India Pvt. Ltd."
+    companyName: "Kaden kopper Hospitalty",
+    
   },
   {
     id: 6,
     logo: logo5,
-    companyName: "Aluform",
-    description: "India Pvt. Ltd."
+    companyName: "The Royal Kraft",
   },
   {
     id: 7,
     logo: logo6,
-    companyName: "Company 7",
-    description: "India Pvt. Ltd."
+    companyName: "Vinsjoy",
   },
   {
     id: 8,
     logo: logo7,
-    companyName: "Company 8",
-    description: "India Pvt. Ltd."
+    companyName: "Weeding Resorts",
   },
   {
     id: 9,
     logo: logo8,
-    companyName: "Company 9",
-    description: "India Pvt. Ltd."
+    companyName: "Zenergy",
   }
 ]);
 
