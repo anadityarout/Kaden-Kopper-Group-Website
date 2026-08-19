@@ -7,25 +7,52 @@
   margin: 0;
   padding: 0;
   background-color: #ffffff;
+  overflow-x: hidden;
 }
 
 
 /* =========================================================
    SERVICE BANNER
+   Full 16:9 image — no crop
 ========================================================= */
 
 .service-banner {
   width: 100%;
-  height: 70vh;
+  aspect-ratio: 16 / 9;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background-color: #111111;
-
   position: relative;
   overflow: hidden;
+
+  background-color: #111111;
+
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+
+/* =========================================================
+   BANNER OVERLAY
+========================================================= */
+
+.service-banner-overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.08) 0%,
+    rgba(0, 0, 0, 0.18) 45%,
+    rgba(0, 0, 0, 0.30) 100%
+  );
+
+  pointer-events: none;
 }
 
 
@@ -34,8 +61,14 @@
 ========================================================= */
 
 .service-banner-content {
-  position: relative;
+  position: absolute;
+  inset: 0;
+
   z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   width: 100%;
 
@@ -48,11 +81,20 @@
   color: #ffffff;
 
   font-family: "Oswald", sans-serif;
-  font-size: 64px;
+
+  font-size: clamp(42px, 5vw, 72px);
+
   font-weight: 600;
 
   letter-spacing: 2px;
+
+  line-height: 1.1;
+
   text-transform: uppercase;
+
+  text-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.45),
+    0 2px 5px rgba(0, 0, 0, 0.35);
 }
 
 
@@ -105,10 +147,12 @@
   color: #c89a2b;
 
   font-family: "Inter", sans-serif;
+
   font-size: 13px;
   font-weight: 600;
 
   letter-spacing: 2px;
+
   text-transform: uppercase;
 }
 
@@ -125,6 +169,7 @@
   color: #1a1a1a;
 
   font-family: "Playfair Display", serif;
+
   font-size: 42px;
   font-weight: 700;
 
@@ -139,6 +184,7 @@
   color: #555555;
 
   font-family: "Inter", sans-serif;
+
   font-size: 16px;
 
   line-height: 1.6;
@@ -166,6 +212,7 @@
   background-color: #ffffff;
 
   border: 1px solid #eeeeee;
+
   border-radius: 12px;
 
   padding: 40px 28px;
@@ -219,6 +266,7 @@
   color: #1a1a1a;
 
   font-family: "Playfair Display", serif;
+
   font-size: 19px;
   font-weight: 700;
 
@@ -236,6 +284,7 @@
   color: #666666;
 
   font-family: "Inter", sans-serif;
+
   font-size: 14px;
 
   line-height: 1.6;
@@ -313,6 +362,7 @@
   color: #1a1a1a;
 
   font-family: "Playfair Display", serif;
+
   font-size: 17px;
   font-weight: 700;
 
@@ -330,6 +380,7 @@
   color: #777777;
 
   font-family: "Inter", sans-serif;
+
   font-size: 13.5px;
 
   line-height: 1.5;
@@ -440,8 +491,7 @@
 
   display: block;
 
-  transition:
-    transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .rk-serv-spotlight-card:hover .rk-serv-company-logo {
@@ -476,6 +526,7 @@
   color: #1a1a1a;
 
   font-family: "Playfair Display", serif;
+
   font-size: 24px;
   font-weight: 700;
 
@@ -493,6 +544,7 @@
   color: var(--rk-spot-color, #c89a2b);
 
   font-family: "Inter", sans-serif;
+
   font-size: 14.5px;
   font-weight: 600;
 
@@ -510,6 +562,7 @@
   color: #666666;
 
   font-family: "Inter", sans-serif;
+
   font-size: 14px;
 
   line-height: 1.6;
@@ -547,6 +600,7 @@
   color: #333333;
 
   font-family: "Inter", sans-serif;
+
   font-size: 12.5px;
   font-weight: 500;
 
@@ -652,6 +706,7 @@
   color: #ffffff;
 
   font-family: "Inter", sans-serif;
+
   font-size: 14.5px;
   font-weight: 700;
 
@@ -671,6 +726,7 @@
   color: #b7c0cf;
 
   font-family: "Inter", sans-serif;
+
   font-size: 12.5px;
   font-weight: 400;
 
@@ -703,6 +759,7 @@
   border-radius: 40px;
 
   font-family: "Inter", sans-serif;
+
   font-size: 14px;
   font-weight: 600;
 
@@ -723,10 +780,42 @@
 
 
 /* =========================================================
+   LARGE TABLET — 1200px
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .rk-serv-spotlight-card {
+    grid-template-columns:
+      220px
+      minmax(0, 1fr)
+      320px;
+  }
+
+  .rk-serv-company-logo {
+    width: 170px;
+    height: 140px;
+  }
+
+  .rk-serv-spotlight-content {
+    padding: 28px;
+  }
+
+}
+
+
+/* =========================================================
    TABLET — 1024px
 ========================================================= */
 
 @media (max-width: 1024px) {
+
+  /* Banner */
+
+  .service-banner {
+    aspect-ratio: 16 / 9;
+  }
+
 
   /* Services */
 
@@ -749,6 +838,7 @@
     padding: 25px;
 
     border-right: none;
+
     border-bottom: 1px solid #eeeeee;
   }
 
@@ -768,7 +858,7 @@
   /* Company Image */
 
   .rk-serv-spotlight-image {
-    height: 240px;
+    height: 300px;
 
     padding: 16px;
   }
@@ -781,6 +871,7 @@
 
     padding: 24px 30px;
   }
+
 }
 
 
@@ -793,11 +884,13 @@
   /* Banner */
 
   .service-banner {
-    height: 55vh;
+    aspect-ratio: 16 / 9;
   }
 
   .service-banner-content h1 {
-    font-size: 52px;
+    font-size: 42px;
+
+    letter-spacing: 1.5px;
   }
 
 
@@ -876,7 +969,7 @@
   /* Company Image */
 
   .rk-serv-spotlight-image {
-    height: 230px;
+    height: 270px;
   }
 
 
@@ -893,6 +986,7 @@
 
     border-radius: 28px;
   }
+
 }
 
 
@@ -905,13 +999,13 @@
   /* Banner */
 
   .service-banner {
-    height: 50vh;
+    aspect-ratio: 16 / 9;
   }
 
   .service-banner-content h1 {
-    font-size: 42px;
+    font-size: 34px;
 
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
   }
 
 
@@ -1063,7 +1157,7 @@
   /* Company Image */
 
   .rk-serv-spotlight-image {
-    height: 200px;
+    height: 230px;
 
     padding: 12px;
   }
@@ -1110,6 +1204,7 @@
 
     padding: 14px 20px;
   }
+
 }
 
 
@@ -1119,22 +1214,35 @@
 
 @media (max-width: 400px) {
 
+  /* Banner */
+
   .service-banner {
-    height: 45vh;
+    aspect-ratio: 16 / 9;
   }
 
   .service-banner-content h1 {
-    font-size: 36px;
+    font-size: 28px;
+
+    letter-spacing: 0.8px;
   }
+
+
+  /* Services */
 
   .rk-serv-heading {
     font-size: 28px;
   }
 
+
+  /* Company Logo */
+
   .rk-serv-company-logo {
     width: 155px;
     height: 110px;
   }
+
+
+  /* Company Content */
 
   .rk-serv-spotlight-content {
     padding: 22px 18px;
@@ -1144,11 +1252,43 @@
     font-size: 19px;
   }
 
+
+  /* Company Image */
+
   .rk-serv-spotlight-image {
-    height: 180px;
+    height: 200px;
   }
+
+
+  /* CTA */
 
   .rk-serv-strip-bar {
     padding: 24px 20px;
   }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .service-banner-content h1 {
+    font-size: 25px;
+  }
+
+  .rk-serv-heading {
+    font-size: 26px;
+  }
+
+  .rk-serv-card {
+    padding: 30px 20px;
+  }
+
+  .rk-serv-spotlight-image {
+    height: 180px;
+  }
+
 }

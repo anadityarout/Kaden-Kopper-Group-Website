@@ -35,6 +35,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import "./Service.css";
+import serviceImage from "../../assets/service.jpg";
 import logo from "../../assets/logo.png";
 import logo1 from "../../assets/logo1.png";
 import logo2 from "../../assets/logo2.png";
@@ -309,11 +310,17 @@ const Service = () => {
     <div className="service-page">
 
       {/* Service Banner */}
-      <section className="service-banner">
-        <div className="service-banner-content">
-          <h1>Our Services</h1>
-        </div>
-      </section>
+      <section
+  className="service-banner"
+  style={{
+    backgroundImage: `url(${serviceImage})`,
+  }}
+>
+  <div className="service-banner-overlay"></div>
+
+  <div className="service-banner-content">
+  </div>
+</section>
 
       {/* Services Grid */}
       <section className="rk-serv-section">
