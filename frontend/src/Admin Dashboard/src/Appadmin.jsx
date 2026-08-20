@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Sidebar from "./Components/Sidebar/Sidebar";
 
@@ -15,33 +15,76 @@ import CareerPage from "./Components/Career/CareerPage";
 
 import ContactPage from "./Components/Contact/ContactPage";
 
-import ProjectPage from "./Components/Projectpage/ProjectPage"; // ✅ Fixed
+import ProjectPage from "./Components/Projectpage/ProjectPage";
 
 function App() {
   const [activePage, setActivePage] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // ================================
+  // CHECK LOGIN
+  // ================================
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn");
+
+    if (loggedIn === "true") {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+      window.location.href = "/login";
+    }
+  }, []);
+
+  // ================================
+  // LOADING
+  // ================================
+
+  if (!isLoggedIn) {
+    return null;
+  }
 
   return (
     <div
       style={{
         display: "flex",
+        width: "100%",
         minHeight: "100vh",
       }}
     >
+
+      {/* ================================
+          SIDEBAR
+      ================================= */}
+
       <Sidebar
         activePage={activePage}
         setActivePage={setActivePage}
       />
 
+      {/* ================================
+          MAIN CONTENT
+      ================================= */}
+
       <div
         style={{
           flex: 1,
           minWidth: 0,
+          minHeight: "100vh",
+
           background: "#f5f5f5",
+
           padding: "20px",
+
           overflow: "auto",
+
+          boxSizing: "border-box",
         }}
       >
-        {/* Welcome */}
+
+        {/* ================================
+            WELCOME
+        ================================= */}
 
         {activePage === "" && (
           <div
@@ -49,16 +92,22 @@ function App() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "100%",
+
+              height: "calc(100vh - 40px)",
+
               fontSize: "28px",
               fontWeight: "600",
+
+              color: "#111827",
             }}
           >
             Welcome to Admin Dashboard
           </div>
         )}
 
-        {/* Home */}
+        {/* ================================
+            HOME
+        ================================= */}
 
         {activePage === "homeslider" && <HomeSlider />}
 
@@ -66,29 +115,38 @@ function App() {
 
         {activePage === "companyadmin" && <CompanyAdmin />}
 
-        {/* Old Project Image Page */}
-
         {activePage === "projectimage" && <Projectimage />}
 
-        {/* New Project Management Page */}
+        {/* ================================
+            PROJECT
+        ================================= */}
 
         {activePage === "projectpage" && <ProjectPage />}
 
-        {/* About */}
+        {/* ================================
+            ABOUT
+        ================================= */}
 
         {activePage === "aboutimage" && <AboutImage />}
 
-        {/* Industry */}
+        {/* ================================
+            INDUSTRY
+        ================================= */}
 
         {activePage === "industryimage" && <IndustryImage />}
 
-        {/* Career */}
+        {/* ================================
+            CAREER
+        ================================= */}
 
         {activePage === "careerpage" && <CareerPage />}
 
-        {/* Contact */}
+        {/* ================================
+            CONTACT
+        ================================= */}
 
         {activePage === "contactpage" && <ContactPage />}
+
       </div>
     </div>
   );

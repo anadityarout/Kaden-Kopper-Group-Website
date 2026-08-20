@@ -134,7 +134,7 @@ const spotlights = [
     monogram: "RC",
     logoName: "The Royal Craft",
     logoSub: "Fiber Crafting",
-    name: "The Royal Craft",
+    name: "The Royal Kraft",
     tagline: "Crafting Beauty. Creating Impressions.",
     description:
       "We specialize in premium fiber crafting for decorative items, custom designs, event decor, and artistic creations that add a royal touch to every occasion.",

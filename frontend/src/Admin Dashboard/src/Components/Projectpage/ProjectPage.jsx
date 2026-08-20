@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./ProjectPage.css";
+
 const API_URL =
   "https://a9vqiga5na.execute-api.ap-south-1.amazonaws.com/prod/project";
 
-/* ===========================
+/* =========================================================
    COMPANY DATA
-=========================== */
+========================================================= */
 
 const companies = [
   {
@@ -23,7 +24,7 @@ const companies = [
   },
   {
     id: 2,
-    name: "THE ROYAL CRAFT",
+    name: "THE ROYAL KRAFT",
     categories: [
       "EXTERIOR",
       "FIBER MANDAP",
@@ -109,93 +110,101 @@ const companies = [
   },
 ];
 
-const ProjectPage = () => {
+/* =========================================================
+   PROJECT PAGE
+========================================================= */
 
-  /* ==========================================
-      STATES
-  ========================================== */
+const ProjectPage = () => {
+  /* =======================================================
+     STATES
+  ======================================================= */
 
   const [showModal, setShowModal] = useState(false);
 
   const [projects, setProjects] = useState([]);
 
-  const [editingProject, setEditingProject] =
-    useState(null);
+  const [editingProject, setEditingProject] = useState(null);
 
-  const [oldImageKey, setOldImageKey] =
-    useState("");
+  const [oldImageKey, setOldImageKey] = useState("");
 
-  const [selectedCompany, setSelectedCompany] =
-    useState("");
+  const [selectedCompany, setSelectedCompany] = useState("");
 
-  const [selectedCategory, setSelectedCategory] =
-    useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  const [projectName, setProjectName] =
-    useState("");
+  const [projectName, setProjectName] = useState("");
 
-  const [description, setDescription] =
-    useState("");
+  const [description, setDescription] = useState("");
 
-  const [image, setImage] =
-    useState(null);
+  const [image, setImage] = useState(null);
 
-  const currentCompany =
-    companies.find(
-      (item) =>
-        item.name === selectedCompany
-    );
+  const [loading, setLoading] = useState(false);
 
-  /* ==========================================
-      LOAD PROJECTS
-  ========================================== */
+  /* =======================================================
+     FIND CURRENT COMPANY SAFELY
+  ======================================================= */
+
+  const currentCompany = companies.find(
+    (item) =>
+      item.name.trim().toLowerCase() ===
+      selectedCompany.trim().toLowerCase()
+  );
+
+  /* =======================================================
+     SAFE CATEGORY LIST
+  ======================================================= */
+
+  const currentCategories = currentCompany?.categories || [];
+
+  /* =======================================================
+     LOAD PROJECTS
+  ======================================================= */
 
   const loadProjects = async () => {
-
     try {
+      setLoading(true);
 
-      const response =
-        await fetch(API_URL);
+      const response = await fetch(API_URL);
 
       if (!response.ok) {
-
-        throw new Error(
-          "Unable to load projects"
-        );
-
+        throw new Error("Unable to load projects");
       }
 
-      const data =
-        await response.json();
+      const data = await response.json();
 
-      setProjects(
-        Array.isArray(data)
-          ? data
-          : []
-      );
+      /*
+        API may return:
+        - direct array
+        - object containing projects
+      */
 
+      if (Array.isArray(data)) {
+        setProjects(data);
+      } else if (Array.isArray(data.projects)) {
+        setProjects(data.projects);
+      } else {
+        setProjects([]);
+      }
     } catch (err) {
-
-      console.error(err);
-
+      console.error("Load Projects Error:", err);
       setProjects([]);
-
+    } finally {
+      setLoading(false);
     }
-
   };
 
+  /* =======================================================
+     INITIAL LOAD
+  ======================================================= */
+
   useEffect(() => {
-
     loadProjects();
-
   }, []);
 
-  /* ==========================================
-      RESET FORM
-  ========================================== */
+  /* =======================================================
+     RESET FORM
+  ======================================================= */
 
   const resetForm = () => {
-
     setEditingProject(null);
 
     setOldImageKey("");
@@ -209,308 +218,319 @@ const ProjectPage = () => {
     setDescription("");
 
     setImage(null);
-
   };
 
-  /* ==========================================
-      ADD PROJECT
-  ========================================== */
+  /* =======================================================
+     ADD PROJECT
+  ======================================================= */
 
   const handleAddProject = () => {
-
     resetForm();
 
     setShowModal(true);
-
   };
 
-  /* ==========================================
-      EDIT PROJECT
-  ========================================== */
+  /* =======================================================
+     EDIT PROJECT
+  ======================================================= */
 
   const handleEditProject = (project) => {
+    if (!project) {
+      return;
+    }
 
     setEditingProject(project);
 
-    setOldImageKey(
-      project.key || ""
+    setOldImageKey(project.key || "");
+
+    const companyName = (project.company || "").trim();
+
+    /*
+      Check whether company from API exists
+      in our company list.
+    */
+
+    const matchingCompany = companies.find(
+      (company) =>
+        company.name.trim().toLowerCase() ===
+        companyName.toLowerCase()
     );
 
-    setSelectedCompany(
-      project.company || ""
-    );
+    if (matchingCompany) {
+      setSelectedCompany(matchingCompany.name);
 
-    setSelectedCategory(
-      project.category || ""
-    );
+      /*
+        Make sure category belongs to
+        the selected company.
+      */
 
-    setProjectName(
-      project.projectName || ""
-    );
+      const categoryExists =
+        matchingCompany.categories.some(
+          (category) =>
+            category.trim().toLowerCase() ===
+            (project.category || "").trim().toLowerCase()
+        );
 
-    setDescription(
-      project.description || ""
-    );
+      if (categoryExists) {
+        const actualCategory =
+          matchingCompany.categories.find(
+            (category) =>
+              category.trim().toLowerCase() ===
+              (project.category || "").trim().toLowerCase()
+          );
 
-    setImage(
-      project.image || null
-    );
+        setSelectedCategory(actualCategory);
+      } else {
+        setSelectedCategory("");
+      }
+    } else {
+      /*
+        If API contains an old/invalid company,
+        don't allow currentCompany.categories
+        to crash the application.
+      */
 
-    setShowModal(true);
-
-  };
-
-  /* ==========================================
-      UPLOAD IMAGE
-  ========================================== */
-
-  const uploadImage = async (file) => {
-
-    const response =
-      await fetch(
-
-        `${API_URL}?upload=true&fileName=${encodeURIComponent(
-          file.name
-        )}&fileType=${encodeURIComponent(
-          file.type
-        )}`
-
+      console.warn(
+        "Company not found in company list:",
+        companyName
       );
 
-    if (!response.ok) {
-
-      throw new Error(
-        "Unable to create upload URL"
-      );
-
+      setSelectedCompany("");
+      setSelectedCategory("");
     }
 
-    const uploadData =
-      await response.json();
+    setProjectName(project.projectName || "");
 
-    const upload =
-      await fetch(
-        uploadData.uploadUrl,
-        {
+    setDescription(project.description || "");
 
+    setImage(project.image || null);
+
+    setShowModal(true);
+  };
+
+  /* =======================================================
+     UPLOAD IMAGE
+  ======================================================= */
+
+  const uploadImage = async (file) => {
+    if (!file) {
+      throw new Error("Please select an image");
+    }
+
+    /* -------------------------------------------------------
+       STEP 1: GET PRESIGNED URL
+    ------------------------------------------------------- */
+
+    const uploadUrl =
+      `${API_URL}?upload=true` +
+      `&fileName=${encodeURIComponent(file.name)}` +
+      `&fileType=${encodeURIComponent(file.type)}`;
+
+    const response = await fetch(uploadUrl);
+
+    if (!response.ok) {
+      throw new Error("Unable to create upload URL");
+    }
+
+    const uploadData = await response.json();
+
+    if (!uploadData.uploadUrl) {
+      throw new Error("Upload URL was not returned by API");
+    }
+
+    /* -------------------------------------------------------
+       STEP 2: UPLOAD IMAGE TO S3
+    ------------------------------------------------------- */
+
+    const uploadResponse = await fetch(
+      uploadData.uploadUrl,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": file.type,
+        },
+        body: file,
+      }
+    );
+
+    if (!uploadResponse.ok) {
+      throw new Error("Image upload failed");
+    }
+
+    /* -------------------------------------------------------
+       RETURN IMAGE DATA
+    ------------------------------------------------------- */
+
+    return {
+      image: uploadData.fileUrl,
+      key: uploadData.key,
+    };
+  };
+
+  /* =======================================================
+     SAVE PROJECT
+     ADD + EDIT
+  ======================================================= */
+
+  const handleSave = async () => {
+    try {
+      /* -----------------------------------------------------
+         VALIDATION
+      ----------------------------------------------------- */
+
+      if (!selectedCompany) {
+        alert("Please select a company.");
+        return;
+      }
+
+      if (!selectedCategory) {
+        alert("Please select a category.");
+        return;
+      }
+
+      if (!projectName.trim()) {
+        alert("Please enter project name.");
+        return;
+      }
+
+      if (!description.trim()) {
+        alert("Please enter description.");
+        return;
+      }
+
+      /* -----------------------------------------------------
+         IMAGE DATA
+      ----------------------------------------------------- */
+
+      let projectImage = {
+        image: image,
+        key: oldImageKey,
+      };
+
+      /*
+        If image is a File object,
+        upload it to S3.
+      */
+
+      if (image && typeof image !== "string") {
+        projectImage = await uploadImage(image);
+      }
+
+      /* -----------------------------------------------------
+         UPDATE EXISTING PROJECT
+      ----------------------------------------------------- */
+
+      if (editingProject) {
+        const response = await fetch(API_URL, {
           method: "PUT",
 
           headers: {
-            "Content-Type":
-              file.type,
+            "Content-Type": "application/json",
           },
 
-          body: file,
+          body: JSON.stringify({
+            id: editingProject.id,
 
-        }
-      );
+            company: selectedCompany,
 
-    if (!upload.ok) {
+            category: selectedCategory,
 
-      throw new Error(
-        "Image Upload Failed"
-      );
+            projectName: projectName.trim(),
 
-    }
+            description: description.trim(),
 
-    return {
+            image: projectImage.image,
 
-      image:
-        uploadData.fileUrl,
+            key: projectImage.key,
 
-      key:
-        uploadData.key,
-
-    };
-
-  };
-    /* ==========================================
-      SAVE PROJECT (ADD + EDIT)
-  ========================================== */
-
-  const handleSave = async () => {
-
-    try {
-
-      if (
-        !selectedCompany ||
-        !selectedCategory ||
-        !projectName.trim() ||
-        !description.trim()
-      ) {
-
-        alert("Please fill all fields.");
-
-        return;
-
-      }
-
-      let projectImage = {
-
-        image: image,
-
-        key: oldImageKey,
-
-      };
-
-      /* ===============================
-          Upload New Image
-      ============================== */
-
-      if (
-        image &&
-        typeof image !== "string"
-      ) {
-
-        projectImage =
-          await uploadImage(image);
-
-      }
-
-      /* ===============================
-          UPDATE PROJECT
-      ============================== */
-
-      if (editingProject) {
-
-        const response =
-          await fetch(API_URL, {
-
-            method: "PUT",
-
-            headers: {
-              "Content-Type":
-                "application/json",
-            },
-
-            body: JSON.stringify({
-
-              id:
-                editingProject.id,
-
-              company:
-                selectedCompany,
-
-              category:
-                selectedCategory,
-
-              projectName,
-
-              description,
-
-              image:
-                projectImage.image,
-
-              key:
-                projectImage.key,
-
-              oldKey:
-                oldImageKey,
-
-            }),
-
-          });
+            oldKey: oldImageKey,
+          }),
+        });
 
         if (!response.ok) {
-
-          throw new Error(
-            "Update Failed"
-          );
-
+          throw new Error("Update Failed");
         }
 
-        alert(
-          "Project Updated Successfully"
-        );
-
+        alert("Project Updated Successfully");
       }
 
-      /* ===============================
-          ADD PROJECT
-      ============================== */
+      /* -----------------------------------------------------
+         ADD NEW PROJECT
+      ----------------------------------------------------- */
 
       else {
+        const response = await fetch(API_URL, {
+          method: "POST",
 
-        const response =
-          await fetch(API_URL, {
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-            method: "POST",
+          body: JSON.stringify({
+            id: Date.now(),
 
-            headers: {
-              "Content-Type":
-                "application/json",
-            },
+            company: selectedCompany,
 
-            body: JSON.stringify({
+            category: selectedCategory,
 
-              id: Date.now(),
+            projectName: projectName.trim(),
 
-              company:
-                selectedCompany,
+            description: description.trim(),
 
-              category:
-                selectedCategory,
+            image: projectImage.image,
 
-              projectName,
+            key: projectImage.key,
 
-              description,
-
-              image:
-                projectImage.image,
-
-              key:
-                projectImage.key,
-
-              created:
-                new Date().toLocaleDateString(),
-
-            }),
-
-          });
+            created: new Date().toLocaleDateString(),
+          }),
+        });
 
         if (!response.ok) {
-
-          throw new Error(
-            "Save Failed"
-          );
-
+          throw new Error("Save Failed");
         }
 
-        alert(
-          "Project Added Successfully"
-        );
-
+        alert("Project Added Successfully");
       }
+
+      /* -----------------------------------------------------
+         REFRESH PROJECT LIST
+      ----------------------------------------------------- */
 
       await loadProjects();
 
       resetForm();
 
       setShowModal(false);
-
     } catch (err) {
+      console.error("Save Project Error:", err);
 
-      console.error(err);
-
-      alert(err.message);
-
+      alert(
+        err?.message ||
+          "Something went wrong while saving the project."
+      );
     }
-
   };
-    /* ==========================================
-      DELETE PROJECT
-  ========================================== */
+
+  /* =======================================================
+     DELETE PROJECT
+  ======================================================= */
 
   const handleDelete = async (id) => {
+    if (!id) {
+      alert("Project ID is missing.");
+      return;
+    }
 
-    if (!window.confirm("Delete this project?")) {
+    const confirmed = window.confirm(
+      "Delete this project?"
+    );
+
+    if (!confirmed) {
       return;
     }
 
     try {
-
       const response = await fetch(API_URL, {
-
         method: "DELETE",
 
         headers: {
@@ -520,7 +540,6 @@ const ProjectPage = () => {
         body: JSON.stringify({
           id,
         }),
-
       });
 
       if (!response.ok) {
@@ -530,29 +549,44 @@ const ProjectPage = () => {
       await loadProjects();
 
       alert("Project Deleted Successfully");
-
     } catch (err) {
+      console.error("Delete Project Error:", err);
 
-      console.error(err);
-
-      alert(err.message);
-
+      alert(
+        err?.message ||
+          "Something went wrong while deleting the project."
+      );
     }
-
   };
 
-  /* ==========================================
-      JSX
-  ========================================== */
+  /* =======================================================
+     IMAGE PREVIEW
+  ======================================================= */
+
+  const getImagePreview = () => {
+    if (!image) {
+      return null;
+    }
+
+    if (typeof image === "string") {
+      return image;
+    }
+
+    return URL.createObjectURL(image);
+  };
+
+  /* =======================================================
+     JSX
+  ======================================================= */
 
   return (
-
     <div className="project-page">
 
-      {/* ================= HEADER ================= */}
+      {/* ===================================================
+          HEADER
+      =================================================== */}
 
       <div className="page-header">
-
         <h2>Project Management</h2>
 
         <button
@@ -561,62 +595,63 @@ const ProjectPage = () => {
         >
           + Add Images
         </button>
-
       </div>
 
-      {/* ================= MODAL ================= */}
+      {/* ===================================================
+          MODAL
+      =================================================== */}
 
       {showModal && (
-
         <div className="modal-overlay">
 
           <div className="project-modal">
 
+            {/* =============================================
+                MODAL HEADER
+            ============================================== */}
+
             <div className="modal-header">
 
               <h3>
-
                 {editingProject
                   ? "Edit Project"
                   : "Add Project"}
-
               </h3>
 
               <button
+                type="button"
                 onClick={() => {
-
                   resetForm();
-
                   setShowModal(false);
-
                 }}
               >
                 ✕
-
               </button>
 
             </div>
 
-            {/* ================= COMPANY ================= */}
+            {/* =============================================
+                COMPANY
+            ============================================== */}
 
             <div className="form-group">
 
               <label>Company</label>
 
               <select
-
                 value={selectedCompany}
-
                 onChange={(e) => {
+                  const companyName = e.target.value;
 
-                  setSelectedCompany(
-                    e.target.value
-                  );
+                  setSelectedCompany(companyName);
+
+                  /*
+                    Whenever company changes,
+                    reset category.
+                  */
 
                   setSelectedCategory("");
-
                 }}
-
               >
 
                 <option value="">
@@ -624,77 +659,69 @@ const ProjectPage = () => {
                 </option>
 
                 {companies.map((company) => (
-
                   <option
-
                     key={company.id}
-
                     value={company.name}
-
                   >
-
                     {company.name}
-
                   </option>
-
                 ))}
 
               </select>
 
             </div>
 
-            {/* ================= CATEGORY ================= */}
+            {/* =============================================
+                CATEGORY
+            ============================================== */}
 
             {selectedCompany && (
-
               <div className="form-group">
 
                 <label>Category</label>
 
                 <select
-
                   value={selectedCategory}
-
                   onChange={(e) =>
                     setSelectedCategory(
                       e.target.value
                     )
                   }
-
                 >
 
                   <option value="">
                     Select Category
                   </option>
 
-                  {currentCompany.categories.map((cat) => (
-
-                    <option
-
-                      key={cat}
-
-                      value={cat}
-
-                    >
-
-                      {cat}
-
+                  {currentCategories.length > 0 ? (
+                    currentCategories.map((cat) => (
+                      <option
+                        key={cat}
+                        value={cat}
+                      >
+                        {cat}
+                      </option>
+                    ))
+                  ) : (
+                    <option value="" disabled>
+                      No categories available
                     </option>
-
-                  ))}
+                  )}
 
                 </select>
 
               </div>
-
             )}
 
-            {/* ================= PROJECT DETAILS ================= */}
+            {/* =============================================
+                PROJECT DETAILS
+            ============================================== */}
 
             {selectedCategory && (
-
               <>
-                              {/* ================= PROJECT IMAGE ================= */}
+                {/* =========================================
+                    PROJECT IMAGE
+                ========================================== */}
 
                 <div className="form-group">
 
@@ -705,32 +732,29 @@ const ProjectPage = () => {
                     accept="image/*"
                     onChange={(e) => {
 
-                      if (e.target.files[0]) {
+                      const selectedFile =
+                        e.target.files?.[0];
 
-                        setImage(e.target.files[0]);
-
+                      if (selectedFile) {
+                        setImage(selectedFile);
                       }
 
                     }}
                   />
 
                   {image && (
-
                     <img
-                      src={
-                        typeof image === "string"
-                          ? image
-                          : URL.createObjectURL(image)
-                      }
-                      alt="Preview"
+                      src={getImagePreview()}
+                      alt="Project Preview"
                       className="image-preview"
                     />
-
                   )}
 
                 </div>
 
-                {/* ================= PROJECT NAME ================= */}
+                {/* =========================================
+                    PROJECT NAME
+                ========================================== */}
 
                 <div className="form-group">
 
@@ -747,7 +771,9 @@ const ProjectPage = () => {
 
                 </div>
 
-                {/* ================= DESCRIPTION ================= */}
+                {/* =========================================
+                    DESCRIPTION
+                ========================================== */}
 
                 <div className="form-group">
 
@@ -764,46 +790,52 @@ const ProjectPage = () => {
 
                 </div>
 
-                {/* ================= SAVE / UPDATE ================= */}
+                {/* =========================================
+                    SAVE / UPDATE
+                ========================================== */}
 
                 <div className="modal-footer">
 
                   <button
+                    type="button"
                     className="save-btn"
                     onClick={handleSave}
+                    disabled={loading}
                   >
-
                     {editingProject
                       ? "Update Project"
                       : "Save Project"}
-
                   </button>
 
                 </div>
 
               </>
-                          )}
+            )}
 
           </div>
 
         </div>
-
       )}
 
-      {/* ===========================================
+      {/* ===================================================
           PROJECT LIST
-      =========================================== */}
+      =================================================== */}
 
       <div className="project-list">
 
-        {projects.length === 0 ? (
+        {loading ? (
+          <div className="empty-state">
+            <h3>Loading Projects...</h3>
+          </div>
+        ) : projects.length === 0 ? (
 
           <div className="empty-state">
 
             <h3>No Projects Added</h3>
 
             <p>
-              Click <b>+ Add Images</b> to create your first project.
+              Click <b>+ Add Images</b> to create
+              your first project.
             </p>
 
           </div>
@@ -817,23 +849,14 @@ const ProjectPage = () => {
               <thead>
 
                 <tr>
-
                   <th>No</th>
-
                   <th>Preview</th>
-
                   <th>Company</th>
-
                   <th>Category</th>
-
                   <th>Project Name</th>
-
                   <th>Description</th>
-
                   <th>Status</th>
-
                   <th>Action</th>
-
                 </tr>
 
               </thead>
@@ -842,84 +865,112 @@ const ProjectPage = () => {
 
                 {projects.map((project, index) => (
 
-                  <tr key={project.id}>
+                  <tr
+                    key={
+                      project.id ||
+                      `${project.projectName}-${index}`
+                    }
+                  >
 
-                    <td>{index + 1}</td>
+                    {/* =================================
+                        NUMBER
+                    ================================== */}
+
+                    <td>
+                      {index + 1}
+                    </td>
+
+                    {/* =================================
+                        IMAGE
+                    ================================== */}
 
                     <td>
 
-                      <img
-                        src={project.image}
-                        alt={project.projectName}
-                        className="table-image"
-                      />
+                      {project.image ? (
+                        <img
+                          src={project.image}
+                          alt={
+                            project.projectName ||
+                            "Project"
+                          }
+                          className="table-image"
+                        />
+                      ) : (
+                        <div className="no-image">
+                          No Image
+                        </div>
+                      )}
 
                     </td>
 
-                    <td>{project.company}</td>
+                    {/* =================================
+                        COMPANY
+                    ================================== */}
 
-                    <td>{project.category}</td>
+                    <td>
+                      {project.company || "-"}
+                    </td>
 
-                    <td>{project.projectName}</td>
+                    {/* =================================
+                        CATEGORY
+                    ================================== */}
+
+                    <td>
+                      {project.category || "-"}
+                    </td>
+
+                    {/* =================================
+                        PROJECT NAME
+                    ================================== */}
+
+                    <td>
+                      {project.projectName || "-"}
+                    </td>
+
+                    {/* =================================
+                        DESCRIPTION
+                    ================================== */}
 
                     <td className="desc-cell">
-
-                      {project.description}
-
+                      {project.description || "-"}
                     </td>
+
+                    {/* =================================
+                        STATUS
+                    ================================== */}
 
                     <td>
 
                       <span className="status-badge">
-
                         Show
-
                       </span>
 
                     </td>
 
+                    {/* =================================
+                        ACTION
+                    ================================== */}
+
                     <td>
 
                       <button
-  className="edit-btn"
-  onClick={() => handleEditProject(project)}
->
-  Edit
-</button>
+                        type="button"
+                        className="edit-btn"
+                        onClick={() =>
+                          handleEditProject(project)
+                        }
+                      >
+                        Edit
+                      </button>
 
                       <button
+                        type="button"
                         className="delete-btn"
-                        onClick={async () => {
-
-                          if (
-                            !window.confirm(
-                              "Delete this project?"
-                            )
-                          )
-                            return;
-
-                          await fetch(API_URL, {
-
-                            method: "DELETE",
-
-                            headers: {
-                              "Content-Type":
-                                "application/json",
-                            },
-
-                            body: JSON.stringify({
-                              id: project.id,
-                            }),
-
-                          });
-
-                          await loadProjects();
-
-                        }}
+                        onClick={() =>
+                          handleDelete(project.id)
+                        }
                       >
-
                         Delete
-
                       </button>
 
                     </td>
@@ -939,8 +990,7 @@ const ProjectPage = () => {
       </div>
 
     </div>
-      );
-
+  );
 };
 
 export default ProjectPage;

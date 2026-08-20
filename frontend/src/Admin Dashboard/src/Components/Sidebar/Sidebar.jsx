@@ -13,14 +13,30 @@ import {
   Newspaper,
   Phone,
   FolderOpen,
+  LogOut,
 } from "lucide-react";
 
 const Sidebar = ({ activePage, setActivePage }) => {
-
   const [openMenu, setOpenMenu] = useState("");
 
   const toggleMenu = (menu) => {
     setOpenMenu(openMenu === menu ? "" : menu);
+  };
+
+  // ================= LOGOUT =================
+  const handleLogout = () => {
+    const confirmLogout = window.confirm(
+      "Are you sure you want to logout?"
+    );
+
+    if (!confirmLogout) return;
+
+    // Remove login session
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("adminUser");
+
+    // Redirect to login
+    window.location.href = "/login";
   };
 
   return (
@@ -59,10 +75,7 @@ const Sidebar = ({ activePage, setActivePage }) => {
         </div>
 
         {openMenu === "home" && (
-
           <div className="submenu">
-
-            {/* Home Slider */}
 
             <div
               className={
@@ -76,8 +89,6 @@ const Sidebar = ({ activePage, setActivePage }) => {
               Home Slider
             </div>
 
-            {/* Company */}
-
             <div
               className={
                 activePage === "company"
@@ -90,8 +101,6 @@ const Sidebar = ({ activePage, setActivePage }) => {
               Company
             </div>
 
-            {/* Project Image */}
-
             <div
               className={
                 activePage === "projectimage"
@@ -103,8 +112,6 @@ const Sidebar = ({ activePage, setActivePage }) => {
               <Image size={16} />
               Project Image
             </div>
-
-            {/* Our Companies */}
 
             <div
               className={
@@ -119,7 +126,6 @@ const Sidebar = ({ activePage, setActivePage }) => {
             </div>
 
           </div>
-
         )}
 
       </div>
@@ -151,7 +157,6 @@ const Sidebar = ({ activePage, setActivePage }) => {
         </div>
 
         {openMenu === "about" && (
-
           <div className="submenu">
 
             <div
@@ -167,11 +172,11 @@ const Sidebar = ({ activePage, setActivePage }) => {
             </div>
 
           </div>
-
         )}
 
       </div>
-            {/* ================= INDUSTRY ================= */}
+
+      {/* ================= INDUSTRY ================= */}
 
       <div className="menu-section">
 
@@ -198,7 +203,6 @@ const Sidebar = ({ activePage, setActivePage }) => {
         </div>
 
         {openMenu === "industry" && (
-
           <div className="submenu">
 
             <div
@@ -214,7 +218,6 @@ const Sidebar = ({ activePage, setActivePage }) => {
             </div>
 
           </div>
-
         )}
 
       </div>
@@ -246,7 +249,6 @@ const Sidebar = ({ activePage, setActivePage }) => {
         </div>
 
         {openMenu === "career" && (
-
           <div className="submenu">
 
             <div
@@ -262,7 +264,6 @@ const Sidebar = ({ activePage, setActivePage }) => {
             </div>
 
           </div>
-
         )}
 
       </div>
@@ -286,15 +287,16 @@ const Sidebar = ({ activePage, setActivePage }) => {
             Project
           </span>
 
-          {openMenu === "project" ? (
+          {openMenu === "project" && (
             <ChevronDown size={18} />
-          ) : (
+          )}
+
+          {openMenu !== "project" && (
             <ChevronRight size={18} />
           )}
         </div>
 
         {openMenu === "project" && (
-
           <div className="submenu">
 
             <div
@@ -310,7 +312,6 @@ const Sidebar = ({ activePage, setActivePage }) => {
             </div>
 
           </div>
-
         )}
 
       </div>
@@ -342,7 +343,6 @@ const Sidebar = ({ activePage, setActivePage }) => {
         </div>
 
         {openMenu === "contact" && (
-
           <div className="submenu">
 
             <div
@@ -358,11 +358,11 @@ const Sidebar = ({ activePage, setActivePage }) => {
             </div>
 
           </div>
-
         )}
 
       </div>
-            {/* ================= SETTINGS ================= */}
+
+      {/* ================= SETTINGS ================= */}
 
       <div className="menu-section">
 
@@ -385,6 +385,20 @@ const Sidebar = ({ activePage, setActivePage }) => {
             Site Settings
           </span>
         </div>
+
+      </div>
+
+      {/* ================= LOGOUT ================= */}
+
+      <div className="sidebar-logout-section">
+
+        <button
+          className="sidebar-logout"
+          onClick={handleLogout}
+        >
+          <LogOut size={18} />
+          <span>Logout</span>
+        </button>
 
       </div>
 
